@@ -7,7 +7,7 @@ int main(int argc, char** argv, char** env) {
   printf("Hello, ysyx!\n");
   VerilatedContext* contextp = new VerilatedContext;
   contextp->commandArgs(argc, argv);
-  Vtop top = new Vtop{contextp};
+  Vtop* top = new Vtop{contextp};
   while(!contextp->gotFinish())
   {
     int a = rand() & 1;
