@@ -3,7 +3,7 @@
 #include <assert.h>
 #include "verilated.h"
 #include "Vtop.h"
-int main(int argc, char** arvg, char** env) {
+int main(int argc, char** argv, char** env) {
   printf("Hello, ysyx!\n");
   VerilatedContext* contextp = new VerilatedContext;
   contextp->commandArgs(argc, argv);
