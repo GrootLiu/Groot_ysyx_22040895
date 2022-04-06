@@ -1,8 +1,10 @@
+.PHONY: all sim
 all:
 	@echo "Write this Makefile by your self."
 
-sim:
+sim: ./csrc/main.cpp ./vsrc/top.v
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by your self."
+	@echo "Making..."
+	verilator --Wno-fatal --cc --exe --build ./csrc/main.cpp ./vsrc/top.v
 
 include ../Makefile
