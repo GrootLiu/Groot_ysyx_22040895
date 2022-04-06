@@ -16,7 +16,7 @@ int main(int argc, char** argv, char** env) {
     top->b = b;
     top->eval();
     printf("a = %d, b = %d, f = %d\n", a, b, top->f);
-    assert(top->g == a ^ b);
+    assert(top->f == a ^ b);
   }
   delete top;
   delete contextp;
