@@ -34,7 +34,8 @@ int main(int argc, char** argv, char** env) {
     assert(top->f == a ^ b);
     tfp->dump(contextp->time());
   }
-  delete tfp;
+  top->final();
+  tfp->close();
   delete top;
   delete contextp;
   return 0;

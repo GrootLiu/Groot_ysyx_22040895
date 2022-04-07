@@ -10,6 +10,8 @@
 //==========
 
 class Vtop__Syms;
+class Vtop_VerilatedVcd;
+
 
 //----------
 
