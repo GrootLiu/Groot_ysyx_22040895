@@ -5,7 +5,7 @@
 #include "Vtop.h"
 
 //用于输出显示波形
-#include "verilated_vcd_sc.h"
+#include "verilated_vcd_c.h"
 
 double sim_time = 10;
 
