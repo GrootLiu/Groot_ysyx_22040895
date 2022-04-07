@@ -9,7 +9,7 @@
 
 // This is a 64-bit integer to reduce wrap over issues and allow modulus.
 // This is in units of timeprecision used in Verilog(or from --timescale-override)
-vluint_64 main_time = 10;
+vluint64_t main_time = 10;
 
 int main(int argc, char** argv, char** env) {
   printf("Hello, ysyx!\n");
