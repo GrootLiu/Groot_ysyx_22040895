@@ -14,14 +14,18 @@ int main(int argc, char** argv, char** env) {
   VerilatedContext* contextp = new VerilatedContext;
 
   contextp->commandArgs(argc, argv);
+  //用于打开VCD记录
   contextp->traceEverOn(true);
 
   Vtop* top = new Vtop{contextp};
   VerilatedVcdC* tfp = new VerilatedVcdC;
-
+  
+  //还没明白什么意思
   top->trace(tfp, 99);
-  tfp->open("./wave.vcd");
+  //VCD文件保存位置
+  tfp->open("../wave.vcd");
 
+  //contextp->time()记录仿真时间
   while(contextp->time() < sim_time && !contextp->gotFinish())
   {
     contextp->timeInc(1);
