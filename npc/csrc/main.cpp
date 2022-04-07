@@ -20,7 +20,7 @@ int main(int argc, char** argv, char** env) {
   VerilatedVcdC* tfp = new VerilatedVcdC;
 
   top->trace(tfp, 99);
-  tfp->open(wave.vcd);
+  tfp->open("./wave.vcd");
 
   while(contextp->time() < sim_time && !contextp->gotFinish())
   {
