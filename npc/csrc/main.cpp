@@ -19,7 +19,7 @@ int main(int argc, char** argv, char** env) {
   Vtop* top = new Vtop{contextp};
   VerilatedVcdC* tfp = new VerilatedVcdC;
 
-  top->trace(ftp, 99);
+  top->trace(tfp, 99);
   tfp->open(./wave.vcd);
 
   while(contextp->time() < sim_time && !contextp->gotFinish())
