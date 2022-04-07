@@ -30,7 +30,7 @@ int main(int argc, char** argv, char** env) {
   tfp->open("../wave.vcd");
 
   // contextp->time()记录仿真时间
-  while(contextp->time() < sim_time && !contextp->gotFinish())
+  while(contextp->time() < main_time && !contextp->gotFinish())
  {
     contextp->timeInc(1);
     int a = rand() & 1;
