@@ -10,6 +10,11 @@ void init_regex();
 void init_wp_pool();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
+/**
+ * @description: return a string for parsing
+ * @return {string:line_read}
+ * @use: 
+ */
 static char* rl_gets() {
   static char *line_read = NULL;
 
@@ -27,23 +32,35 @@ static char* rl_gets() {
   return line_read;
 }
 
+/**
+ * @description: process c command
+ * @param {char} *args
+ * @return {0}
+ * @use: continue the execution of the program
+ */
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
 
-
+/**
+ * @description: process q comand
+ * @param {char} *args
+ * @return {-1}
+ * @use: exit 
+ */
 static int cmd_q(char *args) {
   return -1;
 }
 
 static int cmd_help(char *args);
 
+// 还不懂
 static struct {
   const char *name;
   const char *description;
   int (*handler) (char *);
-} cmd_table [] = {
+}cmd_table [] = {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
@@ -52,10 +69,15 @@ static struct {
 
 };
 
+// 我猜ARRLEN返回cmd_table的长度
 #define NR_CMD ARRLEN(cmd_table)
 
 static int cmd_help(char *args) {
   /* extract the first argument */
+  /* 
+    the first attribute of func(strtok) is NULL because it isn't the first call of strtok
+    the second attibute of func(strtok) is 'space' because the parsing string shoud be delimted by 'space'
+  */
   char *arg = strtok(NULL, " ");
   int i;
 
