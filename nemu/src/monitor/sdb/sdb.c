@@ -55,6 +55,8 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si_n(char *args);
+
 // 还不懂
 static struct {
   const char *name;
@@ -66,7 +68,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+  { "si [N]", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si_n}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -97,6 +99,11 @@ static int cmd_help(char *args) {
     printf("Unknown command '%s'\n", arg);
   }
   return 0;
+}
+
+static int cmd_si_n(char *args)
+{
+  return -1;
 }
 
 void sdb_set_batch_mode() {
