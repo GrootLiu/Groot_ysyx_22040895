@@ -110,7 +110,6 @@ static int cmd_si_n(char *args)
 {
   char *arg = strtok(NULL, " ");
   int N = atoi(arg);
-  Decode s;
   if (arg == NULL)
     /* no N was given */
   {
@@ -118,12 +117,7 @@ static int cmd_si_n(char *args)
   }
   else
   {
-    /* number i is the step we are excuting */
-    for (int i = 0; i < N; i++)
-    {
-      isa_exec_once(&s);
-    }
-    
+    cpu_exec(N);
   }  
   return 0;
 }

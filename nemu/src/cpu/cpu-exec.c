@@ -88,7 +88,7 @@ void assert_fail_msg() {
 
 /* Simulate how the CPU works. */
 /*
-    this cpu_exec function is designed for simulate the real cpu's way of work 
+  * this cpu_exec function is designed for simulate the real cpu's way of work 
 */
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INST_TO_PRINT);
