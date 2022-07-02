@@ -5,6 +5,7 @@
 #include "sdb.h"
 
 #include <cpu/decode.h>
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
