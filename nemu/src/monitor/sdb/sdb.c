@@ -148,12 +148,10 @@ static int cmd_scan(char *args)
   char *arg1 = strtok(NULL, " ");
   int N = atoi(arg1);
   char * arg2 = strtok(NULL, " ");
+
+  vaddr_t addr = atoi(arg2);
+  vaddr_read(addr, N);
   
-  if (strcmp(arg2, "0x80000000") == 0)
-  {
-    vaddr_t addr = atoi(arg2);
-    vaddr_read(addr, N);
-  }
   return 0;
 }
 
