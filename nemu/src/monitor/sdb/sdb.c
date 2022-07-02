@@ -154,7 +154,7 @@ static int cmd_scan(char *args)
   // vaddr_t addr = atoi(arg2);
   // int N = atoi(arg1);
   __uint64_t info = vaddr_read(0x80000004, 8);
-  printf("%-32lX#\n", info);
+  printf("%#-32lX\n", info);
   return 0;
 }
 
