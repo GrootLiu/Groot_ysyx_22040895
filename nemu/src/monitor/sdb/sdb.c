@@ -146,7 +146,7 @@ static int cmd_info(char *args)
 static int cmd_scan(char *args)
 {
   char *arg1 = strtok(NULL, " ");
-  if (*arg1 == NULL)
+  if (arg1 == NULL)
   {
     return -1;
   }
