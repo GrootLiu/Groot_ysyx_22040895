@@ -151,7 +151,7 @@ static int cmd_scan(char *args)
   {
     return -1;
   }
-  vaddr_t addr = atol(arg2);
+  vaddr_t addr = atoll(arg2);
   int N = atoi(arg1);
 
   printf("%lu, %d\n", addr, N);
