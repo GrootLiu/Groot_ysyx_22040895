@@ -151,9 +151,15 @@ static int cmd_scan(char *args)
   {
     return -1;
   }
-  // vaddr_t addr = atoi(arg2);
+  vaddr_t addr = strtoul(arg2, NULL, 16);
+  printf("%lx",addr);
   // int N = atoi(arg1);
-  __uint64_t info = vaddr_read(0x80000004, 8);
+  // for (; N > 0; N--)
+  // {
+  //   addr += 4;
+  // }
+  
+  __uint64_t info = vaddr_read(0x80000004, 4);
   printf("%#-.8lx\n", info);
   return 0;
 }
