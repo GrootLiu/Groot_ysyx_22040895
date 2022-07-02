@@ -62,7 +62,7 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
-static int cmd_scan(char *args);
+static int cmd_x(char *args);
 
 // 还不懂
 static struct {
@@ -79,8 +79,8 @@ static struct {
 
   /* TODO: Add more commands */
   { "si", "si [N]: Let the program step through N instructions and pause execution. When N is not given, it defaults to 1", cmd_si},
-  { "info", "Print register status or Print monitor point information", cmd_info},
-  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_scan}
+  { "info", "info r or info w: Print register status or Print monitor point information", cmd_info},
+  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_x}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -104,7 +104,7 @@ static int cmd_help(char *args) {
   else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
-        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        printf("%10s - %s\n", cmd_table[i].name, cmd_table[i].description);
         return 0;
       }
     }
@@ -143,7 +143,7 @@ static int cmd_info(char *args)
   return 0;
 }
 
-static int cmd_scan(char *args)
+static int cmd_x(char *args)
 {
   char *arg1 = strtok(NULL, " ");
   char *arg2 = strtok(NULL, " ");
