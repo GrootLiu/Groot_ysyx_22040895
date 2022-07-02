@@ -110,7 +110,7 @@ static int cmd_si_n(char *args)
 {
   char *arg = strtok(NULL, " ");
   int i;
-  Decode s;
+  Decode *s;
   return -1;
 }
 
