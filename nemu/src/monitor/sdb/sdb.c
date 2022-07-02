@@ -73,7 +73,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si N", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si_n}
+  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si_n}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
