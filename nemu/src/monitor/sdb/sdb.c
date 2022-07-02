@@ -150,7 +150,7 @@ static int cmd_scan(char *args)
   
   if (strcmp(arg2, "0x80000000") == 0)
   {
-    vaddr_t addr = arg2;
+    vaddr_t addr = atoi(arg2);
     vaddr_read(addr, N);
   }
   return 0;
