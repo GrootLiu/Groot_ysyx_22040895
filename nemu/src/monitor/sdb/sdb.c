@@ -151,13 +151,10 @@ static int cmd_scan(char *args)
   {
     return -1;
   }
-  
-  vaddr_t addr = strtoul(arg2, NULL, 16);
-  printf("%s\n", arg2);
+  vaddr_t addr = atoi(arg2);
   int N = atoi(arg1);
 
-  printf("%lu, %d\n", addr, N);
-  vaddr_read(addr, N);
+  vaddr_read(addr, 0x80000000);
 
   return 0;
 }
