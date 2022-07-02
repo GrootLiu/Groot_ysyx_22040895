@@ -151,10 +151,10 @@ static int cmd_scan(char *args)
   {
     return -1;
   }
-  vaddr_t addr = atoi(arg2);
-  // int N = atoi(arg1);
+  // vaddr_t addr = atoi(arg2);
+  int N = atoi(arg1);
 
-  vaddr_read(addr, 0x80000000);
+  vaddr_read(0x80000000, N);
 
   return 0;
 }
