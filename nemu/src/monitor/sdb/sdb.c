@@ -82,8 +82,8 @@ static struct {
 static int cmd_help(char *args) {
   /* extract the first argument */
   /* 
-    the first attribute of func(strtok) is NULL because it isn't the first call of strtok
-    the second attibute of func(strtok) is 'space' because the parsing string shoud be delimted by 'space'
+   *the first attribute of func(strtok) is NULL because it isn't the first call of strtok
+   *the second attibute of func(strtok) is 'space' because the parsing string shoud be delimted by 'space'
   */
   char *arg = strtok(NULL, " ");
   int i;
@@ -109,9 +109,23 @@ static int cmd_help(char *args) {
 static int cmd_si_n(char *args)
 {
   char *arg = strtok(NULL, " ");
-  int i;
-  Decode *s;
-  return -1;
+  int N;
+  Decode s;
+  if (arg == NULL)
+    /* no N was given */
+  {
+    N = 1;
+  }
+  else
+  {
+    /* number i is the step we are excuting */
+    for (int i = 0; i < N; i++)
+    {
+      exec_once(&s, cpu.pc);
+    }
+    
+  }  
+  return 0;
 }
 
 void sdb_set_batch_mode() {
@@ -132,7 +146,7 @@ void sdb_mainloop() {
   }
 
   /*  if the str obtaineed in the following for loop is not empty, 
-      the loop will always be excuted 
+   *  the loop will always be excuted 
   */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
@@ -160,6 +174,9 @@ void sdb_mainloop() {
     for (i = 0; i < NR_CMD; i ++) {
       /*if s1 and s2 are equal, excute the following if */
       if (strcmp(cmd, cmd_table[i].name) == 0) {
+        /* if the return number less than 0,
+         * the for loop will be stopped
+         */
         if (cmd_table[i].handler(args) < 0) { return; }
         break;
       }
