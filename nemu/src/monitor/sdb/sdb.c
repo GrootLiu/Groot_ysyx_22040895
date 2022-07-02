@@ -4,7 +4,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 
-// #include <decode.h>
+#include <decode.h>
 
 static int is_batch_mode = false;
 
@@ -63,6 +63,9 @@ static int cmd_si_n(char *args);
 static struct {
   const char *name;
   const char *description;
+  /* the following statement is a function pointer,
+     points a function which name is 'char *'
+   */
   int (*handler) (char *);
 }cmd_table [] = {
   { "help", "Display informations about all supported commands", cmd_help },
@@ -105,9 +108,9 @@ static int cmd_help(char *args) {
 
 static int cmd_si_n(char *args)
 {
-  // char *arg = strtok(NULL, " ");
-  // int i;
-  // Decode s;
+  char *arg = strtok(NULL, " ");
+  int i;
+  Decode s;
   return -1;
 }
 
@@ -133,10 +136,10 @@ void sdb_mainloop() {
   */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
+    // printf("%s\n,")
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
-    printf("%s\n",cmd);
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
@@ -152,8 +155,10 @@ void sdb_mainloop() {
     sdl_clear_event_queue();
 #endif
 
+    /* cal each cmd_x function from here */
     int i;
     for (i = 0; i < NR_CMD; i ++) {
+      /*if s1 and s2 are equal, excute the following if */
       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { return; }
         break;
