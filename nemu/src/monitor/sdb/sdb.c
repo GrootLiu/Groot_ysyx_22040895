@@ -4,7 +4,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 
-#include <decode.h>
+#include <cpu/decode.h>
 
 static int is_batch_mode = false;
 
