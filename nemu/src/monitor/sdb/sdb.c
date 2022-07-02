@@ -57,7 +57,9 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
-static int cmd_si_n(char *args);
+static int cmd_si(char *args);
+
+static int cmd_info(char *args);
 
 // 还不懂
 static struct {
@@ -73,7 +75,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si_n}
+  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si}
+  { "info", "Print register status or Print monitor point information", cmd_info}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -106,7 +109,7 @@ static int cmd_help(char *args) {
   return 0;
 }
 
-static int cmd_si_n(char *args)
+static int cmd_si(char *args)
 {
   char *arg = strtok(NULL, " ");
   int N = atoi(arg);
@@ -122,11 +125,22 @@ static int cmd_si_n(char *args)
   return 0;
 }
 
+static int cmd_info(char *args)
+{
+  char *arg = strtok(NULL, " ");
+  if (strcmp(arg, 'r') == 0)
+  {
+    isa_reg_display();
+  }
+  else if (strcmp(arg, 'w') == 0)
+  {
+    /* code */
+  } 
+}
+
 void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
-
-
 
 /**
  * @description: main fuction
