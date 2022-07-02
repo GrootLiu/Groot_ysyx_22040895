@@ -151,16 +151,19 @@ static int cmd_scan(char *args)
   {
     return -1;
   }
+  /* addr is the beginning address we want to check */
   vaddr_t addr = strtoul(arg2, NULL, 16);
-  printf("%lx\n",addr);
-  // int N = atoi(arg1);
-  // for (; N > 0; N--)
-  // {
-  //   addr += 4;
-  // }
+  // printf("%#-.8lx\n",addr);
+  /* N is the numbers of mem we want to check */
+  int N = atoi(arg1);
+  for (; N > 0; N--)
+  {
+    addr += 0x4;
+    __uint64_t info = vaddr_read(addr, 4);
+    printf("%#-.8lx\n", info);
+  }
   
-  __uint64_t info = vaddr_read(0x80000004, 4);
-  printf("%#-.8lx\n", info);
+
   return 0;
 }
 
