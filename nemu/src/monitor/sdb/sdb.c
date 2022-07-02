@@ -109,7 +109,7 @@ static int cmd_help(char *args) {
 static int cmd_si_n(char *args)
 {
   char *arg = strtok(NULL, " ");
-  int N;
+  int N = atoi(arg);
   Decode s;
   if (arg == NULL)
     /* no N was given */
