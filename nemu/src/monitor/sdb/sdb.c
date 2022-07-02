@@ -75,7 +75,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si}
+  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si},
   { "info", "Print register status or Print monitor point information", cmd_info}
 };
 
