@@ -1,3 +1,12 @@
+/*** 
+ * @Author: Groot
+ * @Date: 2022-04-06 19:26:19
+ * @LastEditTime: 2022-07-02 17:31:27
+ * @LastEditors: Groot
+ * @Description: 
+ * @FilePath: /ysyx-workbench/nemu/include/common.h
+ * @版权声明
+ */
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
