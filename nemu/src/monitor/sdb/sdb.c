@@ -134,7 +134,7 @@ void sdb_mainloop() {
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
     printf("%s\n",str);
-    printf("%u\n", sizeof(str_end));
+    printf("%lu\n", sizeof(str_end));
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
