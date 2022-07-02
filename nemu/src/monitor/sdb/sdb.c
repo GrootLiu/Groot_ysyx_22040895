@@ -5,6 +5,7 @@
 #include "sdb.h"
 
 #include <cpu/decode.h>
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -61,7 +62,7 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
-// static
+static int cmd_scan(char *args);
 
 // 还不懂
 static struct {
@@ -79,7 +80,7 @@ static struct {
   /* TODO: Add more commands */
   { "si", "si [N]: Let the program step through N instructions and pause execution. When N is not given, it defaults to 1", cmd_si},
   { "info", "Print register status or Print monitor point information", cmd_info},
-  // { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form"}
+  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_scan}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -139,6 +140,30 @@ static int cmd_info(char *args)
   {
     /* code */
   } 
+  return 0;
+}
+
+static int cmd_scan(char *args)
+{
+  char *arg1 = strtok(NULL, " ");
+  char *arg2 = strtok(NULL, " ");
+  if (arg1 == NULL || arg2 == NULL)
+  {
+    return -1;
+  }
+  /* addr is the beginning address we want to check */
+  vaddr_t addr = strtoul(arg2, NULL, 16);
+  // printf("%#-.8lx\n",addr);
+  /* N is the numbers of mem we want to check */
+  int N = atoi(arg1);
+  for (; N > 0; N--)
+  {
+    addr += 0x4;
+    __uint64_t info = vaddr_read(addr, 4);
+    printf("$%lx:%#-.8lx\n", addr, info);
+  }
+  
+
   return 0;
 }
 
