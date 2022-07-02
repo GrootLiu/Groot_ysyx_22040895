@@ -154,7 +154,7 @@ static int cmd_scan(char *args)
   vaddr_t addr = atoi(arg2);
   int N = atoi(arg1);
 
-  printf("%d, %d\n", addr, N);
+  printf("%lu, %d\n", addr, N);
   vaddr_read(addr, N);
 
   return 0;
