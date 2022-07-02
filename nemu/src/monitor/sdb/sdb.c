@@ -61,6 +61,8 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
+static int cmd_scan(char *args);
+
 // 还不懂
 static struct {
   const char *name;
@@ -75,8 +77,9 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-  { "si", "Let the program step through N instructions and pause execution. When n is not given, it defaults to 1", cmd_si},
-  { "info", "Print register status or Print monitor point information", cmd_info}
+  { "si", "si [N]: Let the program step through N instructions and pause execution. When N is not given, it defaults to 1", cmd_si},
+  { "info", "Print register status or Print monitor point information", cmd_info},
+  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form"}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -136,6 +139,20 @@ static int cmd_info(char *args)
   {
     /* code */
   } 
+  return 0;
+}
+
+static int cmd_scan(char *args)
+{
+  char *arg1 = strtok(NULL, " ");
+  int N = atoi(arg1);
+  char * arg2 = strtok(NULL, " ");
+  
+  if (strcmp(arg2, "0x80000000") == 0)
+  {
+    vaddr_t addr = arg2;
+    vaddr_read(addr, N);
+  }
   return 0;
 }
 
