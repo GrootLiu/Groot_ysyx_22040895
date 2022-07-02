@@ -153,7 +153,7 @@ static int cmd_scan(char *args)
   }
   // vaddr_t addr = atoi(arg2);
   int N = atoi(arg1);
-  vaddr_read(0x100000, N);
+  vaddr_read(0x80000000, N);
   return 0;
 }
 
