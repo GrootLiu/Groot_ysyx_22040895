@@ -115,14 +115,25 @@ void sdb_set_batch_mode() {
   is_batch_mode = true;
 }
 
+
+
+/**
+ * @description: main fuction
+ * @return {*}
+ * @use: 
+ */
 void sdb_mainloop() {
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
   }
 
+  /*  if the str obtaineed in the following for loop is not empty, 
+      the loop will always be excuted 
+  */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
+    printf("%s\n", str_end);
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
