@@ -98,13 +98,13 @@ static int cmd_help(char *args) {
   if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
-      printf("%-2s - %s\n", cmd_table[i].name, cmd_table[i].description);
+      printf("%-4s - %s\n", cmd_table[i].name, cmd_table[i].description);
     }
   }
   else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
-        printf("%s\t - %s\n", cmd_table[i].name, cmd_table[i].description);
+        printf("%-4s - %s\n", cmd_table[i].name, cmd_table[i].description);
         return 0;
       }
     }
