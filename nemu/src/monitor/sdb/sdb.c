@@ -146,13 +146,13 @@ static int cmd_info(char *args)
 static int cmd_scan(char *args)
 {
   char *arg1 = strtok(NULL, " ");
-  if (arg1 == NULL)
+  char * arg2 = strtok(NULL, " ");
+  if (arg1 == NULL || arg2 == NULL)
   {
     return -1;
   }
   int N = atoi(arg1);
-  char * arg2 = strtok(NULL, " ");
-
+  
   vaddr_t addr = atoi(arg2);
   vaddr_read(addr, N);
 
