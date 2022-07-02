@@ -152,7 +152,7 @@ static int cmd_scan(char *args)
     return -1;
   }
   vaddr_t addr = strtoul(arg2, NULL, 16);
-  printf("%lx",addr);
+  printf("%lx\n",addr);
   // int N = atoi(arg1);
   // for (; N > 0; N--)
   // {
