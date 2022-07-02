@@ -136,6 +136,7 @@ static int cmd_info(char *args)
   {
     /* code */
   } 
+  return 0;
 }
 
 void sdb_set_batch_mode() {
