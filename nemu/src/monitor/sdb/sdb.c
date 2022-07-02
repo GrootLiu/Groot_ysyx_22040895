@@ -160,7 +160,7 @@ static int cmd_scan(char *args)
   {
     addr += 0x4;
     __uint64_t info = vaddr_read(addr, 4);
-    printf("%#-.8lx\n", info);
+    printf("%lu:%#-.8lx\n", addr, info);
   }
   
 
