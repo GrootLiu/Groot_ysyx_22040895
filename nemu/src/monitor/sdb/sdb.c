@@ -152,8 +152,9 @@ static int cmd_scan(char *args)
     return -1;
   }
   // vaddr_t addr = atoi(arg2);
-  int N = atoi(arg1);
-  vaddr_read(0x80000000, N);
+  // int N = atoi(arg1);
+  __uint64_t info = vaddr_read(0x80000000, 1);
+  printf("%lu\n", info);
   return 0;
 }
 
