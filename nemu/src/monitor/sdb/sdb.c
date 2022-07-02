@@ -121,7 +121,7 @@ static int cmd_si_n(char *args)
     /* number i is the step we are excuting */
     for (int i = 0; i < N; i++)
     {
-      exec_once(&s, cpu.pc);
+      isa_exec_once(&s);
     }
     
   }  
