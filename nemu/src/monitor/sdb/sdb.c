@@ -4,6 +4,8 @@
 #include <readline/history.h>
 #include "sdb.h"
 
+// #include <decode.h>
+
 static int is_batch_mode = false;
 
 void init_regex();
@@ -103,6 +105,9 @@ static int cmd_help(char *args) {
 
 static int cmd_si_n(char *args)
 {
+  // char *arg = strtok(NULL, " ");
+  // int i;
+  // Decode s;
   return -1;
 }
 
