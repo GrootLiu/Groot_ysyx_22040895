@@ -50,7 +50,7 @@ bool InitStack(SqStack *S)
 */
 bool GetTop(SqStack S)
 {
-  if (IsEmpty(S))
+  if (S.top == S.base)
     return 0;
   return *(S.top - 1);
 }
@@ -76,7 +76,7 @@ bool Push(SqStack *S, SElemType e)
 */
 bool Pop(SqStack *S)
 {
-  if (IsEmpty(S))
+  if (S->top == S->base)
     return 0;
   --S->top;
   return 1;
