@@ -13,7 +13,8 @@
  * RP: Right parenthsis
  */
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_PLUS, TK_SUB, TK_MULT, TK_DIV, TK_LP, TK_RP
+  TK_NOTYPE = 256, TK_EQ, TK_LP, TK_RP, TK_NUM
+  // TK_PLUS, TK_SUB, TK_MULT, TK_DIV,
 
   /* TODO: Add more token types */
 
@@ -36,8 +37,12 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+  {"\\(", TK_LP},       // Left parenthesis
+  {"\\)", TK_RP},       // Right parenthesis
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+  {"[0-9]+", TK_NUM}    // number
+  
 };
 
 /* NR_REGEX indicates the number of rules */
@@ -93,11 +98,14 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
+      // printf(rules[i].regex)
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         /* substr_start points to the address where the substring starts */
         char *substr_start = e + position;
         /* substr_start is the length of substring */
         int substr_len = pmatch.rm_eo;
+
+        // char *substr = 
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
@@ -110,7 +118,19 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+          case TK_NOTYPE : ;
+          case TK_LP : tokens[nr_token].type = TK_LP;
+          case TK_RP : tokens[nr_token].type = TK_RP;
+          case TK_NUM : 
+                        {
+                          tokens[nr_token].type = TK_NUM;
+                          strcpy(tokens[nr_token].str, substr_start);
+                        }                        
           case '+' : tokens[nr_token].type = '+';
+          case '-' : tokens[nr_token].type = '-';
+          case '*' : tokens[nr_token].type = '*';
+          case '/' : tokens[nr_token].type = '/';
+          
           default: TODO();
         }
         nr_token++;
