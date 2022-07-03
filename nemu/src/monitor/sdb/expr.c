@@ -229,7 +229,7 @@ word_t expr(char *e, bool *success)
   return 0;
 }
 
-uint32_t eval(int start, int end)
+int eval(int start, int end)
 {
   if (start > end)
   {
@@ -242,6 +242,8 @@ uint32_t eval(int start, int end)
      * For now this token should be a number.
      * Return the value of the number.
      */
+    int number = atoi(tokens[start].str);
+    return number;
   }
   else if (check_parentheses(start, end) == true)
   {
