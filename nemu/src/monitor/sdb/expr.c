@@ -6,7 +6,7 @@
 #include <regex.h>
 
 #include <assert.h>
-#include <stack.c>
+#include </stack.c>
 /*
  * token_type is an integer,
  * we must ensure the integers corresponding to different types of token are not the same
