@@ -7,6 +7,89 @@
 
 #include <assert.h>
 // #include <stack.c>
+
+#include <stdio.h>
+#include <malloc.h>
+
+#define STACK_INT_SIZE 100
+#define STACKINCREMENT 10
+#define SElemType char
+
+bool InitStack(SqStack *S);
+bool GetTop(SqStack S);
+bool Push(SqStack *S, SElemType e);
+bool Pop(SqStack *S);
+bool IsEmpty(SqStack S);
+
+typedef struct
+{
+  /* stack base address */
+  SElemType *base; 
+  /* stack top address */
+  SElemType *top;  
+  int stacksize;
+} SqStack;
+
+/* Algorithmic description of basic operations */
+/* init a stack */
+bool InitStack(SqStack *S)
+{
+  S->base = (SElemType *)malloc(STACK_INT_SIZE * sizeof(SElemType)); //开辟新的空间
+  if (!S->base)
+  /* if stack creation failed, return 0*/
+    return 0; 
+  S->top = S->base;
+  S->stacksize = STACK_INT_SIZE;
+  return 1;
+}
+
+/* If the stack is not empty, return the top element of the stack and return true 
+ * otherwise return false 
+*/
+bool GetTop(SqStack S)
+{
+  if (IsEmpty(S))
+    return 0;
+  return *(S.top - 1);
+}
+
+/* Insert the element as the new top element of the stack */
+bool Push(SqStack *S, SElemType e)
+{
+  if (S->top - S->base >= S->stacksize)
+  /* If the stack is full, need to add space */
+  {
+    S->base = (SElemType *)realloc(S->base, (S->stacksize + STACKINCREMENT) * sizeof(SElemType));
+    if (!S->base)
+      return 0;
+    S->top = S->base + S->stacksize;
+    S->stacksize += STACKINCREMENT;
+  }
+  *(S->top++) = e;
+  return 1;
+}
+
+/* If the stack is not empty, delete the top element of the stack, return its value with e and return true, 
+ * otherwise return false 
+*/
+bool Pop(SqStack *S)
+{
+  if (IsEmpty(S))
+    return 0;
+  --S->top;
+  return 1;
+}
+
+bool IsEmpty(SqStack S)
+{
+    if (S.top == S.base)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+
 /*
  * token_type is an integer,
  * we must ensure the integers corresponding to different types of token are not the same
@@ -188,67 +271,67 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and 1, respectively
    *
    */
-  // int p = 0, q = 1;
+  int p = 0, q = 1;
 
   return 0;
 }
 
-// int eval(int start, int end)
-// {
-//   if (start > end)
-//   {
-//     /* Bad expression */
-//     return -1;
-//   }
-//   else if (start == end)
-//   {
-//     /* Single token.
-//      * For now this token should be a number.
-//      * Return the value of the number.
-//      */
-//   }
-//   else if (check_parentheses(start, end) == true)
-//   {
-//     /* The expression is surrounded by a matched pair of parentheses.
-//      * If that is the case, just throw away the parentheses.
-//      */
-//     return eval(start + 1, end - 1);
-//   }
-//   else
-//   {
-//     /* We should do more things here. */
-//   }
-//   return 0;
-// }
+int eval(int start, int end)
+{
+  if (start > end)
+  {
+    /* Bad expression */
+    return -1;
+  }
+  else if (start == end)
+  {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+  }
+  else if (check_parentheses(start, end) == true)
+  {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(start + 1, end - 1);
+  }
+  else
+  {
+    /* We should do more things here. */
+  }
+  return 0;
+}
 
-// bool check_parentheses(start, end)
-// {
-//   SqStack s;
-//   InitStack(&s);
-//   for (int i = start; i < end; i++)
-//   {
-//     if (tokens[i].type == TK_LP)
-//     {
-//       Push(&s, '(');
-//     }
-//     else if (tokens[i].type == TK_RP)
-//     {
-//       if (GetTop(s) == '(')
-//       {
-//         Pop(&s);
-//       }
-//       else
-//       {
-//         return false;
-//       }      
-//     }
-//     else
-//       continue;   
-//   }
-//   if (IsEmpty(s) == true)
-//   {
-//     return true;
-//   }
-//   else
-//     return false;  
-// }
+bool check_parentheses(start, end)
+{
+  SqStack s;
+  InitStack(&s);
+  for (int i = start; i < end; i++)
+  {
+    if (tokens[i].type == TK_LP)
+    {
+      Push(&s, '(');
+    }
+    else if (tokens[i].type == TK_RP)
+    {
+      if (GetTop(s) == '(')
+      {
+        Pop(&s);
+      }
+      else
+      {
+        return false;
+      }      
+    }
+    else
+      continue;   
+  }
+  if (IsEmpty(s) == true)
+  {
+    return true;
+  }
+  else
+    return false;  
+}
