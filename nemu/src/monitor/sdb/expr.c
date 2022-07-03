@@ -409,7 +409,7 @@ int find_priop(int start, int end)
   }
   
   /* The following for loop will find the operator with the lowest precedence  */
-  if (flag == 1)
+  if (low_flag == 1)
   {
     for (int i = 0; i < op_num; i++)
       {
