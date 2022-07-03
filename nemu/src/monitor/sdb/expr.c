@@ -224,7 +224,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and strlen, respectively
    */
   int p = 0, q = nr_token;
-  int expression_result = eval(p,q);
+  uint32_t expression_result = eval(p,q);
 
   return 0;
 }
