@@ -25,7 +25,7 @@ typedef struct
 } SqStack;
 
 bool InitStack(SqStack *S);
-bool GetTop(SqStack S);
+char GetTop(SqStack S);
 bool Push(SqStack *S, SElemType e);
 bool Pop(SqStack *S);
 bool IsEmpty(SqStack S);
@@ -295,7 +295,7 @@ bool InitStack(SqStack *S)
 /* If the stack is not empty, return the top element of the stack and return true 
  * otherwise return false 
 */
-bool GetTop(SqStack S)
+char GetTop(SqStack S)
 {
   if (S.top == S.base)
     return 0;
