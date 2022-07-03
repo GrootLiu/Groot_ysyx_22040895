@@ -229,7 +229,7 @@ word_t expr(char *e, bool *success)
   return 0;
 }
 
-int eval(int start, int end)
+uint32_t eval(int start, int end)
 {
   if (start > end)
   {
