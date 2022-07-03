@@ -81,6 +81,8 @@ static struct rule
 
 bool check_parentheses(int start, int end);
 
+int find_mainop(int start, int end);
+
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -210,7 +212,7 @@ word_t expr(char *e, bool *success)
 
   TODO();
   /* p indicates the begining of the substring, q indicates the end of the substring
-   * now we init the p and q, give them 0 and 1, respectively
+   * now we init the p and q, give them 0 and strlen, respectively
    *
    */
   // int p = 0, q = 1;
@@ -242,6 +244,22 @@ int eval(int start, int end)
   else
   {
     /* We should do more things here. */
+    /* analyse the main opertor*/
+    // op = the position of 主运算符 in the token expression;
+    int val1 = eval(start, op - 1);
+    int val2 = eval(op + 1, end);
+
+    /* op_type is the main operator's type
+     * we should find the type of main operator and identify its type
+     */
+    char op_type;
+    switch (op_type) 
+    {
+      case '+': return val1 + val2;
+      case '-': /* ... */
+      case '*': /* ... */
+      case '/': /* ... */
+      default: assert(0);
   }
   return 0;
 }
