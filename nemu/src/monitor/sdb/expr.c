@@ -222,19 +222,19 @@ word_t expr(char *e, bool *success)
   TODO();
   /* p indicates the begining of the substring, q indicates the end of the substring
    * now we init the p and q, give them 0 and strlen, respectively
-   *
    */
-  // int p = 0, q = 1;
+  int p = 0, q = nr_token;
+  int expression_result = eval(p,q);
 
   return 0;
 }
 
-int eval(int start, int end)
+uint32_t eval(int start, int end)
 {
   if (start > end)
   {
     /* Bad expression */
-    return -1;
+    assert(0);
   }
   else if (start == end)
   {
