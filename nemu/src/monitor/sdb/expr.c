@@ -372,7 +372,7 @@ int find_priop(int start, int end)
     int right = i;
     /* 'in' indicates if this token in parentheses */
     int in = 0;
-    for (int j = 0; j < op_num && op_pos[i] != '(' && op_pos[i] != ')'; j++)
+    for (int j = 0; j < op_num && op_pos[i].op != '(' && op_pos[i].op != ')'; j++)
     {
       if (left == 0)
       /* left point reaches the left boundary */
