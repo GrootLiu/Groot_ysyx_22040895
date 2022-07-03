@@ -276,8 +276,8 @@ int eval(int start, int end)
     default:
       assert(0);
     }
-    return 0;
   }
+  return 0;
 }
 
 bool check_parentheses(int start, int end)
