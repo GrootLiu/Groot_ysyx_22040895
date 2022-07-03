@@ -262,7 +262,7 @@ int eval(int start, int end)
     /* op_type is the main operator's type
      * we should find the type of main operator and identify its type
      */
-    char op_type;
+    char op_type = tokens[op].str;
     switch (op_type)
     {
     case '+':
