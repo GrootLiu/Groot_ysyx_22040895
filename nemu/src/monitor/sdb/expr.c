@@ -193,62 +193,62 @@ word_t expr(char *e, bool *success)
   return 0;
 }
 
-int eval(int start, int end)
-{
-  if (start > end)
-  {
-    /* Bad expression */
-    return -1;
-  }
-  else if (start == end)
-  {
-    /* Single token.
-     * For now this token should be a number.
-     * Return the value of the number.
-     */
-  }
-  else if (check_parentheses(start, end) == true)
-  {
-    /* The expression is surrounded by a matched pair of parentheses.
-     * If that is the case, just throw away the parentheses.
-     */
-    return eval(start + 1, end - 1);
-  }
-  else
-  {
-    /* We should do more things here. */
-  }
-  return 0;
-}
+// int eval(int start, int end)
+// {
+//   if (start > end)
+//   {
+//     /* Bad expression */
+//     return -1;
+//   }
+//   else if (start == end)
+//   {
+//     /* Single token.
+//      * For now this token should be a number.
+//      * Return the value of the number.
+//      */
+//   }
+//   else if (check_parentheses(start, end) == true)
+//   {
+//     /* The expression is surrounded by a matched pair of parentheses.
+//      * If that is the case, just throw away the parentheses.
+//      */
+//     return eval(start + 1, end - 1);
+//   }
+//   else
+//   {
+//     /* We should do more things here. */
+//   }
+//   return 0;
+// }
 
-bool check_parentheses(start, end)
-{
-  SqStack s;
-  InitStack(&s);
-  for (int i = start; i < end; i++)
-  {
-    if (tokens[i].type == TK_LP)
-    {
-      Push(&s, '(');
-    }
-    else if (tokens[i].type == TK_RP)
-    {
-      if (GetTop(s) == '(')
-      {
-        Pop(&s);
-      }
-      else
-      {
-        return false;
-      }      
-    }
-    else
-      continue;   
-  }
-  if (IsEmpty(s) == true)
-  {
-    return true;
-  }
-  else
-    return false;  
-}
+// bool check_parentheses(start, end)
+// {
+//   SqStack s;
+//   InitStack(&s);
+//   for (int i = start; i < end; i++)
+//   {
+//     if (tokens[i].type == TK_LP)
+//     {
+//       Push(&s, '(');
+//     }
+//     else if (tokens[i].type == TK_RP)
+//     {
+//       if (GetTop(s) == '(')
+//       {
+//         Pop(&s);
+//       }
+//       else
+//       {
+//         return false;
+//       }      
+//     }
+//     else
+//       continue;   
+//   }
+//   if (IsEmpty(s) == true)
+//   {
+//     return true;
+//   }
+//   else
+//     return false;  
+// }
