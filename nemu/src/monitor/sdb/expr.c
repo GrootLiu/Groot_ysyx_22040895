@@ -71,17 +71,28 @@ static struct rule
     {"\\(", TK_LP},    // Left parenthesis
     {"\\)", TK_RP},    // Right parenthesis
     {"\\+", '+'},      // plus
+    {"\\-", '-'},      // substraction
+    {"\\*", '*'},      // multiplication
+    {"\\/", '/'},      // division
     {"==", TK_EQ},     // equal
     {"[0-9]+", TK_NUM} // number
 
 };
+
+/* for holding those operators that may be primary operators */
+struct op_pos
+{
+  char op;
+  int pos;
+};
+
 
 /* NR_REGEX indicates the number of rules */
 #define NR_REGEX ARRLEN(rules)
 
 bool check_parentheses(int start, int end);
 
-int find_mainop(int start, int end);
+int find_priop(int start, int end);
 
 static regex_t re[NR_REGEX] = {};
 
@@ -296,6 +307,132 @@ bool check_parentheses(int start, int end)
     return false;  
 }
 
+int find_priop(int start, int end)
+{
+  int primary = -1;
+  struct op_pos[32] op_pos;
+  int op_num = 0;
+  /* use low_flog to detect if there are plus or substrction */
+  int low_flag = 0;
+  /* use the following for loop to select all arithmetic operators and parentheses,
+   * then store them and their positions into a array
+   */
+  for (int i = start; i < end; i++)
+  {
+    switch (tokens[i].type)
+    {
+      /* The token of the NOT operator is not a primary operator. */
+      case TK_EQ : continue;
+      case TK_NOTYPE : continue;
+      case TK_NUM : continue;
+      case TK_LP : 
+      {
+        op_pos[op_num].op = '(';
+        op_pos[op_num].pos = i;
+      }
+      case TK_RP : 
+      {
+        op_pos[op_num].op = ')';
+        op_pos[op_num].pos = i;
+      }
+      case '+' : 
+      {
+        op_pos[op_num].op = '+';
+        op_pos[op_num].pos = i;
+        low_flag = 1;
+      }
+      case '-' : 
+      {
+        op_pos[op_num].op = '+';
+        op_pos[op_num].pos = i;
+        low_flag = 1;
+      }
+      case '*' : 
+      {
+        op_pos[op_num].op = '*';
+        op_pos[op_num].pos = i;
+      }
+      case '/' : 
+      {
+        op_pos[op_num].op = '/';
+        op_pos[op_num].pos = i;
+      }
+    }
+    op_num++;
+  }
+
+  /* the following for loop will check whether the token is in parentheses,
+   * if the token in parentheses, let its pos = -1
+   */
+  for (int i = 0; i < op_num; i++)
+  {
+    /* left point will scan the left side */
+    int left = i;
+    /* right point will scan the right side */
+    int right = i;
+    /* 'in' indicates if this token in parentheses */
+    int in = 0;
+    for (int j = 0; j < op_num && op_pos[i] != '(' && op_pos[i] != ')'; j++)
+    {
+      if (left == 0)
+      /* left point reaches the left boundary */
+      {
+        break;
+      }
+      /* left pointer detected left parenthesis  */
+      else if (op_pos[left].op == '(')
+      {
+        in = 1;
+        break;
+      }
+      /* right pointer detected right parenthesis */
+      else if (op_pos[left].op == ')')
+      {
+        for (int k = 0; k < op_num; k++)
+        {
+          if (op_pos[right].op == ')')
+          {
+            in = 1;
+            break;
+          }
+          else if (op_pos[right].op == '(')
+            break;    
+          right++;      
+        }        
+      }
+      left--;      
+    }
+    if (in == 1)
+    {
+      op_pos[i].pos = -1;
+    }
+  }
+  
+  /* The following for loop will find the operator with the lowest precedence  */
+  if (flag == 1)
+  {
+    for (int i = 0; i < op_num; i++)
+      {
+        if (op_pos[i].op == '*' || op_pos[i].op == '/')
+        {
+          op_pos[i].pos = -1;
+        }
+      } 
+  }
+
+  /* the following loop will scan the op_pos from right to left ,
+   * and find the first operator which pos is not negative nor parenthesis
+   */
+  for (int i = op_num-1; i >= 0; i--)
+  {
+    if (op_pos[i].pos != -1 && op_pos[i].op != '(' && op_pos[i].op != ')')
+    {
+      primay = op_pos[i].pos;
+    }
+    
+  }
+  
+}
 
 /* Algorithmic description of basic operations */
 /* init a stack */
