@@ -226,8 +226,7 @@ word_t expr(char *e, bool *success)
    */
   int p = 0, q = nr_token;
   uint32_t expression_result = eval(p,q);
-
-  return 0;
+  return expression_result;
 }
 
 uint32_t eval(int start, int end)
