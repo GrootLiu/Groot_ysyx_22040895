@@ -18,9 +18,9 @@
 typedef struct
 {
   /* stack base address */
-  SElemType *base; 
+  SElemType *base;
   /* stack top address */
-  SElemType *top;  
+  SElemType *top;
   int stacksize;
 } SqStack;
 
@@ -85,7 +85,6 @@ struct op_pos
   char op;
   int pos;
 };
-
 
 /* NR_REGEX indicates the number of rules */
 #define NR_REGEX ARRLEN(rules)
@@ -264,15 +263,21 @@ int eval(int start, int end)
      * we should find the type of main operator and identify its type
      */
     char op_type;
-    switch (op_type) 
+    switch (op_type)
     {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
-      default: assert(0);
+    case '+':
+      return val1 + val2;
+    case '-':
+      return val1 - val2;
+    case '*':
+      return val1 * val2;
+    case '/':
+      return val1 / val2;
+    default:
+      assert(0);
+    }
+    return 0;
   }
-  return 0;
 }
 
 bool check_parentheses(int start, int end)
@@ -294,17 +299,17 @@ bool check_parentheses(int start, int end)
       else
       {
         return false;
-      }      
+      }
     }
     else
-      continue;   
+      continue;
   }
   if (IsEmpty(s) == true)
   {
     return true;
   }
   else
-    return false;  
+    return false;
 }
 
 int find_priop(int start, int end)
@@ -321,42 +326,45 @@ int find_priop(int start, int end)
   {
     switch (tokens[i].type)
     {
-      /* The token of the NOT operator is not a primary operator. */
-      case TK_EQ : continue;
-      case TK_NOTYPE : continue;
-      case TK_NUM : continue;
-      case TK_LP : 
-      {
-        op_pos[op_num].op = '(';
-        op_pos[op_num].pos = i;
-      }
-      case TK_RP : 
-      {
-        op_pos[op_num].op = ')';
-        op_pos[op_num].pos = i;
-      }
-      case '+' : 
-      {
-        op_pos[op_num].op = '+';
-        op_pos[op_num].pos = i;
-        low_flag = 1;
-      }
-      case '-' : 
-      {
-        op_pos[op_num].op = '+';
-        op_pos[op_num].pos = i;
-        low_flag = 1;
-      }
-      case '*' : 
-      {
-        op_pos[op_num].op = '*';
-        op_pos[op_num].pos = i;
-      }
-      case '/' : 
-      {
-        op_pos[op_num].op = '/';
-        op_pos[op_num].pos = i;
-      }
+    /* The token of the NOT operator is not a primary operator. */
+    case TK_EQ:
+      continue;
+    case TK_NOTYPE:
+      continue;
+    case TK_NUM:
+      continue;
+    case TK_LP:
+    {
+      op_pos[op_num].op = '(';
+      op_pos[op_num].pos = i;
+    }
+    case TK_RP:
+    {
+      op_pos[op_num].op = ')';
+      op_pos[op_num].pos = i;
+    }
+    case '+':
+    {
+      op_pos[op_num].op = '+';
+      op_pos[op_num].pos = i;
+      low_flag = 1;
+    }
+    case '-':
+    {
+      op_pos[op_num].op = '+';
+      op_pos[op_num].pos = i;
+      low_flag = 1;
+    }
+    case '*':
+    {
+      op_pos[op_num].op = '*';
+      op_pos[op_num].pos = i;
+    }
+    case '/':
+    {
+      op_pos[op_num].op = '/';
+      op_pos[op_num].pos = i;
+    }
     }
     op_num++;
   }
@@ -396,34 +404,34 @@ int find_priop(int start, int end)
             break;
           }
           else if (op_pos[right].op == '(')
-            break;    
-          right++;      
-        }        
+            break;
+          right++;
+        }
       }
-      left--;      
+      left--;
     }
     if (in == 1)
     {
       op_pos[i].pos = -1;
     }
   }
-  
+
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
   {
     for (int i = 0; i < op_num; i++)
+    {
+      if (op_pos[i].op == '*' || op_pos[i].op == '/')
       {
-        if (op_pos[i].op == '*' || op_pos[i].op == '/')
-        {
-          op_pos[i].pos = -1;
-        }
-      } 
+        op_pos[i].pos = -1;
+      }
+    }
   }
 
   /* the following loop will scan the op_pos from right to left ,
    * and find the first operator which pos is not negative nor parenthesis
    */
-  for (int i = op_num-1; i >= 0; i--)
+  for (int i = op_num - 1; i >= 0; i--)
   {
     if (op_pos[i].pos != -1 && op_pos[i].op != '(' && op_pos[i].op != ')')
     {
@@ -439,16 +447,16 @@ bool InitStack(SqStack *S)
 {
   S->base = (SElemType *)malloc(STACK_INT_SIZE * sizeof(SElemType)); //开辟新的空间
   if (!S->base)
-  /* if stack creation failed, return 0*/
-    return 0; 
+    /* if stack creation failed, return 0*/
+    return 0;
   S->top = S->base;
   S->stacksize = STACK_INT_SIZE;
   return 1;
 }
 
-/* If the stack is not empty, return the top element of the stack and return true 
- * otherwise return false 
-*/
+/* If the stack is not empty, return the top element of the stack and return true
+ * otherwise return false
+ */
 char GetTop(SqStack S)
 {
   if (S.top == S.base)
@@ -472,9 +480,9 @@ bool Push(SqStack *S, SElemType e)
   return 1;
 }
 
-/* If the stack is not empty, delete the top element of the stack, return its value with e and return true, 
- * otherwise return false 
-*/
+/* If the stack is not empty, delete the top element of the stack, return its value with e and return true,
+ * otherwise return false
+ */
 bool Pop(SqStack *S)
 {
   if (S->top == S->base)
@@ -485,9 +493,9 @@ bool Pop(SqStack *S)
 
 bool IsEmpty(SqStack S)
 {
-    if (S.top == S.base)
-    {
-        return 1;
-    }
-    return 0;
+  if (S.top == S.base)
+  {
+    return 1;
+  }
+  return 0;
 }
