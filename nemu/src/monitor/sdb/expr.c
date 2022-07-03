@@ -79,7 +79,7 @@ static struct rule
 /* NR_REGEX indicates the number of rules */
 #define NR_REGEX ARRLEN(rules)
 
-bool check_parentheses(start, end);
+bool check_parentheses(int start, int end);
 
 static regex_t re[NR_REGEX] = {};
 
@@ -246,7 +246,7 @@ int eval(int start, int end)
   return 0;
 }
 
-bool check_parentheses(start, end)
+bool check_parentheses(int start, int end)
 {
   SqStack s;
   InitStack(&s);
