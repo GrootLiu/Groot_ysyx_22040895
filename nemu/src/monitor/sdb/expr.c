@@ -91,7 +91,6 @@ struct op_pos
 #define NR_REGEX ARRLEN(rules)
 
 bool check_parentheses(int start, int end);
-
 int find_priop(int start, int end);
 
 static regex_t re[NR_REGEX] = {};
@@ -257,6 +256,7 @@ int eval(int start, int end)
     /* We should do more things here. */
     /* analyse the main opertor*/
     // op = the position of 主运算符 in the token expression;
+    int op = find_priop(start, end);
     int val1 = eval(start, op - 1);
     int val2 = eval(op + 1, end);
 
