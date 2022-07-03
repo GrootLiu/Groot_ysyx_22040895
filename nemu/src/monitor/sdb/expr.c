@@ -91,6 +91,7 @@ struct op_pos
 
 bool check_parentheses(int start, int end);
 int find_priop(int start, int end);
+uint32_t eval(int start, int end);
 
 static regex_t re[NR_REGEX] = {};
 
