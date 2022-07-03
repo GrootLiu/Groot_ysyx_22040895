@@ -30,68 +30,6 @@ bool Push(SqStack *S, SElemType e);
 bool Pop(SqStack *S);
 bool IsEmpty(SqStack S);
 
-
-
-/* Algorithmic description of basic operations */
-/* init a stack */
-bool InitStack(SqStack *S)
-{
-  S->base = (SElemType *)malloc(STACK_INT_SIZE * sizeof(SElemType)); //开辟新的空间
-  if (!S->base)
-  /* if stack creation failed, return 0*/
-    return 0; 
-  S->top = S->base;
-  S->stacksize = STACK_INT_SIZE;
-  return 1;
-}
-
-/* If the stack is not empty, return the top element of the stack and return true 
- * otherwise return false 
-*/
-bool GetTop(SqStack S)
-{
-  if (S.top == S.base)
-    return 0;
-  return *(S.top - 1);
-}
-
-/* Insert the element as the new top element of the stack */
-bool Push(SqStack *S, SElemType e)
-{
-  if (S->top - S->base >= S->stacksize)
-  /* If the stack is full, need to add space */
-  {
-    S->base = (SElemType *)realloc(S->base, (S->stacksize + STACKINCREMENT) * sizeof(SElemType));
-    if (!S->base)
-      return 0;
-    S->top = S->base + S->stacksize;
-    S->stacksize += STACKINCREMENT;
-  }
-  *(S->top++) = e;
-  return 1;
-}
-
-/* If the stack is not empty, delete the top element of the stack, return its value with e and return true, 
- * otherwise return false 
-*/
-bool Pop(SqStack *S)
-{
-  if (S->top == S->base)
-    return 0;
-  --S->top;
-  return 1;
-}
-
-bool IsEmpty(SqStack S)
-{
-    if (S.top == S.base)
-    {
-        return 1;
-    }
-    return 0;
-}
-
-
 /*
  * token_type is an integer,
  * we must ensure the integers corresponding to different types of token are not the same
@@ -140,6 +78,8 @@ static struct rule
 
 /* NR_REGEX indicates the number of rules */
 #define NR_REGEX ARRLEN(rules)
+
+bool check_parentheses(start, end);
 
 static regex_t re[NR_REGEX] = {};
 
@@ -273,7 +213,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and 1, respectively
    *
    */
-  int p = 0, q = 1;
+  // int p = 0, q = 1;
 
   return 0;
 }
@@ -336,4 +276,64 @@ bool check_parentheses(start, end)
   }
   else
     return false;  
+}
+
+
+/* Algorithmic description of basic operations */
+/* init a stack */
+bool InitStack(SqStack *S)
+{
+  S->base = (SElemType *)malloc(STACK_INT_SIZE * sizeof(SElemType)); //开辟新的空间
+  if (!S->base)
+  /* if stack creation failed, return 0*/
+    return 0; 
+  S->top = S->base;
+  S->stacksize = STACK_INT_SIZE;
+  return 1;
+}
+
+/* If the stack is not empty, return the top element of the stack and return true 
+ * otherwise return false 
+*/
+bool GetTop(SqStack S)
+{
+  if (S.top == S.base)
+    return 0;
+  return *(S.top - 1);
+}
+
+/* Insert the element as the new top element of the stack */
+bool Push(SqStack *S, SElemType e)
+{
+  if (S->top - S->base >= S->stacksize)
+  /* If the stack is full, need to add space */
+  {
+    S->base = (SElemType *)realloc(S->base, (S->stacksize + STACKINCREMENT) * sizeof(SElemType));
+    if (!S->base)
+      return 0;
+    S->top = S->base + S->stacksize;
+    S->stacksize += STACKINCREMENT;
+  }
+  *(S->top++) = e;
+  return 1;
+}
+
+/* If the stack is not empty, delete the top element of the stack, return its value with e and return true, 
+ * otherwise return false 
+*/
+bool Pop(SqStack *S)
+{
+  if (S->top == S->base)
+    return 0;
+  --S->top;
+  return 1;
+}
+
+bool IsEmpty(SqStack S)
+{
+    if (S.top == S.base)
+    {
+        return 1;
+    }
+    return 0;
 }
