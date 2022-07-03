@@ -188,7 +188,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and 1, respectively
    *
    */
-  int p = 0, q = 1;
+  // int p = 0, q = 1;
 
   return 0;
 }
