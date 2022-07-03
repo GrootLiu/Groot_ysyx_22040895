@@ -282,6 +282,7 @@ uint32_t eval(int start, int end)
   return 0;
 }
 
+/* check that all parentheses in an expression match */
 bool check_parentheses(int start, int end)
 {
   SqStack s;
@@ -311,7 +312,9 @@ bool check_parentheses(int start, int end)
     return true;
   }
   else
-    return false;
+    // TODO()
+    // Needs to be further changed to: if there is no match, throw a mismatch error
+    assert(0);
 }
 
 int find_priop(int start, int end)
