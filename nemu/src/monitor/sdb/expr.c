@@ -15,12 +15,6 @@
 #define STACKINCREMENT 10
 #define SElemType char
 
-bool InitStack(SqStack *S);
-bool GetTop(SqStack S);
-bool Push(SqStack *S, SElemType e);
-bool Pop(SqStack *S);
-bool IsEmpty(SqStack S);
-
 typedef struct
 {
   /* stack base address */
@@ -29,6 +23,14 @@ typedef struct
   SElemType *top;  
   int stacksize;
 } SqStack;
+
+bool InitStack(SqStack *S);
+bool GetTop(SqStack S);
+bool Push(SqStack *S, SElemType e);
+bool Pop(SqStack *S);
+bool IsEmpty(SqStack S);
+
+
 
 /* Algorithmic description of basic operations */
 /* init a stack */
