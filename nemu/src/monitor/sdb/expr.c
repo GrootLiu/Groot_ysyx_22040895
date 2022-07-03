@@ -427,11 +427,10 @@ int find_priop(int start, int end)
   {
     if (op_pos[i].pos != -1 && op_pos[i].op != '(' && op_pos[i].op != ')')
     {
-      primay = op_pos[i].pos;
+      primary = op_pos[i].pos;
     }
-    
   }
-  
+  return primary;
 }
 
 /* Algorithmic description of basic operations */
