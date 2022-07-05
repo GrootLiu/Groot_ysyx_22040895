@@ -3,6 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+// #include "expr.c"
 
 #include <cpu/decode.h>
 #include <memory/vaddr.h>
@@ -62,7 +63,7 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
-static int cmd_scan(char *args);
+static int cmd_x(char *args);
 
 // 还不懂
 static struct {
@@ -79,8 +80,8 @@ static struct {
 
   /* TODO: Add more commands */
   { "si", "si [N]: Let the program step through N instructions and pause execution. When N is not given, it defaults to 1", cmd_si},
-  { "info", "Print register status or Print monitor point information", cmd_info},
-  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_scan}
+  { "info", "info r or info w: Print register status or Print monitor point information", cmd_info},
+  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_x}
 };
 
 // 我猜ARRLEN返回cmd_table的长度
@@ -98,13 +99,13 @@ static int cmd_help(char *args) {
   if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
-      printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+      printf("%-4s - %s\n", cmd_table[i].name, cmd_table[i].description);
     }
   }
   else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
-        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        printf("%-4s - %s\n", cmd_table[i].name, cmd_table[i].description);
         return 0;
       }
     }
@@ -143,7 +144,7 @@ static int cmd_info(char *args)
   return 0;
 }
 
-static int cmd_scan(char *args)
+static int cmd_x(char *args)
 {
   char *arg1 = strtok(NULL, " ");
   char *arg2 = strtok(NULL, " ");
@@ -152,18 +153,19 @@ static int cmd_scan(char *args)
     return -1;
   }
   /* addr is the beginning address we want to check */
+  printf("%s\n", arg2);
+  // bool *success = false;
+  // vaddr_t result = expr(arg2, success);
+  // printf("result: %lu\n", result);
   vaddr_t addr = strtoul(arg2, NULL, 16);
-  // printf("%#-.8lx\n",addr);
   /* N is the numbers of mem we want to check */
   int N = atoi(arg1);
   for (; N > 0; N--)
   {
-    addr += 0x4;
     __uint64_t info = vaddr_read(addr, 4);
     printf("$%lx:%#-.8lx\n", addr, info);
+    addr += 0x4;
   }
-  
-
   return 0;
 }
 
