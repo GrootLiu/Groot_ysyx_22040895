@@ -299,7 +299,7 @@ uint32_t eval(int start, int end)
     // op = the position of 主运算符 in the token expression;
     int op = find_priop(start, end);
     printf("op: %d\n", op);
-    int val1 = eval(start, op - 1);
+    int val1 = eval(start, op);
     int val2 = eval(op + 1, end);
     // printf("start=%d", start);
     // printf("end=%d", end);
@@ -372,7 +372,7 @@ int find_priop(int start, int end)
    * then store them and their positions into a array
    */
   printf("start=%d\tend%d\n", start, end);
-  for (int i = start; i <= end; i++)
+  for (int i = start; i < end; i++)
   {
     printf("times=%d\n", i);
     // printf("op_pos[op_num].op=%c\n", tokens[i].type);
