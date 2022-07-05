@@ -227,7 +227,7 @@ word_t expr(char *e, bool *success)
 
   /* TODO: Insert codes to evaluate the expression. */
 
-  TODO();
+  // TODO();
   /* p indicates the begining of the substring, q indicates the end of the substring
    * now we init the p and q, give them 0 and strlen, respectively
    */
