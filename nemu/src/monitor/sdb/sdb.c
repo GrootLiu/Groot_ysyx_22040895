@@ -160,9 +160,9 @@ static int cmd_x(char *args)
   int N = atoi(arg1);
   for (; N > 0; N--)
   {
-    addr += 0x4;
     __uint64_t info = vaddr_read(addr, 4);
     printf("$%lx:%#-.8lx\n", addr, info);
+    addr += 0x4;
   }
   return 0;
 }
