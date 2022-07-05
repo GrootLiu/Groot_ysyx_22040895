@@ -364,7 +364,7 @@ bool check_parentheses(int start, int end)
 int find_priop(int start, int end)
 {
   int primary = -1;
-  struct op_pos op_pos[32];
+  struct op_pos op_pos[1024];
   int op_num = 0;
   /* use low_flog to detect if there are plus or substrction */
   int low_flag = 0;
