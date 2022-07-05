@@ -242,8 +242,8 @@ word_t expr(char *e, bool *success)
   /* p indicates the begining of the substring, q indicates the end of the substring
    * now we init the p and q, give them 0 and strlen, respectively
    */
-  int p = 0, q = nr_token;
-  printf("token_num: %d\n", q);
+  int p = 0, q = nr_token-1;
+  printf("token_num: %d\n", q+1);
   for (int i = 0; i < nr_token; i++)
   {
     printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
