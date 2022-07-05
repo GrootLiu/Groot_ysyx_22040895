@@ -256,6 +256,11 @@ word_t expr(char *e, bool *success)
 static int dipth = 0;
 uint32_t eval(int start, int end)
 {
+  if (dipth > 2)
+  {
+    exit();
+  }
+  
   printf("--------dipth:%d-------\n", dipth);
   if (start > end)
   {
@@ -367,6 +372,7 @@ int find_priop(int start, int end)
    */
   for (int i = start; i < end; i++)
   {
+
     switch (tokens[i].type)
     {
     /* The token of the NOT operator is not a primary operator. */
