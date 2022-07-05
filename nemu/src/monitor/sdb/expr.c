@@ -156,7 +156,7 @@ static bool make_token(char *e)
         char *substr_start = e + position;
         /* substr_start is the length of substring */
         int substr_len = pmatch.rm_eo;
-        printf("--%s--\n", substr_start);
+        // printf("--%s--\n", substr_start);
         // char *substr =
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
@@ -172,7 +172,7 @@ static bool make_token(char *e)
         switch (rules[i].token_type)
         {
           case TK_NOTYPE:
-            printf("%s\n", "TK_NOTYPE");
+            // printf("%s\n", "TK_NOTYPE");
             nr_token--;
             break;
           case TK_LP:
