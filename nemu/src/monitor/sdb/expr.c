@@ -260,7 +260,7 @@ uint32_t eval(int start, int end)
   {
     exit(0);
   }
-  
+
   printf("--------dipth:%d-------\n", dipth);
   if (start > end)
   {
@@ -471,12 +471,14 @@ int find_priop(int start, int end)
     }
   }
 
-  printf("low_flag: %d\n", low_flag);
+  // printf("low_flag: %d\n", low_flag);
+  printf("++++++++++++++++++++++\n");
   for (int i = 0; i < op_num; i++)
   {
     printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
   }
-  
+  printf("++++++++++++++++++++++\n");
+
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
   {
