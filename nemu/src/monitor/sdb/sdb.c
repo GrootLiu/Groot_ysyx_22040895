@@ -156,6 +156,7 @@ static int cmd_x(char *args)
   printf("%s\n", arg2);
   bool *success = false;
   expr(arg2, success);
+  printf("%s\n", arg2);
   vaddr_t addr = strtoul(arg2, NULL, 16);
   
   printf("%#lx\n", addr);
