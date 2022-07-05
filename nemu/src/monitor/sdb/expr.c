@@ -198,7 +198,7 @@ static bool make_token(char *e)
           case '/':
             tokens[nr_token].type = '/';
             break;
-          default:
+          default:;
             // TODO();
           }
           nr_token++;
