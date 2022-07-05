@@ -446,7 +446,7 @@ int find_priop(int start, int end)
     if (in == 1)
     {
       op_pos[i].pos = -1;
-      // break;
+      break;
     }
   }
 
