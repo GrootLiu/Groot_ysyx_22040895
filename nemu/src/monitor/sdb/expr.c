@@ -279,14 +279,14 @@ uint32_t eval(int start, int end)
     dipth++;
     return number;
   }
-  // else if (check_parentheses(start, end) == true)
-  // {
-  //   /* The expression is surrounded by a matched pair of parentheses.
-  //    * If that is the case, just throw away the parentheses.
-  //    */
-  //   dipth++;
-  //   return eval(start + 1, end - 1);
-  // }
+  else if (tokens[start].type == ' ' && check_parentheses(start, end) == true)
+  {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    dipth++;
+    return eval(start + 1, end - 1);
+  }
   else
   {
     /* We should do more things here. */
