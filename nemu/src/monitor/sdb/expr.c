@@ -241,7 +241,8 @@ uint32_t eval(int start, int end)
   if (start > end)
   {
     /* Bad expression */
-    assert(0);
+    // assert(0);
+    return;
   }
   else if (start == end)
   {
