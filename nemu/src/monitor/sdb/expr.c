@@ -233,7 +233,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and strlen, respectively
    */
   int p = 0, q = nr_token;
-  printf("tnoken_num: %d", q);
+  printf("tnoken_num: %d\n", q);
   for (int i = 0; i < nr_token; i++)
   {
     printf("token_array: %s\n", tokens[i].str);
