@@ -405,6 +405,7 @@ int find_priop(int start, int end)
   /* the following for loop will check whether the token is in parentheses,
    * if the token in parentheses, let its pos = -1
    */
+  printf("opnum=%d\n", op_num);
   for (int i = 0; i < op_num; i++)
   {
     /* left point will scan the left side */
