@@ -379,31 +379,36 @@ int find_priop(int start, int end)
     case TK_LP:
       op_pos[op_num].op = '(';
       op_pos[op_num].pos = i;
+      op_num++;
       break;
     case TK_RP:
       op_pos[op_num].op = ')';
       op_pos[op_num].pos = i;
+      op_num++;
       break;
     case '+':
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
+      op_num++;
       low_flag = 1;
       break;
     case '-':
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
+      op_num++;
       low_flag = 1;
       break;
     case '*':
       op_pos[op_num].op = '*';
       op_pos[op_num].pos = i;
+      op_num++;
       break;
     case '/':
       op_pos[op_num].op = '/';
       op_pos[op_num].pos = i;
+      op_num++;
       break;
     }
-    op_num++;
   }
 
   /* the following for loop will check whether the token is in parentheses,
