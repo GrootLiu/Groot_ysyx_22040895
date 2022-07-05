@@ -244,10 +244,10 @@ word_t expr(char *e, bool *success)
    */
   int p = 0, q = nr_token - 1;
   printf("token_num: %d\n", q + 1);
-  for (int i = 0; i < nr_token; i++)
-  {
-    printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
-  }
+  // for (int i = 0; i < nr_token; i++)
+  // {
+  //   printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
+  // }
   uint32_t expression_result = eval(p, q);
   printf("-------%d-------\n", expression_result);
   return expression_result;
@@ -464,6 +464,7 @@ int find_priop(int start, int end)
     }
   }
 
+  printf("low_flag: %d\n", low_flag);
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
   {
