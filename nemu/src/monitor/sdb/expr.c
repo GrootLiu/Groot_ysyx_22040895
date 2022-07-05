@@ -253,13 +253,16 @@ word_t expr(char *e, bool *success)
   return expression_result;
 }
 
+static int dipth = 0;
 uint32_t eval(int start, int end)
 {
+  printf("--------dipth:%d-------\n", dipth);
   if (start > end)
   {
     /* Bad expression */
     // assert(0);
     printf("---start>end---\n");
+    dipth++;
     return 0;
   }
   else if (start == end)
@@ -273,6 +276,7 @@ uint32_t eval(int start, int end)
     printf("number: %s\n", tokens[end].str);
     int number = atoi(tokens[start].str);
     printf("number: %d\n", number);
+    dipth++;
     return number;
   }
   else if (check_parentheses(start, end) == true)
@@ -280,6 +284,7 @@ uint32_t eval(int start, int end)
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
+    dipth++;
     return eval(start + 1, end - 1);
   }
   else
@@ -295,6 +300,7 @@ uint32_t eval(int start, int end)
      * we should find the type of main operator and identify its type
      */
     char op_type = tokens[op].type;
+    dipth++;
     switch (op_type)
     {
     case '+':
