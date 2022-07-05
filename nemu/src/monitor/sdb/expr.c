@@ -266,6 +266,7 @@ uint32_t eval(int start, int end)
      * For now this token should be a number.
      * Return the value of the number.
      */
+    int number = atoi(tokens[start].str);
     return number;
   }
   else if (tokens[start].type == TK_LP && tokens[end].type == TK_RP)
@@ -273,6 +274,7 @@ uint32_t eval(int start, int end)
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
+    dipth++;
     return eval(start + 1, end - 1);
   }
   else
@@ -399,6 +401,7 @@ int find_priop(int start, int end)
       break;
     }
   }
+
   /* the following for loop will check whether the token is in parentheses,
    * if the token in parentheses, let its pos = -1
    */
@@ -470,7 +473,6 @@ int find_priop(int start, int end)
       primary = op_pos[i].pos;
     }
   }
-  printf("primary:%d\n", primary);
   return primary;
 }
 
