@@ -266,8 +266,8 @@ uint32_t eval(int start, int end)
   {
     /* Bad expression */
     // assert(0);
-    // printf("---start>end---\n");
-    // dipth++;
+    printf("---start>end---\n");
+    dipth++;
     return 0;
   }
   else if (start == end)
