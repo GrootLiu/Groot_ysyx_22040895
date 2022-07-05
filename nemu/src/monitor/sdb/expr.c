@@ -162,7 +162,17 @@ static bool make_token(char *e)
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
-        printf("substr_len: %d\n", substr_len);
+        // for (int i = 0; i < substr_len; i++)
+        // {
+        //   // strcpy(tokens[nr_token].str, substr_start[i]);
+        //   printf("--%c--\n", substr_start[i]);
+        //   nr_token++;
+        // }
+        printf("%.*s\n",substr_start);
+        char *debug;
+        // sscanf("")
+
+        printf("substr_len: %d\n", substr_len, substr_len);
 
         position += substr_len;
 
@@ -191,12 +201,12 @@ static bool make_token(char *e)
           assert(substr_len < 32);
           // printf("sub_str: %s\n", substr_start);
           // strcpy(tokens[nr_token].str, substr_start);
-          for (int i = 0; i < substr_len; i++)
-          {
-            strcpy(tokens[nr_token].str, substr_start[i]);
-            printf("--%c--\n", substr_start[i]);
-            nr_token++;
-          }
+          // for (int i = 0; i < substr_len; i++)
+          // {
+          //   strcpy(tokens[nr_token].str, substr_start[i]);
+          //   printf("--%c--\n", substr_start[i]);
+          //   nr_token++;
+          // }
           break;
         case '+':
           tokens[nr_token].type = '+';
