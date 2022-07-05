@@ -268,7 +268,7 @@ uint32_t eval(int start, int end)
      * For now this token should be a number.
      * Return the value of the number.
      */
-    printf("number: %s", tokens[start].str);
+    printf("number: %s\n", tokens[start].str);
     int number = atoi(tokens[start].str);
     printf("number: %d\n", number);
     return number;
