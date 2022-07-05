@@ -258,7 +258,7 @@ uint32_t eval(int start, int end)
 {
   if (dipth > 2)
   {
-    exit();
+    exit(0);
   }
   
   printf("--------dipth:%d-------\n", dipth);
