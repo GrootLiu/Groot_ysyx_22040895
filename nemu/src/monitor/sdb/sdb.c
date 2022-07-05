@@ -157,8 +157,8 @@ static int cmd_x(char *args)
   expr(arg2, success);
   vaddr_t addr = strtoul(arg2, NULL, 16);
   // printf("%s\n", arg2);
-  // printf("%#lx\n", addr);
-  // printf("%#-.8lx\n",addr);
+  printf("%#lx\n", addr);
+  printf("%#-.8lx\n",addr);
   /* N is the numbers of mem we want to check */
   // int N = atoi(arg1);
   // for (; N > 0; N--)
