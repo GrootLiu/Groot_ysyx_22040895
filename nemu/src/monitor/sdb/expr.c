@@ -190,13 +190,7 @@ static bool make_token(char *e)
           tokens[nr_token].type = TK_NUM;
           // 这里得用动态申请内存扩充str长度
           assert(substr_len < 32);
-          printf("substr_start: %.*s\n", substr_len, substr_start);
-          // printf("sub_str: %s\n", substr_start);
           strncpy(tokens[nr_token].str, substr_start,substr_len);
-          // for (int i = 0; i < substr_len; i++)
-          // {
-          //   strcpy(tokens[nr_token].str, substr_start[i]);
-          //   printf("--%c--\n", substr_start[i]);
           nr_token++;
           // }
           break;
@@ -252,7 +246,7 @@ word_t expr(char *e, bool *success)
   printf("token_num: %d\n", q);
   for (int i = 0; i < nr_token; i++)
   {
-    printf("token_array: %s\n", tokens[i].str);
+    printf("token_array: %d\n", tokens[i].type);
   }
   uint32_t expression_result = eval(p, q);
   printf("-------%d-------\n", expression_result);
