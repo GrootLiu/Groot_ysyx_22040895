@@ -193,7 +193,7 @@ static bool make_token(char *e)
             tokens[nr_token].type = TK_NUM;
             // 这里得用动态申请内存扩充str长度
             assert(substr_len < 32);
-            printf("sub_str: %s\n", substr_start);
+            // printf("sub_str: %s\n", substr_start);
             strcpy(tokens[nr_token].str, substr_start);
             break;
           case '+':
