@@ -1,12 +1,3 @@
-/*** 
- * @Author: Groot
- * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-01 22:20:33
- * @LastEditors: Groot
- * @Description: 
- * @FilePath: /ysyx-workbench/nemu/include/macro.h
- * @版权声明
- */
 #ifndef __MACRO_H__
 #define __MACRO_H__
 

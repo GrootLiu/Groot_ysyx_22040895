@@ -1,12 +1,3 @@
-/*** 
- * @Author: Groot
- * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-02 09:34:04
- * @LastEditors: Groot
- * @Description: 
- * @FilePath: /ysyx-workbench/nemu/include/isa.h
- * @版权声明
- */
 #ifndef __ISA_H__
 #define __ISA_H__
 
@@ -15,7 +6,6 @@
 
 // The macro `__GUEST_ISA__` is defined in $(CFLAGS).
 // It will be expanded as "x86" or "mips32" ...
-// concat is used to merge arg1 and arg2
 typedef concat(__GUEST_ISA__, _CPU_state) CPU_state;
 typedef concat(__GUEST_ISA__, _ISADecodeInfo) ISADecodeInfo;
 

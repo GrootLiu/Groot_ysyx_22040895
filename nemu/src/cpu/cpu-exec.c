@@ -25,14 +25,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 }
 
-
-/**
- * @description: 
- * @param {Decode} *s
- * @param {vaddr_t} pc
- * @return {*}
- * @use: call it with the si function to complete the work of single step excution
- */
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
@@ -66,7 +58,6 @@ static void execute(uint64_t n) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
-    // 只要nemu的状态不为running，就停止执行
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
@@ -87,9 +78,6 @@ void assert_fail_msg() {
 }
 
 /* Simulate how the CPU works. */
-/*
-  * this cpu_exec function is designed for simulate the real cpu's way of work 
-*/
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INST_TO_PRINT);
   switch (nemu_state.state) {
