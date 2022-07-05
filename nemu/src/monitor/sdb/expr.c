@@ -190,7 +190,7 @@ static bool make_token(char *e)
           tokens[nr_token].type = TK_NUM;
           // 这里得用动态申请内存扩充str长度
           assert(substr_len < 32);
-          strncpy(tokens[nr_token].str, substr_start,substr_len);
+          strncpy(tokens[nr_token].str, substr_start, substr_len);
           nr_token++;
           // }
           break;
@@ -242,8 +242,8 @@ word_t expr(char *e, bool *success)
   /* p indicates the begining of the substring, q indicates the end of the substring
    * now we init the p and q, give them 0 and strlen, respectively
    */
-  int p = 0, q = nr_token-1;
-  printf("token_num: %d\n", q+1);
+  int p = 0, q = nr_token - 1;
+  printf("token_num: %d\n", q + 1);
   for (int i = 0; i < nr_token; i++)
   {
     printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
@@ -269,6 +269,7 @@ uint32_t eval(int start, int end)
      * Return the value of the number.
      */
     int number = atoi(tokens[start].str);
+    printf("number: %d\n");
     return number;
   }
   else if (check_parentheses(start, end) == true)
@@ -301,8 +302,7 @@ uint32_t eval(int start, int end)
       return val1 * val2;
     case '/':
       return val1 / val2;
-    default:
-      assert(0);
+    default:;
     }
   }
   return 0;
