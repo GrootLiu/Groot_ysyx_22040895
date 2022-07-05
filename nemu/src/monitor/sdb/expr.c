@@ -280,7 +280,7 @@ uint32_t eval(int start, int end)
     // printf("end=%d", end);
     // printf("number: %s\n", tokens[end].str);
     int number = atoi(tokens[start].str);
-    // printf("number: %d\n", number);
+    printf("number: %d\n", number);
     dipth++;
     return number;
   }
