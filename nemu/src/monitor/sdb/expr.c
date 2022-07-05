@@ -268,7 +268,7 @@ uint32_t eval(int start, int end)
     // assert(0);
     // printf("---start>end---\n");
     dipth++;
-    return 0;
+    return;
   }
   else if (start == end)
   {
