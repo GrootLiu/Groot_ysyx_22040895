@@ -177,32 +177,38 @@ static bool make_token(char *e)
             break;
           case TK_LP:
             tokens[nr_token].type = TK_LP;
+            nr_token++;
             break;
           case TK_RP:
             tokens[nr_token].type = TK_RP;
+            nr_token++;
             break;
           case TK_NUM:
             tokens[nr_token].type = TK_NUM;
+            nr_token++;
             // 这里得用动态申请内存扩充str长度
             assert(substr_len < 32);
             strcpy(tokens[nr_token].str, substr_start);
             break;
           case '+':
             tokens[nr_token].type = '+';
+            nr_token++;
             break;
           case '-':
             tokens[nr_token].type = '-';
+            nr_token++;
             break;
           case '*':
             tokens[nr_token].type = '*';
+            nr_token++;
             break;
           case '/':
             tokens[nr_token].type = '/';
+            nr_token++;
             break;
           default:;
             // TODO();
-          }
-          nr_token++;
+          }          
           break;
       }
     }
