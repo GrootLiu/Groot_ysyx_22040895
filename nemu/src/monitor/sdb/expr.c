@@ -255,19 +255,9 @@ word_t expr(char *e, bool *success)
 static int dipth = 0;
 uint32_t eval(int start, int end)
 {
-  // if (dipth > 4)
-  // {
-  //   exit(0);
-  // }
 
-  printf("--------dipth:%d-------\n", dipth);
-  printf("tokens[start].type == %d && tokens[end].type == %d\n", tokens[start].type, tokens[end].type);
   if (start > end)
   {
-    /* Bad expression */
-    // assert(0);
-    printf("---start>end---\n");
-    dipth++;
     return 0;
   }
   else if (start == end)
@@ -276,12 +266,6 @@ uint32_t eval(int start, int end)
      * For now this token should be a number.
      * Return the value of the number.
      */
-    // printf("start=%d", start);
-    // printf("end=%d", end);
-    // printf("number: %s\n", tokens[end].str);
-    int number = atoi(tokens[start].str);
-    printf("number: %d\n", number);
-    dipth++;
     return number;
   }
   else if (tokens[start].type == TK_LP && tokens[end].type == TK_RP)
@@ -289,7 +273,6 @@ uint32_t eval(int start, int end)
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    dipth++;
     return eval(start + 1, end - 1);
   }
   else
@@ -298,18 +281,14 @@ uint32_t eval(int start, int end)
     /* analyse the main opertor*/
     // op = the position of 主运算符 in the token expression;
     int op = find_priop(start, end);
-    printf("op: %d\n", op);
     int val1 = eval(start, op - 1);
-    printf("val1=%d\n", val1);
     int val2 = eval(op + 1, end);
-    printf("val2=%d\n", val2);
     // printf("start=%d", start);
     // printf("end=%d", end);
     /* op_type is the main operator's type
      * we should find the type of main operator and identify its type
      */
     char op_type = tokens[op].type;
-    printf("tokens[op].type=%c\n", op_type);
     dipth++;
     switch (op_type)
     {
@@ -374,10 +353,8 @@ int find_priop(int start, int end)
   /* use the following for loop to select all arithmetic operators and parentheses,
    * then store them and their positions into a array
    */
-  printf("start=%d\tend%d\n", start, end);
   for (int i = start; i < end; i++)
   {
-    printf("times=%d\n", i);
     // printf("op_pos[op_num].op=%c\n", tokens[i].type);
     switch (tokens[i].type)
     {
@@ -391,13 +368,11 @@ int find_priop(int start, int end)
     case TK_RP:
       op_pos[op_num].op = ')';
       op_pos[op_num].pos = i;
-      printf("op_pos[op_num].op=')'\n");
       op_num++;
       break;
     case TK_LP:
       op_pos[op_num].op = '(';
       op_pos[op_num].pos = i;
-      printf("op_pos[op_num].op='('\n");
       op_num++;
       break;
     case '+':
@@ -424,14 +399,6 @@ int find_priop(int start, int end)
       break;
     }
   }
-  // printf("----------------------\n");
-  // printf("op_num: %d\n", op_num);
-  // for (int i = 0; i < op_num; i++)
-  // {
-  //   printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
-  // }
-  // printf("----------------------\n");
-
   /* the following for loop will check whether the token is in parentheses,
    * if the token in parentheses, let its pos = -1
    */
@@ -480,13 +447,6 @@ int find_priop(int start, int end)
     }
   }
 
-  // printf("low_flag: %d\n", low_flag);
-  printf("++++++++++++++++++++++\n");
-  for (int i = 0; i < op_num; i++)
-  {
-    printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
-  }
-  printf("++++++++++++++++++++++\n");
 
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
