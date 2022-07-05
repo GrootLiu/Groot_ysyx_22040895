@@ -156,18 +156,14 @@ static bool make_token(char *e)
         char *substr_start = e + position;
         /* substr_start is the length of substring */
         int substr_len = pmatch.rm_eo;
-        
+
         // char *substr =
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
-        
+
         printf("substr_len: %d\n", substr_len);
-        for (int i = 0; i < substr_len; i++)
-        {
-          printf("--%c--\n", substr_start[i]);
-        }
-                
+
         position += substr_len;
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -177,45 +173,51 @@ static bool make_token(char *e)
 
         switch (rules[i].token_type)
         {
-          case TK_NOTYPE:
-            // printf("%s\n", "TK_NOTYPE");
-            nr_token--;
-            break;
-          case TK_LP:
-            tokens[nr_token].type = TK_LP;
-            nr_token++;
-            break;
-          case TK_RP:
-            tokens[nr_token].type = TK_RP;
-            nr_token++;
-            break;
-          case TK_NUM:
-            tokens[nr_token].type = TK_NUM;
-            // 这里得用动态申请内存扩充str长度
-            assert(substr_len < 32);
-            // printf("sub_str: %s\n", substr_start);
-            strcpy(tokens[nr_token].str, substr_start);
-            break;
-          case '+':
-            tokens[nr_token].type = '+';
-            nr_token++;
-            break;
-          case '-':
-            tokens[nr_token].type = '-';
-            nr_token++;
-            break;
-          case '*':
-            tokens[nr_token].type = '*';
-            nr_token++;
-            break;
-          case '/':
-            tokens[nr_token].type = '/';
-            nr_token++;
-            break;
-          default:;
-            // TODO();
-          }          
+        case TK_NOTYPE:
+          // printf("%s\n", "TK_NOTYPE");
+          nr_token--;
           break;
+        case TK_LP:
+          tokens[nr_token].type = TK_LP;
+          nr_token++;
+          break;
+        case TK_RP:
+          tokens[nr_token].type = TK_RP;
+          nr_token++;
+          break;
+        case TK_NUM:
+          tokens[nr_token].type = TK_NUM;
+          // 这里得用动态申请内存扩充str长度
+          assert(substr_len < 32);
+          // printf("sub_str: %s\n", substr_start);
+          // strcpy(tokens[nr_token].str, substr_start);
+          for (int i = 0; i < substr_len; i++)
+          {
+            tokens[nr_token].str = substr_start[i];
+            printf("--%c--\n", substr_start[i]);
+            nr_token++;
+          }
+          break;
+        case '+':
+          tokens[nr_token].type = '+';
+          nr_token++;
+          break;
+        case '-':
+          tokens[nr_token].type = '-';
+          nr_token++;
+          break;
+        case '*':
+          tokens[nr_token].type = '*';
+          nr_token++;
+          break;
+        case '/':
+          tokens[nr_token].type = '/';
+          nr_token++;
+          break;
+        default:;
+          // TODO();
+        }
+        break;
       }
     }
 
@@ -249,7 +251,7 @@ word_t expr(char *e, bool *success)
   for (int i = 0; i < nr_token; i++)
   {
     printf("token_array: %s\n", tokens[i].str);
-  } 
+  }
   uint32_t expression_result = eval(p, q);
   printf("-------%d-------\n", expression_result);
   return expression_result;
