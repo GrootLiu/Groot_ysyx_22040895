@@ -255,10 +255,10 @@ word_t expr(char *e, bool *success)
 static int dipth = 0;
 uint32_t eval(int start, int end)
 {
-  if (dipth > 4)
-  {
-    exit(0);
-  }
+  // if (dipth > 4)
+  // {
+  //   exit(0);
+  // }
 
   printf("--------dipth:%d-------\n", dipth);
   printf("tokens[start].type == %d && tokens[end].type == %d\n", tokens[start].type, tokens[end].type);
