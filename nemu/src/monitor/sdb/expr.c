@@ -162,17 +162,8 @@ static bool make_token(char *e)
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
-        // for (int i = 0; i < substr_len; i++)
-        // {
-        //   // strcpy(tokens[nr_token].str, substr_start[i]);
-        //   printf("--%c--\n", substr_start[i]);
-        //   nr_token++;
-        // }
-        printf("substr_start: %.*s\n", substr_len, substr_start);
-        // char *debug;
-        // sscanf("")
-
-        printf("substr_len: %d\n", substr_len);
+        // printf("substr_start: %.*s\n", substr_len, substr_start);
+        // printf("substr_len: %d\n", substr_len);
 
         position += substr_len;
 
@@ -199,13 +190,14 @@ static bool make_token(char *e)
           tokens[nr_token].type = TK_NUM;
           // 这里得用动态申请内存扩充str长度
           assert(substr_len < 32);
+          printf("substr_start: %.*s\n", substr_len, substr_start);
           // printf("sub_str: %s\n", substr_start);
-          // strcpy(tokens[nr_token].str, substr_start);
+          strncpy(tokens[nr_token].str, substr_start,substr_len);
           // for (int i = 0; i < substr_len; i++)
           // {
           //   strcpy(tokens[nr_token].str, substr_start[i]);
           //   printf("--%c--\n", substr_start[i]);
-          //   nr_token++;
+          nr_token++;
           // }
           break;
         case '+':
