@@ -168,7 +168,7 @@ static bool make_token(char *e)
         //   printf("--%c--\n", substr_start[i]);
         //   nr_token++;
         // }
-        printf("%.*s\n", substr_len, substr_start);
+        printf("substr_start: %.*s\n", substr_len, substr_start);
         // char *debug;
         // sscanf("")
 
