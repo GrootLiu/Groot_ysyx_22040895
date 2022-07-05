@@ -162,8 +162,6 @@ static int cmd_x(char *args)
     __uint64_t info = vaddr_read(addr, 4);
     printf("$%lx:%#-.8lx\n", addr, info);
   }
-  
-
   return 0;
 }
 

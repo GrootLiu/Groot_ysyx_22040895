@@ -125,7 +125,7 @@ typedef struct token
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[1024] __attribute__((used)) = {};
 /* nr_token indicates the number of tokens that have been identified */
 static int nr_token __attribute__((used)) = 0;
 
@@ -171,32 +171,38 @@ static bool make_token(char *e)
 
         switch (rules[i].token_type)
         {
-        case TK_NOTYPE:
-          nr_token--;
-        case TK_LP:
-          tokens[nr_token].type = TK_LP;
-        case TK_RP:
-          tokens[nr_token].type = TK_RP;
-        case TK_NUM:
-        {
-          tokens[nr_token].type = TK_NUM;
-          // 这里得用动态申请内存扩充str长度
-          assert(substr_len < 32);
-          strcpy(tokens[nr_token].str, substr_start);
-        }
-        case '+':
-          tokens[nr_token].type = '+';
-        case '-':
-          tokens[nr_token].type = '-';
-        case '*':
-          tokens[nr_token].type = '*';
-        case '/':
-          tokens[nr_token].type = '/';
-        default:
-          TODO();
-        }
-        nr_token++;
-        break;
+          case TK_NOTYPE:
+            nr_token--;
+            break;
+          case TK_LP:
+            tokens[nr_token].type = TK_LP;
+            break;
+          case TK_RP:
+            tokens[nr_token].type = TK_RP;
+            break;
+          case TK_NUM:
+            tokens[nr_token].type = TK_NUM;
+            // 这里得用动态申请内存扩充str长度
+            assert(substr_len < 32);
+            strcpy(tokens[nr_token].str, substr_start);
+            break;
+          case '+':
+            tokens[nr_token].type = '+';
+            break;
+          case '-':
+            tokens[nr_token].type = '-';
+            break;
+          case '*':
+            tokens[nr_token].type = '*';
+            break;
+          case '/':
+            tokens[nr_token].type = '/';
+            break;
+          default:
+            TODO();
+          }
+          nr_token++;
+          break;
       }
     }
 
@@ -210,6 +216,7 @@ static bool make_token(char *e)
   return true;
 }
 
+/* e is the expression string */
 word_t expr(char *e, bool *success)
 {
   if (!make_token(e))
@@ -225,7 +232,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and strlen, respectively
    */
   int p = 0, q = nr_token;
-  uint32_t expression_result = eval(p,q);
+  uint32_t expression_result = eval(p, q);
   return expression_result;
 }
 
@@ -339,37 +346,31 @@ int find_priop(int start, int end)
     case TK_NUM:
       continue;
     case TK_LP:
-    {
       op_pos[op_num].op = '(';
       op_pos[op_num].pos = i;
-    }
+      break;
     case TK_RP:
-    {
       op_pos[op_num].op = ')';
       op_pos[op_num].pos = i;
-    }
+      break;
     case '+':
-    {
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
       low_flag = 1;
-    }
+      break;
     case '-':
-    {
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
       low_flag = 1;
-    }
+      break;
     case '*':
-    {
       op_pos[op_num].op = '*';
       op_pos[op_num].pos = i;
-    }
+      break;
     case '/':
-    {
       op_pos[op_num].op = '/';
       op_pos[op_num].pos = i;
-    }
+      break;
     }
     op_num++;
   }
