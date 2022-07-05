@@ -408,12 +408,12 @@ int find_priop(int start, int end)
   for (int i = 0; i < op_num; i++)
   {
     /* left point will scan the left side */
-    int left = i;
+    int left = i-1;
     /* right point will scan the right side */
-    int right = i;
+    int right = i+1;
     /* 'in' indicates if this token in parentheses */
     int in = 0;
-    for (int j = 0; j < op_num && op_pos[j].op != '(' && op_pos[j].op != ')'; j++)
+    for (int j = 0; j < op_num && op_pos[i].op != '(' && op_pos[i].op != ')'; j++)
     {
       if (left < 0)
       /* left point reaches the left boundary */
