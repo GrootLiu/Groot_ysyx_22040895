@@ -446,10 +446,19 @@ int find_priop(int start, int end)
     if (in == 1)
     {
       op_pos[i].pos = -1;
-      break;
+      // break;
     }
   }
 
+  for (int i = 0; i < op_num; i++)
+  {
+    if (op_pos[i].op == TK_NUM && op_pos[i].pos != -1)
+    {
+      low_flag = 1;
+    }
+    
+  }
+  
 
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
