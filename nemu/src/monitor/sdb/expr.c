@@ -292,7 +292,7 @@ uint32_t eval(int start, int end)
     /* We should do more things here. */
     /* analyse the main opertor*/
     // op = the position of 主运算符 in the token expression;
-    int op-1 = find_priop(start, end);
+    int op = find_priop(start, end);
     int val1 = eval(start, op - 1);
     int val2 = eval(op + 1, end);
     // printf("start=%d", start);
