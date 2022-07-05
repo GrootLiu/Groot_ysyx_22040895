@@ -168,11 +168,11 @@ static bool make_token(char *e)
         //   printf("--%c--\n", substr_start[i]);
         //   nr_token++;
         // }
-        printf("%.*s\n",substr_start);
-        char *debug;
+        printf("%.*s\n", substr_len, substr_start);
+        // char *debug;
         // sscanf("")
 
-        printf("substr_len: %d\n", substr_len, substr_len);
+        printf("substr_len: %d\n", substr_len);
 
         position += substr_len;
 
