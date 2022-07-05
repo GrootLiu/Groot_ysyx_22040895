@@ -247,7 +247,7 @@ word_t expr(char *e, bool *success)
   // {
   //   printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
   // }
-  uint32_t expression_result = eval(0, nr_token);
+  uint32_t expression_result = eval(0, nr_token-1);
   printf("-------%d-------\n", expression_result);
   return expression_result;
 }
