@@ -262,7 +262,7 @@ uint32_t eval(int start, int end)
   }
 
   printf("--------dipth:%d-------\n", dipth);
-  printf("tokens[start].type == %c && tokens[end].type == %c\n", tokens[start].type, tokens[end].type);
+  printf("tokens[start].type == %d && tokens[end].type == %d\n", tokens[start].type, tokens[end].type);
   if (start > end)
   {
     /* Bad expression */
@@ -285,7 +285,7 @@ uint32_t eval(int start, int end)
     dipth++;
     return number;
   }
-  else if (tokens[start].type == '(' && tokens[end].type == ')')
+  else if (tokens[start].type == TK_LP && tokens[end].type == TK_RP)
   {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
