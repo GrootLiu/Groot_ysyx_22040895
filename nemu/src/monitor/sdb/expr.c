@@ -247,7 +247,7 @@ word_t expr(char *e, bool *success)
   // {
   //   printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
   // }
-  uint32_t expression_result = eval(0, nr_token-1);
+  uint32_t expression_result = eval(0, nr_token - 1);
   printf("-------%d-------\n", expression_result);
   return expression_result;
 }
@@ -367,13 +367,13 @@ int find_priop(int start, int end)
       continue;
     case TK_NUM:
       continue;
-    case TK_RP:
-      op_pos[op_num].op = ')';
+    case TK_LP:
+      op_pos[op_num].op = '(';
       op_pos[op_num].pos = i;
       op_num++;
       break;
-    case TK_LP:
-      op_pos[op_num].op = '(';
+    case TK_RP:
+      op_pos[op_num].op = ')';
       op_pos[op_num].pos = i;
       op_num++;
       break;
@@ -381,13 +381,11 @@ int find_priop(int start, int end)
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
       op_num++;
-      // low_flag = 1;
       break;
     case '-':
-      op_pos[op_num].op = '+';
+      op_pos[op_num].op = '-';
       op_pos[op_num].pos = i;
       op_num++;
-      // low_flag = 1;
       break;
     case '*':
       op_pos[op_num].op = '*';
@@ -408,10 +406,11 @@ int find_priop(int start, int end)
   printf("opnum=%d\n", op_num);
   for (int i = 0; i < op_num; i++)
   {
+    printf("time=%d\n", i);
     /* left point will scan the left side */
-    int left = i-1;
+    int left = i - 1;
     /* right point will scan the right side */
-    int right = i+1;
+    int right = i + 1;
     /* 'in' indicates if this token in parentheses */
     int in = 0;
     for (int j = 0; j < op_num && op_pos[i].op != '(' && op_pos[i].op != ')'; j++)
@@ -458,9 +457,7 @@ int find_priop(int start, int end)
     {
       low_flag = 1;
     }
-    
   }
-  
 
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
