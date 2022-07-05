@@ -158,17 +158,14 @@ static int cmd_x(char *args)
   // vaddr_t result = expr(arg2, success);
   // printf("result: %lu\n", result);
   vaddr_t addr = strtoul(arg2, NULL, 16);
-  
-  printf("%#lx\n", addr);
-  printf("%#-.8lx\n",addr);
   /* N is the numbers of mem we want to check */
-  // int N = atoi(arg1);
-  // for (; N > 0; N--)
-  // {
-  //   __uint64_t info = vaddr_read(addr, 4);
-  //   printf("$%lx:%#-.8lx\n", addr, info);
-  //   addr += 0x4;
-  // }
+  int N = atoi(arg1);
+  for (; N > 0; N--)
+  {
+    __uint64_t info = vaddr_read(addr, 4);
+    printf("$%lx:%#-.8lx\n", addr, info);
+    addr += 0x4;
+  }
   return 0;
 }
 
