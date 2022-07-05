@@ -248,7 +248,7 @@ word_t expr(char *e, bool *success)
   //   printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
   // }
   uint32_t expression_result = eval(0, nr_token - 1);
-  printf("-------%d-------\n", expression_result);
+  // printf("-------%d-------\n", expression_result);
   return expression_result;
 }
 
@@ -446,7 +446,7 @@ int find_priop(int start, int end)
     if (in == 1)
     {
       op_pos[i].pos = -1;
-      printf("op_pos[%d].pos = -1;\n", i);
+      // printf("op_pos[%d].pos = -1;\n", i);
       // continue;
       break;
     }
