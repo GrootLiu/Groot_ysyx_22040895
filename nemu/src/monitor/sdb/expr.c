@@ -465,6 +465,11 @@ int find_priop(int start, int end)
   }
 
   printf("low_flag: %d\n", low_flag);
+  for (int i = 0; i < op_num; i++)
+  {
+    printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
+  }
+  
   /* The following for loop will find the operator with the lowest precedence  */
   if (low_flag == 1)
   {
