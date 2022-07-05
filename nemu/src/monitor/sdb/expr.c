@@ -447,7 +447,8 @@ int find_priop(int start, int end)
     {
       op_pos[i].pos = -1;
       printf("op_pos[%d].pos = -1;\n", i);
-      continue;
+      // continue;
+      break;
     }
   }
 
