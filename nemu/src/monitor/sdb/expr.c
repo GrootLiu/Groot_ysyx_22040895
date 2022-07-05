@@ -261,7 +261,7 @@ uint32_t eval(int start, int end)
   {
     /* Bad expression */
     // assert(0);
-    printf("---start>end---\n");
+    // printf("---start>end---\n");
     dipth++;
     return 0;
   }
@@ -475,6 +475,7 @@ int find_priop(int start, int end)
       primary = op_pos[i].pos;
     }
   }
+  printf("primary:%d\n", primary);
   return primary;
 }
 
