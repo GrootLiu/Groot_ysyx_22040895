@@ -374,7 +374,7 @@ int find_priop(int start, int end)
   printf("start=%d\tend%d\n", start, end);
   for (int i = start; i < end; i++)
   {
-
+    printf("times=%d\n",i);
     switch (tokens[i].type)
     {
     /* The token of the NOT operator is not a primary operator. */
