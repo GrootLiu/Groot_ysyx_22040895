@@ -421,13 +421,13 @@ int find_priop(int start, int end)
       break;
     }
   }
-  printf("----------------------\n");
-  printf("op_num: %d\n", op_num);
-  for (int i = 0; i < op_num; i++)
-  {
-    printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
-  }
-  printf("----------------------\n");
+  // printf("----------------------\n");
+  // printf("op_num: %d\n", op_num);
+  // for (int i = 0; i < op_num; i++)
+  // {
+  //   printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
+  // }
+  // printf("----------------------\n");
 
   /* the following for loop will check whether the token is in parentheses,
    * if the token in parentheses, let its pos = -1
