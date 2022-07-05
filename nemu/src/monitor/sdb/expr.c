@@ -396,13 +396,13 @@ int find_priop(int start, int end)
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
       op_num++;
-      low_flag = 1;
+      // low_flag = 1;
       break;
     case '-':
       op_pos[op_num].op = '+';
       op_pos[op_num].pos = i;
       op_num++;
-      low_flag = 1;
+      // low_flag = 1;
       break;
     case '*':
       op_pos[op_num].op = '*';
@@ -467,6 +467,7 @@ int find_priop(int start, int end)
     if (in == 1)
     {
       op_pos[i].pos = -1;
+      in = 0;
     }
   }
 
