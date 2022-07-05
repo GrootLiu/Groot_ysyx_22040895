@@ -300,7 +300,9 @@ uint32_t eval(int start, int end)
     int op = find_priop(start, end);
     printf("op: %d\n", op);
     int val1 = eval(start, op - 1);
+    printf("val1=%d\n", val1);
     int val2 = eval(op + 1, end);
+    printf("val2=%d\n", val2);
     // printf("start=%d", start);
     // printf("end=%d", end);
     /* op_type is the main operator's type
