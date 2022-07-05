@@ -193,7 +193,7 @@ static bool make_token(char *e)
           // strcpy(tokens[nr_token].str, substr_start);
           for (int i = 0; i < substr_len; i++)
           {
-            tokens[nr_token].str = substr_start[i];
+            strcpy(tokens[nr_token].str, substr_start[i]);
             printf("--%c--\n", substr_start[i]);
             nr_token++;
           }
