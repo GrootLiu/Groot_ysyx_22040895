@@ -242,13 +242,12 @@ word_t expr(char *e, bool *success)
   /* p indicates the begining of the substring, q indicates the end of the substring
    * now we init the p and q, give them 0 and strlen, respectively
    */
-  int p = 0, q = nr_token - 1;
-  printf("token_num: %d\n", q + 1);
+  printf("token_num: %d\n", nr_token);
   // for (int i = 0; i < nr_token; i++)
   // {
   //   printf("token_array: %s%c\n", tokens[i].str, tokens[i].type);
   // }
-  uint32_t expression_result = eval(p, q);
+  uint32_t expression_result = eval(0, nr_token);
   printf("-------%d-------\n", expression_result);
   return expression_result;
 }
@@ -300,7 +299,7 @@ uint32_t eval(int start, int end)
     // op = the position of 主运算符 in the token expression;
     int op = find_priop(start, end);
     printf("op: %d\n", op);
-    int val1 = eval(start, op);
+    int val1 = eval(start, op - 1);
     int val2 = eval(op + 1, end);
     // printf("start=%d", start);
     // printf("end=%d", end);
