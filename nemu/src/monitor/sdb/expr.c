@@ -226,8 +226,6 @@ word_t expr(char *e, bool *success)
     return 0;
   }
 
-  printf("%s\n", e);
-
   /* TODO: Insert codes to evaluate the expression. */
 
   // TODO();
@@ -236,6 +234,7 @@ word_t expr(char *e, bool *success)
    */
   int p = 0, q = nr_token;
   uint32_t expression_result = eval(p, q);
+  printf("-------%d-------\n", expression_result);
   return expression_result;
 }
 
