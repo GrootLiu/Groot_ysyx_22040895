@@ -3,7 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-#include "expr.c"
+// #include "expr.c"
 
 #include <cpu/decode.h>
 #include <memory/vaddr.h>
