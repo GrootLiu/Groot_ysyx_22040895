@@ -172,6 +172,7 @@ static bool make_token(char *e)
         switch (rules[i].token_type)
         {
           case TK_NOTYPE:
+            printf("%s\n", "TK_NOTYPE");
             nr_token--;
             break;
           case TK_LP:
