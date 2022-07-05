@@ -364,7 +364,7 @@ bool check_parentheses(int start, int end)
 int find_priop(int start, int end)
 {
   int primary = -1;
-  struct op_pos op_pos[1024];
+  struct op_pos op_pos[32];
   int op_num = 0;
   /* use low_flog to detect if there are plus or substrction */
   int low_flag = 0;
@@ -372,7 +372,7 @@ int find_priop(int start, int end)
    * then store them and their positions into a array
    */
   printf("start=%d\tend%d\n", start, end);
-  for (int i = start; i < end; i++)
+  for (int i = start; i <= end; i++)
   {
     printf("times=%d\n", i);
     // printf("op_pos[op_num].op=%c\n", tokens[i].type);
