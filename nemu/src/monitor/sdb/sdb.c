@@ -155,7 +155,7 @@ static int cmd_x(char *args)
   /* addr is the beginning address we want to check */
   printf("%s\n", arg2);
   bool *success = false;
-  expr(arg2, success);
+  unint32_t result = expr(arg2, success);
   printf("%s\n", arg2);
   vaddr_t addr = strtoul(arg2, NULL, 16);
   
