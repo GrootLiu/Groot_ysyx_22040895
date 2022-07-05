@@ -269,7 +269,7 @@ uint32_t eval(int start, int end)
      * Return the value of the number.
      */
     int number = atoi(tokens[start].str);
-    printf("number: %d\n");
+    printf("number: %d\n", number);
     return number;
   }
   else if (check_parentheses(start, end) == true)
