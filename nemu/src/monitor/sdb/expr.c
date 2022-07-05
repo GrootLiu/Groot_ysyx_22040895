@@ -418,6 +418,7 @@ int find_priop(int start, int end)
     }
   }
   printf("----------------------\n");
+  printf("op_num: %d\n", op_num);
   for (int i = 0; i < op_num; i++)
   {
     printf("ops[%d]_op: %c\tops[%d]_pos: %d\n", i, op_pos[i].op, i, op_pos[i].pos);
