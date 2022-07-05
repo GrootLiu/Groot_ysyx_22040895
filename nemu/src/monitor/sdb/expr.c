@@ -271,11 +271,11 @@ uint32_t eval(int start, int end)
      * For now this token should be a number.
      * Return the value of the number.
      */
-    printf("start=%d", start);
-    printf("end=%d", end);
-    printf("number: %s\n", tokens[end].str);
-    int number = atoi(tokens[start].str);
-    printf("number: %d\n", number);
+    // printf("start=%d", start);
+    // printf("end=%d", end);
+    // printf("number: %s\n", tokens[end].str);
+    // int number = atoi(tokens[start].str);
+    // printf("number: %d\n", number);
     dipth++;
     return number;
   }
@@ -295,8 +295,8 @@ uint32_t eval(int start, int end)
     int op = find_priop(start, end);
     int val1 = eval(start, op - 1);
     int val2 = eval(op + 1, end);
-    printf("start=%d", start);
-    printf("end=%d", end);
+    // printf("start=%d", start);
+    // printf("end=%d", end);
     /* op_type is the main operator's type
      * we should find the type of main operator and identify its type
      */
@@ -345,7 +345,7 @@ bool check_parentheses(int start, int end)
   }
   if (IsEmpty(s) == true)
   {
-    printf("匹配成功\n");
+    // printf("匹配成功\n");
     return true;
   }
   else
