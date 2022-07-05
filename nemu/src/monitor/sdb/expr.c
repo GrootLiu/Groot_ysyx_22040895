@@ -309,6 +309,7 @@ uint32_t eval(int start, int end)
      * we should find the type of main operator and identify its type
      */
     char op_type = tokens[op].type;
+    printf("tokens[op].type=%c\n", op_type);
     dipth++;
     switch (op_type)
     {
