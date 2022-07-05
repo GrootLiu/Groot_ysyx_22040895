@@ -233,6 +233,7 @@ word_t expr(char *e, bool *success)
    * now we init the p and q, give them 0 and strlen, respectively
    */
   int p = 0, q = nr_token;
+  printf("noken_num: %d", q);
   uint32_t expression_result = eval(p, q);
   printf("-------%d-------\n", expression_result);
   return expression_result;
