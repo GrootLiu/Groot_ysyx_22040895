@@ -324,7 +324,8 @@ bool check_parentheses(int start, int end)
   else
     // TODO()
     // Needs to be further changed to: if there is no match, throw a mismatch error
-    assert(0);
+    // assert(0);
+    return false;
 }
 
 int find_priop(int start, int end)
