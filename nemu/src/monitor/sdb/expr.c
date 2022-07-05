@@ -255,7 +255,7 @@ word_t expr(char *e, bool *success)
 static int dipth = 0;
 uint32_t eval(int start, int end)
 {
-  if (dipth > 2)
+  if (dipth > 3)
   {
     exit(0);
   }
