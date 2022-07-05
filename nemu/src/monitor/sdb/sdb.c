@@ -154,7 +154,7 @@ static int cmd_x(char *args)
   }
   /* addr is the beginning address we want to check */
   bool *s = true;
-  expr(arg2, s);
+  expr(arg2, &s);
   vaddr_t addr = strtoul(arg2, NULL, 16);
   // printf("%s\n", arg2);
   // printf("%#lx\n", addr);
