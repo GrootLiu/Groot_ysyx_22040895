@@ -262,6 +262,7 @@ uint32_t eval(int start, int end)
   }
 
   printf("--------dipth:%d-------\n", dipth);
+  printf("tokens[start].type == %c && tokens[end].type == %c\n", tokens[start].type, tokens[end].type);
   if (start > end)
   {
     /* Bad expression */
