@@ -246,7 +246,7 @@ word_t expr(char *e, bool *success)
   printf("token_num: %d\n", q);
   for (int i = 0; i < nr_token; i++)
   {
-    printf("token_array: %d\n", tokens[i].type);
+    printf("token_array: %c\n", tokens[i].type);
   }
   uint32_t expression_result = eval(p, q);
   printf("-------%d-------\n", expression_result);
