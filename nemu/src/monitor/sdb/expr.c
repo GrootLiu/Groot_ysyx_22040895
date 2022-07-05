@@ -375,7 +375,7 @@ int find_priop(int start, int end)
   for (int i = start; i < end; i++)
   {
     printf("times=%d\n",i);
-    printf("op_pos[op_num].op=%c\n", op_pos[op_num].op);
+    printf("op_pos[op_num].op=%c\n", tokens[i].type);
     switch (tokens[i].type)
     {
     /* The token of the NOT operator is not a primary operator. */
