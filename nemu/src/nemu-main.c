@@ -1,14 +1,14 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-05 10:20:25
+ * @LastEditTime: 2022-07-05 10:21:45
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/nemu/src/nemu-main.c
  * 版权声明
  */
 #include <common.h>
-#include "nemu/tools/gen-expr/gen-expr.c"
+#include "/home/groot/ysyx-workbench/nemu/tools/gen-expr/gen-expr.c"
 void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
