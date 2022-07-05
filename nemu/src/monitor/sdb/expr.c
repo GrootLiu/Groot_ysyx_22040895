@@ -279,7 +279,7 @@ uint32_t eval(int start, int end)
     dipth++;
     return number;
   }
-  else if (tokens[start].type == '(' && tokens[end].type == ')' && check_parentheses(start, end) == true)
+  else if (tokens[start].type == '(' && tokens[end].type == ')')
   {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
