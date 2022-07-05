@@ -8,7 +8,7 @@
  * 版权声明
  */
 #include <common.h>
-// #include "/sdb/expr.c"
+#include "nemu/tools/gen-expr/gen-expr.c"
 void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
