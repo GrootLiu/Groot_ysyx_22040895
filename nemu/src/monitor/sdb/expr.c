@@ -371,6 +371,7 @@ int find_priop(int start, int end)
   /* use the following for loop to select all arithmetic operators and parentheses,
    * then store them and their positions into a array
    */
+  printf("start=%d\tend%d\n", start, end);
   for (int i = start; i < end; i++)
   {
 
