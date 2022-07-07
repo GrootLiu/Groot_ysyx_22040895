@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-05 10:23:01
+ * @LastEditTime: 2022-07-06 10:04:41
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/nemu/src/nemu-main.c
@@ -25,19 +25,6 @@ int main(int argc, char *argv[])
 
   /* Start engine. */
   engine_start();
-  // char buf[1024];
-  // FILE *fp = fopen("nemu/tools/gen-expr/input", "r");
-  // assert(fp != NULL);
-
-  // while (fgets(buf, 2000, fp) != NULL)
-  // {
-  //   printf("%s\n", buf);
-  // }
-  
-
-  // fclose(fp);
-
-  // expr();
 
   return is_exit_status_bad();
 }

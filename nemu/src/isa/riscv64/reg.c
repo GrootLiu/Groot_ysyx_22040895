@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-02 11:44:08
+ * @LastEditTime: 2022-07-07 13:10:57
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/nemu/src/isa/riscv64/reg.c
@@ -23,10 +23,21 @@ const char *regs[] = {
  * @use: 
  */
 void isa_reg_display() {
-  for (int i = 0; i < 32; i++)
-  {
-    printf("The reg %d's content is: %s\n", i, regs[i]);
-  }  
+  printf("++++++++++++++++++++++++++++++++++++++++++reg info:++++++++++++++++++++++++++++++++++++++++++++++\n");
+  for (int i = 1; i <= 32; i++)
+  {  
+    if (i % 1 == 0)
+    {
+      printf("|");
+    }  
+    printf("%-3s :%-16lx\t", regs[i-1], cpu.gpr[i-1]);
+    if (i % 4 == 0)
+    {
+      printf("|");
+      printf("\n");      
+    }
+  }
+  printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
