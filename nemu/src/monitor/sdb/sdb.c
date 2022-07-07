@@ -116,17 +116,20 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args)
 {
-  char *arg = strtok(NULL, " ");
-  int N = atoi(arg);
-  if (arg == NULL)
+  // printf("------%s-----\n" ,args);
+  int N;
+  if (args == NULL)
     /* no N was given */
   {
     N = 1;
   }
   else
   {
-    cpu_exec(N);
-  }  
+    char *arg = strtok(NULL, " ");
+    N = atoi(arg);
+  }
+  cpu_exec(N);
+  isa_reg_display();
   return 0;
 }
 
@@ -189,7 +192,6 @@ void sdb_mainloop() {
   */
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
-    // printf("%s\n,")
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
