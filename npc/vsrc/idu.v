@@ -13,6 +13,7 @@ module idu (input wire rst,
             output reg[`RegAddrBus] rdaddr_o_idu,
             output reg[`InstBus] pc_o_idu);
     
+    assign pc_o_idu      = (rst == `RstDisable) ? 32'b0 : pc_i_idu;
     assign opcode_o_idu  = (rst == `RstDisable) ? 7'b0 : inst_i_idu[6:0];
     assign func3_o_idu   = (rst == `RstDisable) ? 3'b0 : inst_i_idu[14:12];
     assign func7_o_idu   = (rst == `RstDisable) ? 7'b0 : inst_i_idu[31:25];
@@ -21,8 +22,6 @@ module idu (input wire rst,
     assign rs1addr_o_idu = (rst == `RstDisable) ? 5'b0 : inst_i_idu[19:15];
     assign rs2addr_o_idu = (rst == `RstDisable) ? 5'b0 : inst_i_idu[24:20];
     assign rdaddr_o_idu  = (rst == `RstDisable) ? 5'b0 : inst_i_idu[11:7];
-    assign pc_o_idu      = (rst == `RstDisable) ? 32'b0 : pc_i_idu;
-    
     
 endmodule //idu
     
