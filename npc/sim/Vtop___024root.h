@@ -19,9 +19,16 @@ VL_MODULE(Vtop___024root) {
   public:
 
     // PORTS
-    VL_IN8(a,0,0);
-    VL_IN8(b,0,0);
-    VL_OUT8(f,0,0);
+    VL_IN8(clk,0,0);
+    VL_IN8(rst,0,0);
+    VL_IN(inst_i,31,0);
+    VL_OUT(instaddr_o,31,0);
+
+    // LOCAL SIGNALS
+    CData/*0:0*/ top__DOT__ce_ifu_instrom;
+
+    // LOCAL VARIABLES
+    CData/*0:0*/ __Vclklast__TOP__clk;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table

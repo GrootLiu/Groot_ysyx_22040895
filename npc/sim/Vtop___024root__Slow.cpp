@@ -29,16 +29,14 @@ void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
+    // Body
+    vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
 }
-
-void Vtop___024root___combo__TOP__1(Vtop___024root* vlSelf);
 
 void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_settle\n"); );
-    // Body
-    Vtop___024root___combo__TOP__1(vlSelf);
 }
 
 void Vtop___024root___final(Vtop___024root* vlSelf) {
@@ -52,7 +50,9 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->a = VL_RAND_RESET_I(1);
-    vlSelf->b = VL_RAND_RESET_I(1);
-    vlSelf->f = VL_RAND_RESET_I(1);
+    vlSelf->clk = VL_RAND_RESET_I(1);
+    vlSelf->rst = VL_RAND_RESET_I(1);
+    vlSelf->inst_i = VL_RAND_RESET_I(32);
+    vlSelf->instaddr_o = VL_RAND_RESET_I(32);
+    vlSelf->top__DOT__ce_ifu_instrom = VL_RAND_RESET_I(1);
 }

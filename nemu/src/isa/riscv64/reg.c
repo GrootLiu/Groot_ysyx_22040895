@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-07 13:10:57
+ * @LastEditTime: 2022-07-08 15:47:39
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/nemu/src/isa/riscv64/reg.c
@@ -30,13 +30,14 @@ void isa_reg_display() {
     {
       printf("|");
     }  
-    printf("%-3s :%-16lx\t", regs[i-1], cpu.gpr[i-1]);
+    printf("%-3s :%-16.8lx\t", regs[i-1], cpu.gpr[i-1]);
     if (i % 4 == 0)
     {
       printf("|");
       printf("\n");      
     }
   }
+  printf("|%-3s :%#-35.16lx\t|\n", "pc", cpu.pc);
   printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 }
 

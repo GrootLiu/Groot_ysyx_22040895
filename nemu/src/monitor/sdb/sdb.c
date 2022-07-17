@@ -81,7 +81,7 @@ static struct {
   /* TODO: Add more commands */
   { "si", "si [N]: Let the program step through N instructions and pause execution. When N is not given, it defaults to 1", cmd_si},
   { "info", "info r or info w: Print register status or Print monitor point information", cmd_info},
-  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting meemory address, then output consecutive N 4-bytes in hexadecimal form", cmd_x}
+  { "x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting memory address, then output consecutive N 4-bytes in hexadecimal form", cmd_x}
 };
 
 // 我猜ARRLEN返回cmd_table的长度

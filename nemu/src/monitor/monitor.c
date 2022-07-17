@@ -36,7 +36,7 @@ static long load_img() {
     Log("No image is given. Use the default build-in image.");
     return 4096; // built-in image size
   }
-
+  printf("file is : %s\n", img_file);
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
 
@@ -53,6 +53,15 @@ static long load_img() {
   return size;
 }
 
+
+/**
+ * @description: parse the arg 'b' to enable the batch mode
+ * @author: Groot
+ * @param {int} argc
+ * @param {char} *argv
+ * @return {*}
+ * @use: 
+ */
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
@@ -86,8 +95,16 @@ static int parse_args(int argc, char *argv[]) {
 void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
 
+  /**
+   * @description: parse the 'b' to enable the 
+   * @author: Groot
+   * @return {*}
+   * @use: 
+   */
   /* Parse arguments. */
   parse_args(argc, argv);
+
+  // sdb_set_batch_mode();
 
   /* Set random seed. */
   init_rand();
