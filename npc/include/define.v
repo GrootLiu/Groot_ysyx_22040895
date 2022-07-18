@@ -37,7 +37,7 @@
 
 //*************************     与通用寄存器Reg file有关的宏定义     **************************
 `define RegAddrBus       4:0            //Regfile模块的地址线宽度
-`define RegBus          53:0            //Regfile模块的数据线宽度
+`define RegBus          63:0            //Regfile模块的数据线宽度
 `define RegWidth        64              //通用寄存器的宽度
 `define DoubleRegWidth  128             //两倍的通用寄存器的数据线宽度
 `define DoubleRegBus    127:0           //两倍的通用寄存器的数据线宽度

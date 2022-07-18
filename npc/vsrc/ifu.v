@@ -1,4 +1,4 @@
-`include "../include/include.v"
+`include "../include/define.v"
 
 module ifu (input wire clk,
             input wire rst,
