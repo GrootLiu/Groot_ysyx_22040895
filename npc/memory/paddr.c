@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-07-16 16:43:13
+ * @LastEditTime: 2022-07-18 14:33:30
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/memory/paddr.c
@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+// #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 // 字节对齐？
 #define PG_ALIGN __attribute((aligned(4096)))
 #define RESET_VECTOR (CONFIG_MBASE + CONFIG_PC_RESET_OFFSET)
@@ -28,7 +28,6 @@ int outOfBound(uint32_t addr)
 
 uint32_t paddr_read(uint32_t addr)
 {
-    printf("pc: %x\n", addr);
     if (outOfBound(addr) == 1)
     {
         printf("!!!---memory access out of boundry---!!!\n");

@@ -26,9 +26,12 @@ VL_MODULE(Vtop___024root) {
 
     // LOCAL SIGNALS
     CData/*0:0*/ top__DOT__ce_ifu_instrom;
+    SData/*11:0*/ top__DOT__imm1_id_sext;
+    IData/*19:0*/ top__DOT__imm2_id_sext;
 
     // LOCAL VARIABLES
     CData/*0:0*/ __Vclklast__TOP__clk;
+    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table
