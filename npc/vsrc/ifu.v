@@ -1,14 +1,15 @@
-`include "../include/define.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/pc.v"
 
 module ifu (input wire clk,
             input wire rst,
             input wire[`InstBus] inst_i_ifu,
             input wire jb_i_ifu,
             input wire[`InstBus] dnpc_i_ifu,
-            output reg[`InstBus] inst_o_ifu,
-            output reg[`InstAddrBus] instaddr_o_ifu,
-            output reg[`InstAddrBus] pc_o_ifu,
-            output reg ce_o_ifu);
+            output wire[`InstBus] inst_o_ifu,
+            output wire[`InstAddrBus] instaddr_o_ifu,
+            output wire[`InstAddrBus] pc_o_ifu,
+            output wire ce_o_ifu);
     
     
     pc my_pc(

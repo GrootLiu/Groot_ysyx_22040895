@@ -1,4 +1,4 @@
-`include "../include/define.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
 
 module sext (input wire rst,
                  input wire immsel_i_sext,
