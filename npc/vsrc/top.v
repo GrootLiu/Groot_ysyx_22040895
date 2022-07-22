@@ -1,9 +1,14 @@
-`include "../include/define.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/idu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ifu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/sext.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/regfile.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/opnumsel.v"
 
 module top(input wire clk,
            input wire rst,
            input wire[`InstBus] inst_i,
-           output reg[`InstAddrBus] instaddr_o);
+           output wire[`InstAddrBus] instaddr_o);
     
     wire jmup_branch;
     wire[`InstBus] dnpc;
@@ -39,9 +44,27 @@ module top(input wire clk,
     wire[`RegAddrBus] rs2addr_id_reg;
     wire[`RegAddrBus] rdaddr_id_reg;
     
+    // 用于连接cu模块和regfile模块的线
+    wire re1_cu_reg;
+    wire re2_cu_reg;
+    wire we_cu_reg;
+
+    // 用于连接cu模块和opnumsel模块得线
+    wire opsrc_cu_opnumsel;
+    
+    // 用于连接regfile和opnumsel模块的线
+    wire[`RegBus] rdata1_reg_mux;
+    wire[`RegBus] rdata2_reg_mux;
+    
+    // 用于连接ex模块和regfile模块的线
+    wire[`RegBus] wdata_ex_reg;
+    
     // 用于连接id模块和ex模块的线
     wire[`InstBus] pc_id_ex;
-    
+
+    // 用于连接opnumsel模块和ex模块的线
+    wire[`RegBus] opnum1_opnumsel_ex;
+    wire[`RegBus] opnum2_opnumsel_ex;
     ifu my_ifu(
     .clk                (clk),
     .rst                (rst),
@@ -54,12 +77,19 @@ module top(input wire clk,
     .ce_o_ifu           (ce_ifu_instrom)
     );
     
-  always @(posedge clk) begin
-    $display("pc: %h", pc_ifu_idu);
-    $display("inst: %h", inst_i);
-    $display("------------------------------");
-  end
-    
+    // always @(posedge clk) begin
+    //     $display("pc: %h", pc_ifu_idu);
+    //     $display("inst: %h", inst_i);
+    //     $display("------------------------------");
+    // end
+    sext my_sext(
+    //ports
+    .rst           		(rst),
+    .immsel_i_sext 		(immsel_cu_sext),
+    .imm1_i_sext   		(imm1_id_sext),
+    .imm2_i_sext   		(imm2_id_sext),
+    .simm_o_sext   		(simm_sext_opnummux)
+    );
     idu my_idu(
     //ports
     .rst           		(rst),
@@ -75,15 +105,27 @@ module top(input wire clk,
     .rdaddr_o_idu  		(rdaddr_id_reg),
     .pc_o_idu      		(pc_id_ex)
     );
-    
-    sext my_sext(
+    regfile my_regfile(
     //ports
-    .rst           		(rst),
-    .immsel_i_sext 		(immsel_cu_sext),
-    .imm1_i_sext   		(imm1_id_sext),
-    .imm2_i_sext   		(imm2_id_sext),
-    .simm_o_sext   		(simm_sext_opnummux)
+    .clk          		(clk),
+    .rst          		(rst),
+    .re1_i_reg    		(re1_cu_reg),
+    .re2_i_reg    		(re2_cu_reg),
+    .we_i_reg     		(we_cu_reg),
+    .raddr1_i_reg 		(rs1addr_id_reg),
+    .raddr2_i_reg 		(rs2addr_id_reg),
+    .waddr_i_reg  		(rdaddr_id_reg),
+    .rdata1_o_reg 		(rdata1_reg_mux),
+    .rdata2_o_reg 		(rdata2_reg_mux),
+    .wdata_i_reg  		(wdata_ex_reg)
     );
-    
+    opnumsel my_opnumsel(
+    .opsrc_i_opnumsel  		(opsrc_cu_opnumsel),
+    .simm_i_opnumsel   		(simm_sext_opnummux),
+    .rdata1_opnumsel   		(rdata1_reg_mux),
+    .rdata2_opnumsel   		(rdata2_reg_mux),
+    .opnum1_o_opnumsel 		(opnum1_opnumsel_ex),
+    .opnum2_o_opnumsel 		(opnum2_opnumsel_ex)
+    );
     
 endmodule

@@ -1,4 +1,4 @@
-`include "../include/define.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
 
 module idu (input wire rst,
             input wire[`InstBus] inst_i_idu,
