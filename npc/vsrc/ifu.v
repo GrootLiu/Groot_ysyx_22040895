@@ -4,7 +4,7 @@
 module ifu (input wire clk,
             input wire rst,
             input wire[`InstBus] inst_i_ifu,
-            input wire jb_i_ifu,
+            input wire pcsel_i_ifu,
             input wire[`InstBus] dnpc_i_ifu,
             output wire[`InstBus] inst_o_ifu,
             output wire[`InstAddrBus] instaddr_o_ifu,
@@ -17,7 +17,7 @@ module ifu (input wire clk,
     .rst(rst),
     .pc_o_pc(instaddr_o_ifu),
     .ce_o_pc(ce_o_ifu),
-    .jb_i_pc(jb_i_ifu),
+    .pcsel_i_pc(pcsel_i_ifu),
     .dnpc_i_pc(dnpc_i_ifu)
     );
     

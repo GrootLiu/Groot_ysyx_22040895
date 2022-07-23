@@ -26,12 +26,20 @@ VL_MODULE(Vtop___024root) {
 
     // LOCAL SIGNALS
     CData/*0:0*/ top__DOT__ce_ifu_instrom;
+    CData/*4:0*/ top__DOT__rs1addr_id_reg;
+    CData/*4:0*/ top__DOT__rdaddr_id_reg;
+    CData/*1:0*/ top__DOT__opsrc_cu_opnumsel;
+    CData/*0:0*/ top__DOT__my_cu__DOT__addi;
     SData/*11:0*/ top__DOT__imm1_id_sext;
     IData/*19:0*/ top__DOT__imm2_id_sext;
+    QData/*63:0*/ top__DOT__simm_sext_opnummux;
+    QData/*63:0*/ top__DOT__rdata1_reg_mux;
+    QData/*63:0*/ top__DOT__wdata_ex_reg;
+    VlUnpacked<QData/*63:0*/, 32> top__DOT__my_regfile__DOT__regs;
 
     // LOCAL VARIABLES
     CData/*0:0*/ __Vclklast__TOP__clk;
-    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table
