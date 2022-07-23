@@ -17,3 +17,4 @@ module opnumsel (
     assign opnum2_o_opnumsel = (opsrc_i_opnumsel[0] == 1) ? simm_i_opnumsel : rdata1_opnumsel;
 
 endmodule //opnumsel
+

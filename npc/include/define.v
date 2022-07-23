@@ -26,7 +26,7 @@
 `define OpCodeLength    6:0             // opcode长度=7
 `define func3Length      2:0             // fun3长度=3
 `define func7Length      6:0             // fun7长度=7
-`define aluopLength           2:0
+`define aluopLength           3:0
 `define imm1Length            11:0
 `define imm2Length            19:0
 

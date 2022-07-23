@@ -1,9 +1,9 @@
-/***
+/*** 
  * @Author: Groot
  * @Date: 2022-07-05 22:56:28
- * @LastEditTime: 2022-07-18 15:23:45
+ * @LastEditTime: 2022-07-23 16:02:04
  * @LastEditors: Groot
- * @Description:
+ * @Description: 
  * @FilePath: /ysyx-workbench/npc/csrc/main.cpp
  * @版权声明
  */
@@ -43,7 +43,7 @@ int main(int argc, char **argv, char **env)
 
   top->trace(tfp, 99);
   // VCD文件保存位置
-  tfp->open("./wave.vcd");
+  tfp->open("./wave/wave.vcd");
   top->rst = RstEnable;
   while (contextp->time() < main_time && !contextp->gotFinish())
   {
@@ -64,7 +64,7 @@ int main(int argc, char **argv, char **env)
     if (top->instaddr_o >= 0x80000000)
     {
       uint32_t pc = top->instaddr_o;
-      top->inst_i = paddr_read(pc);
+      top->inst_i = 0xffc10113;
     }
     top->eval();
     tfp->dump(contextp->time());

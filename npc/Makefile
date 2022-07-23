@@ -13,5 +13,5 @@ sim: verilator
 
 wave: sim
 	@echo "- open the vcd with GTKWave..."
-	gtkwave wave.vcd
+	gtkwave ./wave/wave.vcd
 include ../Makefile
