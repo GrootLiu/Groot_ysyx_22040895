@@ -16,7 +16,7 @@ alu u_alu(
 	.aluop_i_alu  		(aluop_i_exu),
 	.op1_i_alu    		(op1_i_exu),
 	.op2_i_alu    		(op2_i_exu),
-	.result_o_alu 		(  		)
+	.result_o_alu 		(result_o_exu)
 );
 
     
