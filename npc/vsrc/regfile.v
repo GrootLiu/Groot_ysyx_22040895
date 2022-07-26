@@ -24,12 +24,8 @@ module regfile (input wire clk,
     end
     
     // 寄存器读端口1
-    assign rdata1_o_reg = (rst == `RstEnable || raddr1_i_reg == 5'b0) ? 64'b0 :
-                          (re1_i_reg == `ReadEnable && we_i_reg == `WriteEnable && raddr1_i_reg == waddr_i_reg) ? wdata_i_reg :
-                          regs[raddr1_i_reg];
+    assign rdata1_o_reg = (rst == `RstEnable || raddr1_i_reg == 5'b0 || re1_i_reg == `ReadDisable) ? 64'b0 : regs[raddr1_i_reg];
     // 寄存器读端口2
-    assign rdata2_o_reg = (rst == `RstEnable || raddr2_i_reg == 5'b0) ? 64'b0 :
-    (re2_i_reg == `ReadEnable && we_i_reg == `WriteEnable && raddr2_i_reg == waddr_i_reg) ? wdata_i_reg :
-    regs[raddr2_i_reg];
+    assign rdata2_o_reg = (rst == `RstEnable || raddr2_i_reg == 5'b0 || re2_i_reg == `ReadDisable) ? 64'b0 : regs[raddr2_i_reg];
     
 endmodule //regfile
