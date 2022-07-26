@@ -27,11 +27,12 @@
 `define func3Length      2:0             // fun3长度=3
 `define func7Length      6:0             // fun7长度=7
 `define aluopLength           3:0
+`define bcuopLength           2:0
 `define imm1Length            11:0
 `define imm2Length            19:0
 
 //*************************     与指令存储器ROM有关的宏定义     **************************
-`define InstAddrBus     31:0            //ROM的地址总线宽度
+`define InstAddrBus     63:0            //ROM的地址总线宽度
 `define InstBus         31:0            //ROM的数据总线宽度
 `define InstMemNum      131071          //ROM的实际大小为128KB
 `define InstMemNumLog2  17              //ROM实际使用的地址线宽度

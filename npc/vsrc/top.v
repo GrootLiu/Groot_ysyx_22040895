@@ -15,9 +15,8 @@ module top(input wire clk,
     
     // 用于连接if模块和inst_rom的线
     wire ce_ifu_instrom;
-    
     // 用于连接cu和if中pc的线
-    wire pcsel_cu_if;
+    wire jump_branch_cu_ifu;
     
     // 用于连接if模块与id模块的线
     wire[`InstBus] inst_ifu_idu;
@@ -34,10 +33,9 @@ module top(input wire clk,
     
     // 用于连接cu模块和sext模块的线
     wire immsel_cu_sext;
-    // 下句以后删掉
     
-    // 用于连接sext模块和opnum_mux模块的线
-    wire[`RegBus] simm_sext_opnummux;
+    // 用于连接sext模块和opnum_mux模块和exu的线
+    wire[`RegBus] simm_sext_opnummux_exu;
     
     // 用于连接id模块和regfile模块的线
     wire[`RegAddrBus] rs1addr_id_reg;
@@ -50,14 +48,15 @@ module top(input wire clk,
     wire we_cu_reg;
     
     // 用于连接cu模块和opnumsel模块得线
-    wire[1:0] opsrc_cu_opnumsel;
+    wire opsrc_cu_opnumsel;
 
 
     // 用于连接cu模块和exu模块的线
     wire[`aluopLength] aluop_cu_exu;
-    wire pcsel_exu_cu;
+    wire[`bcuopLength] bcuop_cu_exu;
+    wire jump_branch_exu_cu;
 
-    // 用于连接exu和ifu模块的线
+    // 用于连接ex模块和ifu模块的线
     wire[`InstAddrBus] dnpc_exu_ifu;
     
     // 用于连接regfile和opnumsel模块的线
@@ -66,9 +65,9 @@ module top(input wire clk,
     
     // 用于连接ex模块和regfile模块的线
     wire[`RegBus] wdata_ex_reg;
-    // assign wdata_ex_reg = 64'hffffffff;
+
     // 用于连接id模块和ex模块的线
-    wire[`InstBus] pc_id_ex;
+    wire[`InstAddrBus] pc_id_exu;
     
     // 用于连接opnumsel模块和ex模块的线
     wire[`RegBus] opnum1_opnumsel_ex;
@@ -78,8 +77,8 @@ module top(input wire clk,
     .clk                (clk),
     .rst                (rst),
     .inst_i_ifu         (inst_i),
-    .pcsel_i_ifu        (pcsel_cu_if),
-    .dnpc_i_ifu         (32'b0),
+    .pcsel_i_ifu        (jump_branch_cu_ifu),
+    .dnpc_i_ifu         (dnpc_exu_ifu),
     .inst_o_ifu         (inst_ifu_idu),
     .instaddr_o_ifu     (instaddr_o),
     .pc_o_ifu           (pc_ifu_idu),
@@ -91,7 +90,7 @@ module top(input wire clk,
     .immsel_i_sext 		(immsel_cu_sext),
     .imm1_i_sext   		(imm1_id_sext),
     .imm2_i_sext   		(imm2_id_sext),
-    .simm_o_sext   		(simm_sext_opnummux)
+    .simm_o_sext   		(simm_sext_opnummux_exu)
     );
     
     idu my_idu(
@@ -106,7 +105,7 @@ module top(input wire clk,
     .rs1addr_o_idu 		(rs1addr_id_reg),
     .rs2addr_o_idu 		(rs2addr_id_reg),
     .rdaddr_o_idu  		(rdaddr_id_reg),
-    .pc_o_idu      		(pc_id_ex)
+    .pc_o_idu      		(pc_id_exu)
     );
     
     regfile my_regfile(
@@ -125,7 +124,7 @@ module top(input wire clk,
     
     opnumsel my_opnumsel(
     .opsrc_i_opnumsel  		(opsrc_cu_opnumsel),
-    .simm_i_opnumsel   		(simm_sext_opnummux),
+    .simm_i_opnumsel   		(simm_sext_opnummux_exu),
     .rdata1_opnumsel   		(rdata1_reg_mux),
     .rdata2_opnumsel   		(rdata2_reg_mux),
     .opnum1_o_opnumsel 		(opnum1_opnumsel_ex),
@@ -137,26 +136,28 @@ module top(input wire clk,
     .opcode_i_cu 		(opcode_id_cu),
     .func3_i_cu  		(func3_id_cu),
     .func7_i_cu  		(func7_id_cu),
-    .jb_i_cu     		(`NotBranch),
-    .aluop_o_cu  		(		),
-    .opsel_o_cu  		(		),
+    .jump_branch_i_cu  	(jump_branch_exu_cu),
+    .aluop_o_cu  		(aluop_cu_exu),
+    .opsel_o_cu  		(opsrc_cu_opnumsel),
+    .bcuop_o_cu         (bcuop_cu_exu),
     .immsel_o_cu 		(immsel_cu_sext),
     .re1_o_cu    		(re1_cu_reg),
     .re2_o_cu    		(re2_cu_reg),
     .we_o_cu     		(we_cu_reg),
-    .pcsel_o_cu  		(pcsel_cu_if)
+    .jump_branch_o_cu  	(jump_branch_cu_ifu)
     );
     
     exu my_exu(
-    //ports
     .rst          		(rst),
     .aluop_i_exu  		(aluop_cu_exu),
-    .pcsel_o_exu  		(pcsel_exu_cu),
+    .bcuop_i_exu        (bcuop_cu_exu),
+    .jump_branch_o_exu	(jump_branch_exu_cu),
     .dnpc_o_exu   		(dnpc_exu_ifu),
     .op1_i_exu    		(opnum1_opnumsel_ex),
     .op2_i_exu    		(opnum2_opnumsel_ex),
     .result_o_exu 		(wdata_ex_reg),
-    .pc_i_exu     		(pc_id_ex)
+    .pc_i_exu     		(pc_id_exu),
+    .offset_i_exu       (simm_sext_opnummux_exu)
     );
     
 endmodule
