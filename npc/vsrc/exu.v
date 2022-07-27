@@ -28,7 +28,7 @@ module exu (input wire rst,
     .ltu_o_alu          (ltu_alu_bcu),
     .zero_o_alu         (zero_alu_bcu)
     );
-    
+    wire[`RegBus] dnpc_o_bcu;
     bcu my_bcu(
     //ports
     .lt_i_bcu          		(lt_alu_bcu),
@@ -38,12 +38,17 @@ module exu (input wire rst,
     .pc_i_bcu          		(pc_i_exu),
     .offset_i_bcu      		(offset_i_exu),
     .jump_branch_o_bcu 		(jump_branch_o_exu),
-    .dnpc_o_bcu        		(dnpc_o_exu)
+    .dnpc_o_bcu        		(dnpc_o_bcu)
     );
     
-    // 0 alu   |   1 auipc
-    wire auipc_op              = (aluop_i_exu == 4'b1010) ? 1 : 0;
-    wire[`RegBus] adder_result = pc_i_exu + (op2_i_exu<<12);
-    assign result_o_exu        = (auipc_op == 0) ? alu_result : adder_result;
+    assign dnpc_o_exu = (jalr_op == 1) ? (dnpc_o_bcu & ~1) : dnpc_o_bcu;
+    // 0 alu   |   1 adder_op2
+    wire auipc_op              = (aluop_i_exu == 4'b1010);
+    wire jal_op                = (bcuop_i_exu == 3'b111);
+    wire jalr_op               = (bcuop_i_exu == 3'b000);
+    wire[`RegBus] adder_op2    = (auipc_op == 1'b1) ? (op2_i_exu<<12) :
+                                 (jal_op == 1'b1 | jalr_op == 1'b1) ? (64'h4) : 64'h0;
+    wire[`RegBus] adder_result = pc_i_exu + adder_op2;
+    assign result_o_exu        = (auipc_op | jal_op | jalr_op) ? adder_result : alu_result;
     
 endmodule //ex

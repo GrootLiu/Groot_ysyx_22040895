@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-07-05 22:56:28
- * @LastEditTime: 2022-07-26 10:08:45
+ * @LastEditTime: 2022-07-27 22:35:51
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/csrc/main.cpp
@@ -21,16 +21,17 @@
 #define RstDisable 0
 // This is a 64-bit integer to reduce wrap over issues and allow modulus.
 // This is in units of timeprecision used in Verilog(or from --timescale-override)
-vluint64_t main_time = 49;
+vluint64_t main_time = 63;
 
 static void load_img();
 unsigned int getInst();
 int count = 0;
-unsigned int insts[18] = {
+unsigned int insts[26] = {
   0x00108113, 0x00117193, 0x0021e213, 0xfff24293, 0xffb2a313, 
   0x002303b3, 0x40538433, 0x007474b3, 0x0074e533, 0x00a445b3, 
   0x00653613, 0x00c526b3, 0x00b63733, 0x004717b3, 0x00e7d833,
-  0x40e2d8b3, 0x00009917, 0x04e60063};
+  0x40e2d8b3, 0x00009917, 0x04e60063, 0x0507d063, 0x0507f063,
+  0x0508c063, 0x04f86063, 0x04f81063, 0x0400096f, 0x008609e7};
 int main(int argc, char **argv, char **env)
 {
   load_img(); // load_img();
