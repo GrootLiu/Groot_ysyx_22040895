@@ -10,6 +10,7 @@ static const uint32_t img [] = {
   0x00100073,  // ebreak (used as nemu_trap)
 };
 
+// 将cpu的pc和gpr初始化
 static void restart() {
   /* Set the initial program counter. */
   cpu.pc = RESET_VECTOR;

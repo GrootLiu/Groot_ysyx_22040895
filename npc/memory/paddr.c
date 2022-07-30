@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-07-22 21:37:45
+ * @LastEditTime: 2022-07-28 09:55:51
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/memory/paddr.c
@@ -17,18 +17,18 @@
 #define RESET_VECTOR (CONFIG_MBASE + CONFIG_PC_RESET_OFFSET)
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 
-int outOfBound(uint32_t addr)
+int outOfBound(uint64_t addr)
 {
-    if ((addr >= CONFIG_MBASE) && (addr < (uint32_t)CONFIG_MBASE + CONFIG_MSIZE))
+    if ((addr >= CONFIG_MBASE) && (addr < (uint64_t)CONFIG_MBASE + CONFIG_MSIZE))
     {
         return 0;
     }
     return 1;
 }
 
-uint32_t paddr_read(uint32_t addr)
+uint32_t paddr_read(uint64_t addr)
 {
-    printf("pc: %x\n", addr);
+    printf("pc: %lx\n", addr);
     if (outOfBound(addr) == 1)
     {
         printf("!!!---memory access out of boundry---!!!\n");

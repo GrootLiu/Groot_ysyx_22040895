@@ -1,3 +1,12 @@
+/*
+ * @Author: Groot
+ * @Date: 2022-04-06 19:26:19
+ * @LastEditTime: 2022-07-29 11:39:37
+ * @LastEditors: Groot
+ * @Description: 
+ * @FilePath: /ysyx-workbench/nemu/src/memory/paddr.c
+ * 版权声明
+ */
 #include <memory/host.h>
 #include <memory/paddr.h>
 #include <device/mmio.h>
@@ -8,6 +17,21 @@ static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
+
+#ifdef CONFIG_MTRACE
+#define MAX_MTRACE_NUM 5000
+char mtrace_buf[MAX_MTRACE_NUM][16];
+int mtrace_num = 0;
+void mtrace(char* r_or_w, paddr_t addr)
+{
+  char *p = mtrace_buf[mtrace_num];
+  p += snprintf(p, 10, "%s" " : ", r_or_w);
+  p += snprintf(p, sizeof(mtrace_buf), "%x", addr);  
+  // printf("mtrace_buf[%d]: %s\n", mtrace_num, mtrace_buf[mtrace_num]);
+  mtrace_num++;
+}
+#endif
+
 
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
@@ -43,6 +67,9 @@ void init_mem() {
 }
 
 word_t paddr_read(paddr_t addr, int len) {
+  #ifdef CONFIG_MTRACE
+  mtrace("read", addr);
+  #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
   out_of_bound(addr);
@@ -50,6 +77,9 @@ word_t paddr_read(paddr_t addr, int len) {
 }
 
 void paddr_write(paddr_t addr, int len, word_t data) {
+  #ifdef CONFIG_MTRACE
+  mtrace("write", addr);
+  #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
