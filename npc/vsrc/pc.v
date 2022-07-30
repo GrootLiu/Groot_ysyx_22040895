@@ -14,8 +14,8 @@ module pc (input wire clk,
     always @(posedge clk) begin
         if (rst == `RstEnable) begin
             ce_o_pc <= `ChipDisable;
-            // pc_o_pc <= 32'h7ffffffc;
-            pc_o_pc <= 64'h0;
+            // pc_o_pc <= 64'h000000007ffffffc;
+            // pc_o_pc <= 64'h0;
         end
         else begin
             ce_o_pc <= `ChipEnable;

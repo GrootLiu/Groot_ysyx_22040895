@@ -1,6 +1,6 @@
 #include <isa.h>
 #include <memory/paddr.h>
-
+#include <elf.h>
 void init_rand();
 void init_log(const char *log_file);
 void init_mem();
@@ -9,16 +9,17 @@ void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
 
-static void welcome() {
+static void welcome()
+{
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ASNI_FMT("ON", ASNI_FG_GREEN), ASNI_FMT("OFF", ASNI_FG_RED)));
   IFDEF(CONFIG_TRACE, Log("If trace is enabled, a log file will be generated "
-        "to record the trace. This may lead to a large log file. "
-        "If it is not necessary, you can disable it in menuconfig"));
+                          "to record the trace. This may lead to a large log file. "
+                          "If it is not necessary, you can disable it in menuconfig"));
   Log("Build time: %s, %s", __TIME__, __DATE__);
   printf("Welcome to %s-NEMU!\n", ASNI_FMT(str(__GUEST_ISA__), ASNI_FG_YELLOW ASNI_BG_RED));
   printf("For help, type \"help\"\n");
   // Log("Exercise: Please remove me in the source code and compile NEMU again.");
-  //assert(0);
+  // assert(0);
 }
 
 #ifndef CONFIG_TARGET_AM
@@ -29,10 +30,14 @@ void sdb_set_batch_mode();
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
+static char *elf_file = NULL;
 static int difftest_port = 1234;
 
-static long load_img() {
-  if (img_file == NULL) {
+
+static long load_img()
+{
+  if (img_file == NULL)
+  {
     Log("No image is given. Use the default build-in image.");
     return 4096; // built-in image size
   }
@@ -53,53 +58,71 @@ static long load_img() {
   return size;
 }
 
-
 /**
  * @description: parse the arg 'b' to enable the batch mode
  * @author: Groot
  * @param {int} argc
  * @param {char} *argv
  * @return {*}
- * @use: 
+ * @use:
  */
-static int parse_args(int argc, char *argv[]) {
+static int parse_args(int argc, char *argv[])
+{
   const struct option table[] = {
-    {"batch"    , no_argument      , NULL, 'b'},
-    {"log"      , required_argument, NULL, 'l'},
-    {"diff"     , required_argument, NULL, 'd'},
-    {"port"     , required_argument, NULL, 'p'},
-    {"help"     , no_argument      , NULL, 'h'},
-    {0          , 0                , NULL,  0 },
+      {"batch", no_argument, NULL, 'b'},
+      {"log", required_argument, NULL, 'l'},
+      {"diff", required_argument, NULL, 'd'},
+      {"mtrace", required_argument, NULL, 'm'},
+      {"port", required_argument, NULL, 'p'},
+      {"help", no_argument, NULL, 'h'},
+      {0, 0, NULL, 0},
   };
   int o;
-  while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
-    switch (o) {
-      case 'b': sdb_set_batch_mode(); break;
-      case 'p': sscanf(optarg, "%d", &difftest_port); break;
-      case 'l': log_file = optarg; break;
-      case 'd': diff_so_file = optarg; break;
-      case 1: img_file = optarg; return 0;
-      default:
-        printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
-        printf("\t-b,--batch              run with batch mode\n");
-        printf("\t-l,--log=FILE           output log to FILE\n");
-        printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
-        printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
-        printf("\n");
-        exit(0);
+  while ((o = getopt_long(argc, argv, "-bhl:d:p:m:", table, NULL)) != -1)
+  {
+    switch (o)
+    {
+    case 'b':
+      sdb_set_batch_mode();
+      break;
+    case 'p':
+      sscanf(optarg, "%d", &difftest_port);
+      break;
+    case 'l':
+      log_file = optarg;
+      break;
+    case 'd':
+      diff_so_file = optarg;
+      break;
+    case 'm':
+      elf_file = optarg;
+      break;
+    case 1:
+      img_file = optarg;
+      return 0;
+    default:
+      printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
+      printf("\t-b,--batch              run with batch mode\n");
+      printf("\t-l,--log=FILE           output log to FILE\n");
+      printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
+      printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
+      printf("\t-m,--mtrace=FILE        input a elf file\n");
+      printf("\n");
+      exit(0);
     }
   }
   return 0;
 }
 
-void init_monitor(int argc, char *argv[]) {
+void init_monitor(int argc, char *argv[])
+{
   /* Perform some global initialization. */
 
   /**
-   * @description: parse the 'b' to enable the 
+   * @description: parse the 'b' to enable the
    * @author: Groot
    * @return {*}
-   * @use: 
+   * @use:
    */
   /* Parse arguments. */
   parse_args(argc, argv);
@@ -131,17 +154,17 @@ void init_monitor(int argc, char *argv[]) {
   init_sdb();
 
   IFDEF(CONFIG_ITRACE, init_disasm(
-    MUXDEF(CONFIG_ISA_x86,     "i686",
-    MUXDEF(CONFIG_ISA_mips32,  "mipsel",
-    MUXDEF(CONFIG_ISA_riscv32, "riscv32",
-    MUXDEF(CONFIG_ISA_riscv64, "riscv64", "bad")))) "-pc-linux-gnu"
-  ));
+                           MUXDEF(CONFIG_ISA_x86, "i686",
+                                  MUXDEF(CONFIG_ISA_mips32, "mipsel",
+                                         MUXDEF(CONFIG_ISA_riscv32, "riscv32",
+                                                MUXDEF(CONFIG_ISA_riscv64, "riscv64", "bad")))) "-pc-linux-gnu"));
 
   /* Display welcome message. */
   welcome();
 }
 #else // CONFIG_TARGET_AM
-static long load_img() {
+static long load_img()
+{
   extern char bin_start, bin_end;
   size_t size = &bin_end - &bin_start;
   Log("img size = %ld", size);
@@ -149,7 +172,8 @@ static long load_img() {
   return size;
 }
 
-void am_init_monitor() {
+void am_init_monitor()
+{
   init_rand();
   init_mem();
   init_isa();
@@ -158,3 +182,4 @@ void am_init_monitor() {
   welcome();
 }
 #endif
+
