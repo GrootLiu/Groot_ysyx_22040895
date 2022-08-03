@@ -70,7 +70,7 @@ char *itoa(int num, char *str) // 10进制
     str[i - 1 - j] = str[j] - str[i - 1 - j];
     str[j] = str[j] - str[i - 1 - j];
   }
-
+  str[i] = '\0';
   return str; //返回转换后的值
 }
 void *malloc(size_t size) {

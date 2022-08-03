@@ -2,6 +2,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+// #include "../monitor/sdb/ftrace.c"
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -45,7 +46,17 @@ void log_iring(Decode *_this)
   iringbuf.inst_num++;
 }
 #endif
-
+#ifdef CONFIG_FTRACE
+extern char *find_func(char *func_name, long int pc);
+typedef struct Symtab_info
+{
+  uint64_t strtab_offset;
+  uint64_t symtab_offset;
+  uint64_t symtab_size;
+  char filename[128];
+} Symtab_info;
+int func_depth = 0;
+#endif
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
@@ -64,14 +75,26 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
   }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_FTRACE
-  // char func_name[128];
-  // extern Symtab_info symtab_info;
-  // extern char *find_func(char *func_name, Symtab_info symtab_info, long int pc);
-  // find_func(func_name, symtab_info, 0x0000000080000011);
-  // printf("fun_name: %s\n", func_name);
+  char func_name[128];
+  char func_buff[1024];
+  char *c = func_buff;
   if (_this->logbuf[32] == 'j')
   {
-    printf("pc: %016lx\n", dnpc - 4);
+    find_func(func_name, dnpc);
+    memset(c, ' ', func_depth);
+    c += func_depth;
+    sprintf(c, "call function: [%s@0x%8lx]\n", func_name, dnpc);
+    printf("%s", func_buff);
+    func_depth++;
+  }
+  else if (_this->logbuf[32] == 'r')
+  {
+    func_depth--;
+    char *c = func_buff;
+    memset(c, ' ', func_depth);
+    c += func_depth;
+    sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, _this->pc);
+    printf("%s", func_buff);
   }
 #endif
 }
