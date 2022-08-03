@@ -1,6 +1,5 @@
 #include <isa.h>
 #include <memory/paddr.h>
-#include <elf.h>
 void init_rand();
 void init_log(const char *log_file);
 void init_mem();
@@ -8,6 +7,10 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
+
+#ifdef CONFIG_FTRACE
+int init_elf(char *filename);
+#endif
 
 static void welcome()
 {
@@ -32,7 +35,6 @@ static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
-
 
 static long load_img()
 {
@@ -128,7 +130,9 @@ void init_monitor(int argc, char *argv[])
   parse_args(argc, argv);
 
   // sdb_set_batch_mode();
-
+#ifdef CONFIG_FTRACE
+  init_elf(argv[5]);
+#endif
   /* Set random seed. */
   init_rand();
 
@@ -182,4 +186,3 @@ void am_init_monitor()
   welcome();
 }
 #endif
-
