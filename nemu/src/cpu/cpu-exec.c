@@ -77,9 +77,9 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 #ifdef CONFIG_FTRACE
   char func_name[128];
   char func_buff[1024];
-  char *c = func_buff;
   if (_this->logbuf[32] == 'j')
   {
+    char *c = func_buff;
     find_func(func_name, dnpc);
     memset(c, ' ', func_depth);
     c += func_depth;
@@ -89,8 +89,8 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
   }
   else if (_this->logbuf[32] == 'r')
   {
-    func_depth--;
     char *c = func_buff;
+    func_depth--;
     memset(c, ' ', func_depth);
     c += func_depth;
     sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, _this->pc);

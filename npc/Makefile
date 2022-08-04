@@ -1,3 +1,4 @@
+include $(AM_HOME)/scripts/riscv64-npc.mk
 .PHONY: all sim verilator
 all:
 	@echo "Write this Makefile by your self."
@@ -9,9 +10,8 @@ verilator: ./csrc/main.cpp ./vsrc/top.v
 
 sim: verilator
 	@echo "- generating the vcd..."
-	./sim/Vtop  CPPFLAGS=-DVL_DEBUG
+	./sim/Vtop $(BIN) CPPFLAGS=-DVL_DEBUG
 
 wave: sim
 	@echo "- open the vcd with GTKWave..."
 	gtkwave ./wave/wave.vcd
-include ../Makefile
