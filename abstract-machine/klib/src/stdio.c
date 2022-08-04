@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:54:14
- * @LastEditTime: 2022-08-03 15:03:15
+ * @LastEditTime: 2022-08-03 15:19:00
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/abstract-machine/klib/src/stdio.c
@@ -16,7 +16,7 @@ int printf(const char *fmt, ...)
 {
   int i = 0;
   int cnt = 0;
-  char out[1024];
+  char out[2048];
   va_list arg_ptr;
   va_start(arg_ptr, fmt);
    while (fmt[i] != '\0')
@@ -24,7 +24,7 @@ int printf(const char *fmt, ...)
     if (fmt[i] == '%')
     {
       int args_i;
-      char args_i_s[1024];
+      char args_i_s[2048];
       char *args_s;
       switch (fmt[i + 1])
       {

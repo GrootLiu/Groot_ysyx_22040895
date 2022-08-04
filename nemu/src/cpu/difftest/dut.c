@@ -94,7 +94,7 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
       checkregs(&ref_r, npc);
       return;
     }
-    skip_dut_nr_inst --;
+    skip_dut_nr_inst--;
     if (skip_dut_nr_inst == 0)
       panic("can not catch up with ref.pc = " FMT_WORD " at pc = " FMT_WORD, ref_r.pc, pc);
     return;

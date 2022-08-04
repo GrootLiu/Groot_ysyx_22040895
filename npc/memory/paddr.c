@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-07-28 09:55:51
+ * @LastEditTime: 2022-08-04 21:08:13
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/memory/paddr.c
@@ -28,7 +28,7 @@ int outOfBound(uint64_t addr)
 
 uint32_t paddr_read(uint64_t addr)
 {
-    printf("pc: %lx\n", addr);
+    // printf("pc: %lx\n", addr);
     if (outOfBound(addr) == 1)
     {
         printf("!!!---memory access out of boundry---!!!\n");
