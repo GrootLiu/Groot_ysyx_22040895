@@ -1,16 +1,16 @@
 `include "/home/groot/ysyx-workbench/npc/include/define.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/idu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ifu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/sext.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/regfile.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/opnumsel.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/cu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/exu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_idu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_ifu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_sext.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_regfile.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_opnumsel.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_cu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
 
-module top(input wire clk,
+module ysyx_22040895_top(input wire clk,
            input wire rst,
-           input wire[`InstBus] inst_i,
-           output wire[`InstAddrBus] instaddr_o);
+           input wire[`ysyx_22040895_InstBus] inst_i,
+           output wire[`ysyx_22040895_InstAddrBus] instaddr_o);
     
     
     // 用于连接if模块和inst_rom的线
@@ -19,28 +19,28 @@ module top(input wire clk,
     wire jump_branch_cu_ifu;
     
     // 用于连接if模块与id模块的线
-    wire[`InstBus] inst_ifu_idu;
-    wire[`InstAddrBus] pc_ifu_idu;
+    wire[`ysyx_22040895_InstBus] inst_ifu_idu;
+    wire[`ysyx_22040895_InstAddrBus] pc_ifu_idu;
     
     // 用于连接id模块和cu模块的线
-    wire[`OpCodeLength] opcode_id_cu;
-    wire[`func3Length] func3_id_cu;
-    wire[`func7Length] func7_id_cu;
+    wire[`ysyx_22040895_OpCodeLength] opcode_id_cu;
+    wire[`ysyx_22040895_func3Length] func3_id_cu;
+    wire[`ysyx_22040895_func7Length] func7_id_cu;
     
     // 用于连接id模块和sext模块的线
-    wire[`imm1Length] imm1_id_sext;
-    wire[`imm2Length] imm2_id_sext;
+    wire[`ysyx_22040895_imm1Length] imm1_id_sext;
+    wire[`ysyx_22040895_imm2Length] imm2_id_sext;
     
     // 用于连接cu模块和sext模块的线
     wire immsel_cu_sext;
     
     // 用于连接sext模块和opnum_mux模块和exu的线
-    wire[`RegBus] simm_sext_opnummux_exu;
+    wire[`ysyx_22040895_RegBus] simm_sext_opnummux_exu;
     
     // 用于连接id模块和regfile模块的线
-    wire[`RegAddrBus] rs1addr_id_reg;
-    wire[`RegAddrBus] rs2addr_id_reg;
-    wire[`RegAddrBus] rdaddr_id_reg;
+    wire[`ysyx_22040895_RegAddrBus] rs1addr_id_reg;
+    wire[`ysyx_22040895_RegAddrBus] rs2addr_id_reg;
+    wire[`ysyx_22040895_RegAddrBus] rdaddr_id_reg;
     
     // 用于连接cu模块和regfile模块的线
     wire re1_cu_reg;
@@ -52,28 +52,28 @@ module top(input wire clk,
 
 
     // 用于连接cu模块和exu模块的线
-    wire[`aluopLength] aluop_cu_exu;
-    wire[`bcuopLength] bcuop_cu_exu;
+    wire[`ysyx_22040895_aluopLength] aluop_cu_exu;
+    wire[`ysyx_22040895_bcuopLength] bcuop_cu_exu;
     wire jump_branch_exu_cu;
 
     // 用于连接ex模块和ifu模块的线
-    wire[`InstAddrBus] dnpc_exu_ifu;
+    wire[`ysyx_22040895_InstAddrBus] dnpc_exu_ifu;
     
     // 用于连接regfile和opnumsel模块的线
-    wire[`RegBus] rdata1_reg_mux;
-    wire[`RegBus] rdata2_reg_mux;
+    wire[`ysyx_22040895_RegBus] rdata1_reg_mux;
+    wire[`ysyx_22040895_RegBus] rdata2_reg_mux;
     
     // 用于连接ex模块和regfile模块的线
-    wire[`RegBus] wdata_ex_reg;
+    wire[`ysyx_22040895_RegBus] wdata_ex_reg;
 
     // 用于连接id模块和ex模块的线
-    wire[`InstAddrBus] pc_id_exu;
+    wire[`ysyx_22040895_InstAddrBus] pc_id_exu;
     
     // 用于连接opnumsel模块和ex模块的线
-    wire[`RegBus] opnum1_opnumsel_ex;
-    wire[`RegBus] opnum2_opnumsel_ex;
+    wire[`ysyx_22040895_RegBus] opnum1_opnumsel_ex;
+    wire[`ysyx_22040895_RegBus] opnum2_opnumsel_ex;
     
-    ifu my_ifu(
+    ysyx_22040895_ifu my_ifu(
     .clk                (clk),
     .rst                (rst),
     .inst_i_ifu         (inst_i),
@@ -85,7 +85,7 @@ module top(input wire clk,
     .ce_o_ifu           (ce_ifu_instrom)
     );
     
-    sext my_sext(
+    ysyx_22040895_sext my_sext(
     .rst           		(rst),
     .immsel_i_sext 		(immsel_cu_sext),
     .imm1_i_sext   		(imm1_id_sext),
@@ -93,7 +93,7 @@ module top(input wire clk,
     .simm_o_sext   		(simm_sext_opnummux_exu)
     );
     
-    idu my_idu(
+    ysyx_22040895_idu my_idu(
     .rst           		(rst),
     .inst_i_idu    		(inst_ifu_idu),
     .pc_i_idu      		(pc_ifu_idu),
@@ -108,7 +108,7 @@ module top(input wire clk,
     .pc_o_idu      		(pc_id_exu)
     );
     
-    regfile my_regfile(
+    ysyx_22040895_regfile my_regfile(
     .clk          		(clk),
     .rst          		(rst),
     .re1_i_reg    		(re1_cu_reg),
@@ -122,7 +122,7 @@ module top(input wire clk,
     .wdata_i_reg  		(wdata_ex_reg)
     );
     
-    opnumsel my_opnumsel(
+    ysyx_22040895_opnumsel my_opnumsel(
     .opsrc_i_opnumsel  		(opsrc_cu_opnumsel),
     .simm_i_opnumsel   		(simm_sext_opnummux_exu),
     .rdata1_opnumsel   		(rdata1_reg_mux),
@@ -131,7 +131,7 @@ module top(input wire clk,
     .opnum2_o_opnumsel 		(opnum2_opnumsel_ex)
     );
     
-    cu my_cu(
+    ysyx_22040895_cu my_cu(
     .rst         		(rst),
     .opcode_i_cu 		(opcode_id_cu),
     .func3_i_cu  		(func3_id_cu),
@@ -147,7 +147,7 @@ module top(input wire clk,
     .jump_branch_o_cu  	(jump_branch_cu_ifu)
     );
     
-    exu my_exu(
+    ysyx_22040895_exu my_exu(
     .rst          		(rst),
     .aluop_i_exu  		(aluop_cu_exu),
     .bcuop_i_exu        (bcuop_cu_exu),

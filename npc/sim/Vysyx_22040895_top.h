@@ -5,22 +5,22 @@
 // The class here is then constructed to instantiate the design.
 // See the Verilator manual for examples.
 
-#ifndef VERILATED_VTOP_H_
-#define VERILATED_VTOP_H_  // guard
+#ifndef VERILATED_VYSYX_22040895_TOP_H_
+#define VERILATED_VYSYX_22040895_TOP_H_  // guard
 
 #include "verilated_heavy.h"
 
-class Vtop__Syms;
-class Vtop___024root;
+class Vysyx_22040895_top__Syms;
+class Vysyx_22040895_top___024root;
 class VerilatedVcdC;
-class Vtop_VerilatedVcd;
+class Vysyx_22040895_top_VerilatedVcd;
 
 
 // This class is the main interface to the Verilated model
-class Vtop VL_NOT_FINAL {
+class Vysyx_22040895_top VL_NOT_FINAL {
   private:
     // Symbol table holding complete model state (owned by this class)
-    Vtop__Syms* const vlSymsp;
+    Vysyx_22040895_top__Syms* const vlSymsp;
 
   public:
 
@@ -38,19 +38,19 @@ class Vtop VL_NOT_FINAL {
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.
-    Vtop___024root* const rootp;
+    Vysyx_22040895_top___024root* const rootp;
 
     // CONSTRUCTORS
     /// Construct the model; called by application code
     /// If contextp is null, then the model will use the default global context
     /// If name is "", then makes a wrapper with a
     /// single model invisible with respect to DPI scope names.
-    explicit Vtop(VerilatedContext* contextp, const char* name = "TOP");
-    explicit Vtop(const char* name = "TOP");
+    explicit Vysyx_22040895_top(VerilatedContext* contextp, const char* name = "TOP");
+    explicit Vysyx_22040895_top(const char* name = "TOP");
     /// Destroy the model; called (often implicitly) by application code
-    virtual ~Vtop();
+    virtual ~Vysyx_22040895_top();
   private:
-    VL_UNCOPYABLE(Vtop);  ///< Copying not allowed
+    VL_UNCOPYABLE(Vysyx_22040895_top);  ///< Copying not allowed
 
   public:
     // API METHODS

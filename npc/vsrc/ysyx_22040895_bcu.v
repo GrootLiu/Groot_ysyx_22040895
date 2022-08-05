@@ -1,13 +1,13 @@
 `include "/home/groot/ysyx-workbench/npc/include/define.v"
 
-module bcu (input wire lt_i_bcu,
+module ysyx_22040895_bcu (input wire lt_i_bcu,
             input wire ltu_i_bcu,
             input wire zero_i_bcu,
-            input wire[`bcuopLength] bcuop_i_bcu,
-            input wire[`RegBus] pc_i_bcu,
-            input wire[`RegBus] offset_i_bcu,
+            input wire[`ysyx_22040895_bcuopLength] bcuop_i_bcu,
+            input wire[`ysyx_22040895_RegBus] pc_i_bcu,
+            input wire[`ysyx_22040895_RegBus] offset_i_bcu,
             output wire jump_branch_o_bcu,
-            output wire[`RegBus] dnpc_o_bcu);
+            output wire[`ysyx_22040895_RegBus] dnpc_o_bcu);
     
     wire op_beq  = (bcuop_i_bcu == 3'b001);
     wire op_bge  = (bcuop_i_bcu == 3'b010);

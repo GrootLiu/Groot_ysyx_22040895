@@ -1,16 +1,16 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Symbol table implementation internals
 
-#include "Vtop__Syms.h"
-#include "Vtop.h"
-#include "Vtop___024root.h"
+#include "Vysyx_22040895_top__Syms.h"
+#include "Vysyx_22040895_top.h"
+#include "Vysyx_22040895_top___024root.h"
 
 // FUNCTIONS
-Vtop__Syms::~Vtop__Syms()
+Vysyx_22040895_top__Syms::~Vysyx_22040895_top__Syms()
 {
 }
 
-Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep,Vtop* modelp)
+Vysyx_22040895_top__Syms::Vysyx_22040895_top__Syms(VerilatedContext* contextp, const char* namep,Vysyx_22040895_top* modelp)
     : VerilatedSyms{contextp}
     // Setup internal state of the Syms class
     , __Vm_modelp(modelp)

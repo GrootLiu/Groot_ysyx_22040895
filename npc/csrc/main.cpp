@@ -11,14 +11,14 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "verilated.h"
-#include "../sim/Vtop.h"
+#include "../sim/Vysyx_22040895_top.h"
 // 用于输出显示波形
 #include "verilated_vcd_c.h"
 
 #include "../memory/paddr.c"
 
-#define RstEnable 1
-#define RstDisable 0
+#define ysyx_22040895_RstEnable 1
+#define ysyx_22040895_RstDisable 0
 
 #define EBREAK 0x00100073
 // This is a 64-bit integer to reduce wrap over issues and allow modulus.
@@ -40,19 +40,19 @@ int main(int argc, char **argv, char **env)
 
 	// Instantiation of model
 	// Create model
-	Vtop *top = new Vtop{contextp};
+	Vysyx_22040895_top *top = new Vysyx_22040895_top{contextp};
 	VerilatedVcdC *tfp = new VerilatedVcdC;
 
 	top->trace(tfp, 99);
 	// VCD文件保存位置
 	tfp->open("./wave/wave.vcd");
-	top->rst = RstEnable;
+	top->rst = ysyx_22040895_RstEnable;
 	while (!contextp->gotFinish())
 	{
 		contextp->timeInc(1);
 		if (contextp->time() > 10)
 		{
-			top->rst = RstDisable;
+			top->rst = ysyx_22040895_RstDisable;
 		}
 		if ((contextp->time() % 2) == 0)
 		{
@@ -63,7 +63,7 @@ int main(int argc, char **argv, char **env)
 			top->clk = 1;
 		}
 		top->eval();
-		if (top->instaddr_o >= 0x80000000 && top->rst == RstDisable)
+		if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 		{
 			uint32_t pc = top->instaddr_o;
 			top->inst_i = paddr_read(pc);
