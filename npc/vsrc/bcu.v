@@ -25,6 +25,6 @@ module bcu (input wire lt_i_bcu,
     wire bne  = ~zero_i_bcu & op_bne;
     
     assign jump_branch_o_bcu = beq | bge | bgeu | blt | bltu | bne;
-    assign dnpc_o_bcu        = pc_i_bcu + offset_i_bcu;
+    assign dnpc_o_bcu        = pc_i_bcu + (offset_i_bcu << 1);
     
 endmodule //bcu

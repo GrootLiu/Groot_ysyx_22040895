@@ -101,10 +101,9 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__my_cu__DOT__bgeu_op = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__my_cu__DOT__blt_op = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__my_cu__DOT__bltu_op = VL_RAND_RESET_I(1);
-    vlSelf->top__DOT__my_cu__DOT__jalr_op = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__my_cu__DOT__bne_op = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__my_cu__DOT__jalr_op = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__my_exu__DOT__alu_result = VL_RAND_RESET_Q(64);
-    vlSelf->top__DOT__my_exu__DOT__dnpc_o_bcu = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__my_exu__DOT__my_alu__DOT__sub_result = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__my_exu__DOT__my_alu__DOT__slt_result = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__my_exu__DOT__my_alu__DOT__adder_result = VL_RAND_RESET_Q(64);

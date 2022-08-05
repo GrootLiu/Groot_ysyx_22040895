@@ -19,8 +19,12 @@
 
 #define RstEnable 1
 #define RstDisable 0
+
+#define EBREAK 0x00100073
 // This is a 64-bit integer to reduce wrap over issues and allow modulus.
 // This is in units of timeprecision used in Verilog(or from --timescale-override)
+
+vluint64_t main_time = 100;
 
 static void load_img(char *img_file);
 int main(int argc, char **argv, char **env)
@@ -63,6 +67,10 @@ int main(int argc, char **argv, char **env)
 		{
 			uint32_t pc = top->instaddr_o;
 			top->inst_i = paddr_read(pc);
+			if (top->inst_i == EBREAK)
+			{
+				contextp->gotFinish(true);
+			}
 		}
 		top->eval();
 		tfp->dump(contextp->time());

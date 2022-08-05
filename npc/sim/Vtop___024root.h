@@ -56,8 +56,8 @@ VL_MODULE(Vtop___024root) {
     CData/*0:0*/ top__DOT__my_cu__DOT__bgeu_op;
     CData/*0:0*/ top__DOT__my_cu__DOT__blt_op;
     CData/*0:0*/ top__DOT__my_cu__DOT__bltu_op;
-    CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
     CData/*0:0*/ top__DOT__my_cu__DOT__bne_op;
+    CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
     CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_cout;
     SData/*11:0*/ top__DOT__imm1_id_sext;
     IData/*19:0*/ top__DOT__imm2_id_sext;
@@ -66,7 +66,6 @@ VL_MODULE(Vtop___024root) {
     QData/*63:0*/ top__DOT__pc_id_exu;
     QData/*63:0*/ top__DOT__opnum2_opnumsel_ex;
     QData/*63:0*/ top__DOT__my_exu__DOT__alu_result;
-    QData/*63:0*/ top__DOT__my_exu__DOT__dnpc_o_bcu;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__sub_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__slt_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_result;

@@ -34,7 +34,7 @@ module idu (input wire rst,
     assign branch = beq | bge | bgeu | blt | bltu | bne;
     
     wire[11:0] branch_offset = {inst_i_idu[11:8], inst_i_idu[30:25], inst_i_idu[7], inst_i_idu[31]};
-    wire[19:0] jal_offset   = {inst_i_idu[31], inst_i_idu[21:12], inst_i_idu[22], inst_i_idu[30:23]};
+    wire[19:0] jal_offset   = {inst_i_idu[31], inst_i_idu[19:12], inst_i_idu[20], inst_i_idu[30:21]};
     
     assign pc_o_idu      = (rst == `RstEnable) ? 64'b0 : pc_i_idu;
     assign opcode_o_idu  = (rst == `RstEnable) ? 7'b0 : inst_i_idu[6:0];
