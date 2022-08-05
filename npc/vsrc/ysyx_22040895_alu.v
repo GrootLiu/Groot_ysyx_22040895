@@ -1,9 +1,9 @@
 `include "/home/groot/ysyx-workbench/npc/include/define.v"
 
-module alu (input wire[`aluopLength] aluop_i_alu,
-            input wire[`RegBus] op1_i_alu,
-            input wire[`RegBus] op2_i_alu,
-            output wire[`RegBus] result_o_alu,
+module ysyx_22040895_alu (input wire[`ysyx_22040895_aluopLength] aluop_i_alu,
+            input wire[`ysyx_22040895_RegBus] op1_i_alu,
+            input wire[`ysyx_22040895_RegBus] op2_i_alu,
+            output wire[`ysyx_22040895_RegBus] result_o_alu,
             output wire lt_o_alu,
             output wire ltu_o_alu, 
             output wire zero_o_alu);
@@ -19,30 +19,30 @@ module alu (input wire[`aluopLength] aluop_i_alu,
     wire op_or    = (aluop_i_alu == 4'b0111);
     wire op_xor   = (aluop_i_alu == 4'b1000);
 
-    wire[`RegBus] add_sub_result;
-    wire[`RegBus] sub_result;
-    wire[`RegBus] slt_result;
-    wire[`RegBus] sltu_result;
-    wire[`RegBus] sll_result;
-    wire[`RegBus] srl_result;
-    wire[`RegBus] sra_result;
-    wire[`RegBus] and_result;
-    wire[`RegBus] or_result;
-    wire[`RegBus] xor_result;
+    wire[`ysyx_22040895_RegBus] add_sub_result;
+    wire[`ysyx_22040895_RegBus] sub_result;
+    wire[`ysyx_22040895_RegBus] slt_result;
+    wire[`ysyx_22040895_RegBus] sltu_result;
+    wire[`ysyx_22040895_RegBus] sll_result;
+    wire[`ysyx_22040895_RegBus] srl_result;
+    wire[`ysyx_22040895_RegBus] sra_result;
+    wire[`ysyx_22040895_RegBus] and_result;
+    wire[`ysyx_22040895_RegBus] or_result;
+    wire[`ysyx_22040895_RegBus] xor_result;
 
     assign and_result = op1_i_alu & op2_i_alu;
     assign or_result  = op1_i_alu | op2_i_alu;
     assign xor_result = op1_i_alu ^ op2_i_alu;
 
 
-    wire[`RegBus] adder_result;
+    wire[`ysyx_22040895_RegBus] adder_result;
     wire adder_cout;
 //     wire carryout;
 //     wire overflow;
 
-    wire[`RegBus] op1 = op1_i_alu;
-    wire[`RegBus] op2 = (op_sub | op_slt | op_sltu) ? ~op2_i_alu : op2_i_alu;
-    wire[`RegBus] cin = (op_sub | op_slt | op_sltu) ? 64'h1 : 64'h0;
+    wire[`ysyx_22040895_RegBus] op1 = op1_i_alu;
+    wire[`ysyx_22040895_RegBus] op2 = (op_sub | op_slt | op_sltu) ? ~op2_i_alu : op2_i_alu;
+    wire[`ysyx_22040895_RegBus] cin = (op_sub | op_slt | op_sltu) ? 64'h1 : 64'h0;
     assign {adder_cout, adder_result} = op1 + op2 + cin;
     assign add_sub_result = adder_result;
     assign slt_result[63:1] = {63{1'b0}};

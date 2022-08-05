@@ -1,12 +1,12 @@
 `include "/home/groot/ysyx-workbench/npc/include/define.v"
 
-module cu (input wire rst,
-           input wire[`OpCodeLength] opcode_i_cu,
-           input wire[`func3Length] func3_i_cu,
-           input wire[`func7Length] func7_i_cu,
+module ysyx_22040895_cu (input wire rst,
+           input wire[`ysyx_22040895_OpCodeLength] opcode_i_cu,
+           input wire[`ysyx_22040895_func3Length] func3_i_cu,
+           input wire[`ysyx_22040895_func7Length] func7_i_cu,
            input wire jump_branch_i_cu,
-           output wire[`aluopLength] aluop_o_cu,
-           output wire[`bcuopLength] bcuop_o_cu,
+           output wire[`ysyx_22040895_aluopLength] aluop_o_cu,
+           output wire[`ysyx_22040895_bcuopLength] bcuop_o_cu,
            output wire opsel_o_cu,
            output wire immsel_o_cu,
            output wire re1_o_cu,
@@ -14,9 +14,9 @@ module cu (input wire rst,
            output wire we_o_cu,
            output wire jump_branch_o_cu);
     
-    wire[`OpCodeLength] op   = opcode_i_cu;
-    wire[`func3Length] func3 = func3_i_cu;
-    wire[`func7Length] func7 = func7_i_cu;
+    wire[`ysyx_22040895_OpCodeLength] op   = opcode_i_cu;
+    wire[`ysyx_22040895_func3Length] func3 = func3_i_cu;
+    wire[`ysyx_22040895_func7Length] func7 = func7_i_cu;
     
     //  指令
     // I type               // R type               // R type

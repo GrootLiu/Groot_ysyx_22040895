@@ -8,10 +8,10 @@ module alu_tb;
   // Parameters
 
   // Ports
-  reg  [`aluopLength] aluop_i_alu;
-  reg  [`RegBus] op1_i_alu;
-  reg  [`RegBus] op2_i_alu;
-  wire [`RegBus] result_o_alu;
+  reg  [`ysyx_22040895_aluopLength] aluop_i_alu;
+  reg  [`ysyx_22040895_RegBus] op1_i_alu;
+  reg  [`ysyx_22040895_RegBus] op2_i_alu;
+  wire [`ysyx_22040895_RegBus] result_o_alu;
 
   alu alu_dut (
     .aluop_i_alu   (aluop_i_alu),
