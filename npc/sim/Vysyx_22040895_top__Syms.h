@@ -16,6 +16,8 @@
 // INCLUDE MODULE CLASSES
 #include "Vysyx_22040895_top___024root.h"
 
+// DPI TYPES for DPI Export callbacks (Internal use)
+
 // SYMS CLASS (contains all model state)
 class Vysyx_22040895_top__Syms final : public VerilatedSyms {
   public:

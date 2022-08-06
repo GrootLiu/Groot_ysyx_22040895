@@ -461,7 +461,7 @@ void Vysyx_22040895_top___024root__traceFullSub0(Vysyx_22040895_top___024root* v
                                       & (5U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)))) 
                                   | ((0ULL != vlSelf->ysyx_22040895_top__DOT__my_exu__DOT__alu_result) 
                                      & (6U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu))))));
-        tracep->fullQData(oldp+85,(((0U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu))
+        tracep->fullQData(oldp+85,(((0xcU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
                                      ? (0xfffffffffffffffeULL 
                                         & (vlSelf->ysyx_22040895_top__DOT__rdata1_reg_mux 
                                            + vlSelf->ysyx_22040895_top__DOT__simm_sext_opnummux_exu))
@@ -471,7 +471,7 @@ void Vysyx_22040895_top___024root__traceFullSub0(Vysyx_22040895_top___024root* v
         tracep->fullQData(oldp+87,(vlSelf->ysyx_22040895_top__DOT__rdata1_reg_mux),64);
         tracep->fullQData(oldp+89,(((((0xaU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu)) 
                                       | (7U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu))) 
-                                     | (0U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)))
+                                     | (0xcU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu)))
                                      ? (((0xbU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
                                           ? 0ULL : vlSelf->ysyx_22040895_top__DOT__pc_id_exu) 
                                         + ((0xaU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
@@ -479,8 +479,8 @@ void Vysyx_22040895_top___024root__traceFullSub0(Vysyx_22040895_top___024root* v
                                                << 0xcU)
                                             : (((7U 
                                                  == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)) 
-                                                | (0U 
-                                                   == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)))
+                                                | (0xcU 
+                                                   == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu)))
                                                 ? 4ULL
                                                 : 0ULL)))
                                      : vlSelf->ysyx_22040895_top__DOT__my_exu__DOT__alu_result)),64);
@@ -614,14 +614,14 @@ void Vysyx_22040895_top___024root__traceFullSub0(Vysyx_22040895_top___024root* v
         tracep->fullBit(oldp+144,((0xaU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))));
         tracep->fullBit(oldp+145,((0xbU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))));
         tracep->fullBit(oldp+146,((7U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu))));
-        tracep->fullBit(oldp+147,((0U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu))));
+        tracep->fullBit(oldp+147,((0xcU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))));
         tracep->fullQData(oldp+148,(((0xbU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
                                       ? 0ULL : vlSelf->ysyx_22040895_top__DOT__pc_id_exu)),64);
         tracep->fullQData(oldp+150,(((0xaU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
                                       ? (vlSelf->ysyx_22040895_top__DOT__opnum2_opnumsel_ex 
                                          << 0xcU) : 
                                      (((7U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)) 
-                                       | (0U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)))
+                                       | (0xcU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu)))
                                        ? 4ULL : 0ULL))),64);
         tracep->fullQData(oldp+152,((((0xbU == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))
                                        ? 0ULL : vlSelf->ysyx_22040895_top__DOT__pc_id_exu) 
@@ -629,8 +629,8 @@ void Vysyx_22040895_top___024root__traceFullSub0(Vysyx_22040895_top___024root* v
                                          ? (vlSelf->ysyx_22040895_top__DOT__opnum2_opnumsel_ex 
                                             << 0xcU)
                                          : (((7U == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)) 
-                                             | (0U 
-                                                == (IData)(vlSelf->ysyx_22040895_top__DOT__bcuop_cu_exu)))
+                                             | (0xcU 
+                                                == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu)))
                                              ? 4ULL
                                              : 0ULL)))),64);
         tracep->fullBit(oldp+154,((0U == (IData)(vlSelf->ysyx_22040895_top__DOT__aluop_cu_exu))));
