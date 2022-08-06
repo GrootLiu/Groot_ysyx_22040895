@@ -10,7 +10,7 @@ verilator: ./csrc/main.cpp ./vsrc/ysyx_22040895_top.v
 
 sim: verilator
 	@echo "- generating the vcd..."
-	./sim/Vtop $(BIN) CPPFLAGS=-DVL_DEBUG
+	./sim/Vysyx_22040895_top $(BIN) CPPFLAGS=-DVL_DEBUG
 
 wave: sim
 	@echo "- open the vcd with GTKWave..."

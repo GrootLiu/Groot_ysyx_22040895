@@ -80,7 +80,8 @@ module ysyx_22040895_cu (input wire rst,
     | ({4{srl_op}}  & 4'b0100)
     | ({4{sra_op}}  & 4'b0101)
     | ({4{auipc_op}}& 4'b1010)
-	| ({4{lui_op}}  & 4'b1011);
+	| ({4{lui_op}}  & 4'b1011)
+	| ({4{jalr_op}} & 4'b1100);
     
     assign bcuop_o_cu = ({3{beq_op}} & 3'b001)
     |({3{bge_op}} & 3'b010)
@@ -88,8 +89,7 @@ module ysyx_22040895_cu (input wire rst,
     |({3{blt_op}} & 3'b100)
     |({3{bltu_op}}& 3'b101)
     |({3{bne_op}} & 3'b110)
-    |({3{jal_op}} & 3'b111)
-    |({3{jalr_op}}& 3'b000);
+    |({3{jal_op}} & 3'b111);
     
     wire op_rs1_imm = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | auipc_op | jalr_op | lui_op);
     wire op_rs1_rs2 = (add_op   | sub_op  | and_op | or_op   | xor_op  | slt_op   | sltu_op  | sll_op | srl_op | sra_op | beq_op | bge_op  | bgeu_op | blt_op | bltu_op | bne_op);

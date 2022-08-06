@@ -46,7 +46,7 @@ module ysyx_22040895_exu (input wire rst,
     wire auipc_op              = (aluop_i_exu == 4'b1010);
 	wire lui_op				   = (aluop_i_exu == 4'b1011);
     wire jal_op                = (bcuop_i_exu == 3'b111);
-    wire jalr_op               = (bcuop_i_exu == 3'b000);
+    wire jalr_op               = (aluop_i_exu == 4'b1100);
 	wire[`ysyx_22040895_RegBus] adder_op1    = (lui_op == 1'b1) ? (64'b0) : pc_i_exu;
     wire[`ysyx_22040895_RegBus] adder_op2    = (auipc_op == 1'b1) ? (op2_i_exu<<12) :
                                  (jal_op == 1'b1 | jalr_op == 1'b1) ? (64'h4) : 64'h0;

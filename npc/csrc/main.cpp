@@ -14,8 +14,13 @@
 #include "../sim/Vysyx_22040895_top.h"
 // 用于输出显示波形
 #include "verilated_vcd_c.h"
-
+// 用于DPI-C
+#include "verilated_dpi.h"
+#include "Vysyx_22040895_top__Dpi.h"
+// 访存
 #include "../memory/paddr.c"
+// 用于输出正误
+#include "../include/utils.h"
 
 #define ysyx_22040895_RstEnable 1
 #define ysyx_22040895_RstDisable 0
@@ -25,12 +30,14 @@
 // This is in units of timeprecision used in Verilog(or from --timescale-override)
 
 vluint64_t main_time = 100;
+uint64_t *cpu_gpr = NULL;
 
 static void load_img(char *img_file);
 int main(int argc, char **argv, char **env)
 {
 	load_img(argv[1]); // load_img();
-
+	int exit = 0;
+	uint32_t pc;
 	printf("Hello, ysyx!\n");
 	VerilatedContext *contextp = new VerilatedContext;
 
@@ -65,21 +72,39 @@ int main(int argc, char **argv, char **env)
 		top->eval();
 		if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 		{
-			uint32_t pc = top->instaddr_o;
+			pc = top->instaddr_o;
 			top->inst_i = paddr_read(pc);
 			if (top->inst_i == EBREAK)
 			{
-				contextp->gotFinish(true);
+				exit = 1;
+				top->eval();
+				tfp->dump(contextp->time());
+				continue;
 			}
 		}
 		top->eval();
 		tfp->dump(contextp->time());
+		if (exit == 1)
+		{
+			contextp->gotFinish(true);
+		}
 	}
 	// Down simulating
+	// printf("r0: %ld\n", *reg_a0);
 	top->final();
 	tfp->close();
 	delete top;
 	delete contextp;
+	switch (cpu_gpr[10])
+	{
+	case 0:
+		printf("npc: %s at pc = %x\n", ASNI_FMT("HIT GOOD TRAP", ASNI_FG_CYAN), pc);
+		break;
+	default:
+		printf("npc: %s at pc = %x\n", ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED), pc);
+		break;
+	}
+
 	return 0;
 }
 static void load_img(char *img_file)
@@ -96,6 +121,11 @@ static void load_img(char *img_file)
 	int ret = fread(guest_to_host(RESET_VECTOR), size, 1, fp);
 
 	fclose(fp);
+}
+
+void set_gpr_ptr(const svOpenArrayHandle r)
+{
+	cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
 }
 
 // unsigned int getInst();
