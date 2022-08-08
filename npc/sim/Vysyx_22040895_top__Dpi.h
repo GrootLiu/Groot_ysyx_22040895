@@ -12,8 +12,12 @@ extern "C" {
 #endif
 
 
+    // DPI EXPORTS
+    // DPI export at /home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_ifu.v:29:19
+    extern void get_inst(int* inst);
+
     // DPI IMPORTS
-    // DPI import at /home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_regfile.v:30:34
+    // DPI import at /home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_regfile.v:2:30
     extern void set_gpr_ptr(const svOpenArrayHandle a);
 
 #ifdef __cplusplus

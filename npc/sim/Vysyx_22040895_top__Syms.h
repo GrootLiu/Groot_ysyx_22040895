@@ -15,8 +15,10 @@
 
 // INCLUDE MODULE CLASSES
 #include "Vysyx_22040895_top___024root.h"
+#include "Vysyx_22040895_top___024unit.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)
+using Vysyx_22040895_top__Vcb_get_inst_t = void (*) (Vysyx_22040895_top__Syms* __restrict vlSymsp, IData/*31:0*/ &inst);
 
 // SYMS CLASS (contains all model state)
 class Vysyx_22040895_top__Syms final : public VerilatedSyms {
@@ -29,6 +31,10 @@ class Vysyx_22040895_top__Syms final : public VerilatedSyms {
 
     // MODULE INSTANCE STATE
     Vysyx_22040895_top___024root   TOP;
+    Vysyx_22040895_top___024unit   TOP____024unit;
+
+    // SCOPE NAMES
+    VerilatedScope __Vscope_ysyx_22040895_top__my_ifu;
 
     // CONSTRUCTORS
     Vysyx_22040895_top__Syms(VerilatedContext* contextp, const char* namep, Vysyx_22040895_top* modelp);

@@ -27,14 +27,14 @@ void Vysyx_22040895_top___024root::__Vconfigure(Vysyx_22040895_top__Syms* _vlSym
 Vysyx_22040895_top___024root::~Vysyx_22040895_top___024root() {
 }
 
-void Vysyx_22040895_top___024root____Vdpiimwrap_ysyx_22040895_top__DOT__my_regfile__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 32> &a);
+void Vysyx_22040895_top___024unit____Vdpiimwrap_set_gpr_ptr__Vdpioc2_TOP____024unit(const VlUnpacked<QData/*63:0*/, 32> &a);
 
 void Vysyx_22040895_top___024root___initial__TOP__4(Vysyx_22040895_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vysyx_22040895_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_22040895_top___024root___initial__TOP__4\n"); );
     // Body
-    Vysyx_22040895_top___024root____Vdpiimwrap_ysyx_22040895_top__DOT__my_regfile__DOT__set_gpr_ptr__Vdpioc2_TOP(vlSelf->ysyx_22040895_top__DOT__my_regfile__DOT__regs);
+    Vysyx_22040895_top___024unit____Vdpiimwrap_set_gpr_ptr__Vdpioc2_TOP____024unit(vlSelf->ysyx_22040895_top__DOT__my_regfile__DOT__regs);
 }
 
 void Vysyx_22040895_top___024root___eval_initial(Vysyx_22040895_top___024root* vlSelf) {

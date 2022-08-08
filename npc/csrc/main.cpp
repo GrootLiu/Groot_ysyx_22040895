@@ -1,3 +1,12 @@
+/*** 
+ * @Author: Groot
+ * @Date: 2022-08-08 10:58:41
+ * @LastEditTime: 2022-08-08 10:58:41
+ * @LastEditors: Groot
+ * @Description: 
+ * @FilePath: /ysyx-workbench/npc/csrc/main.cpp
+ * @版权声明
+ */
 /***
  * @Author: Groot
  * @Date: 2022-07-05 22:56:28
@@ -127,18 +136,3 @@ void set_gpr_ptr(const svOpenArrayHandle r)
 {
 	cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
 }
-
-// unsigned int getInst();
-// int count = 0;
-// unsigned int insts[26] = {
-// 	0x00108113, 0x00117193, 0x0021e213, 0xfff24293, 0xffb2a313,
-// 	0x002303b3, 0x40538433, 0x007474b3, 0x0074e533, 0x00a445b3,
-// 	0x00653613, 0x00c526b3, 0x00b63733, 0x004717b3, 0x00e7d833,
-// 	0x40e2d8b3, 0x00009917, 0x04e60063, 0x0507d063, 0x0507f063,
-// 	0x0508c063, 0x04f86063, 0x04f81063, 0x0400096f, 0x008609e7};
-// unsigned int getInst()
-// {
-// 	unsigned int inst = insts[count];
-// 	count++;
-// 	return inst;
-// }

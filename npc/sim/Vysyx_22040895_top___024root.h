@@ -11,12 +11,15 @@
 
 class Vysyx_22040895_top__Syms;
 class Vysyx_22040895_top_VerilatedVcd;
+class Vysyx_22040895_top___024unit;
 
 
 //----------
 
 VL_MODULE(Vysyx_22040895_top___024root) {
   public:
+    // CELLS
+    Vysyx_22040895_top___024unit* __PVT____024unit;
 
     // PORTS
     VL_IN8(clk,0,0);

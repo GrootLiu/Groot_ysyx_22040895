@@ -15,6 +15,7 @@ Vysyx_22040895_top::Vysyx_22040895_top(VerilatedContext* _vcontextp__, const cha
     , rst{vlSymsp->TOP.rst}
     , inst_i{vlSymsp->TOP.inst_i}
     , instaddr_o{vlSymsp->TOP.instaddr_o}
+    , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
     , rootp{&(vlSymsp->TOP)}
 {
 }
