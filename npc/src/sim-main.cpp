@@ -1,10 +1,10 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:34:47
- * @LastEditTime: 2022-08-08 22:51:45
+ * @LastEditTime: 2022-08-09 10:56:41
  * @LastEditors: Groot
  * @Description: 
- * @FilePath: /ysyx-workbench/npc/src/sim_main.cpp
+ * @FilePath: /ysyx-workbench/npc/src/sim-main.cpp
  * @版权声明
  */
 #include "./include/global.h"
@@ -29,6 +29,7 @@ void sim_main(int argc, char **argv)
 	tfp->close();
 	delete top;
 	delete contextp;
+	return;
 }
 
 void wave_gen()
@@ -37,7 +38,7 @@ void wave_gen()
 	tfp = new VerilatedVcdC;
 	top->trace(tfp, 99);
 	// VCD文件保存位置
-	tfp->open("../wave/wave.vcd");
+	tfp->open("./wave/wave.vcd");
 }
 
 void set_gpr_ptr(const svOpenArrayHandle r)

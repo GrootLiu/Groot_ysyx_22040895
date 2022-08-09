@@ -34,7 +34,7 @@ default: run
 ## Make
 run: 
 	@echo
-	@echo "-- VERILATE ----------------"
+	@echo $(FG_YELLOW) "-- VERILATE ----------------" $(CLOSE)
 	@echo
 	$(VERILATOR) $(VERILATOR_FLAGS) $(VERILATOR_INPUT)
 ### To compile, we can either
@@ -43,11 +43,23 @@ run:
 #		$(MAKE) -j -C obj_dir -f Vysyx_22040895_top.mk
 # 3. Or, call a submakefile where we can override the rules ourselves:
 	@echo
-	@echo "-- BUILDING ----------------"
+	@echo $(FG_YELLOW) "-- BUILDING ----------------" $(CLOSE)
 	@echo
 	$(MAKE)  -j -C sim_dir -f ../Makefile_obj
 
 	@echo
-	@echo "-- RUN ----------------"
+	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
 	@echo
 	sim_dir/Vysyx_22040895_top $(BIN)
+
+	@echo
+	@echo $(FG_YELLOW) "-- DONE --------------------" $(CLOSE)
+	@echo $(FG_MAGENTA) "To see waveforms, please "make wave"" $(CLOSE)
+	@echo
+wave: run
+	gtkwave ./wave/wave.vcd
+
+
+FG_YELLOW = "\001\033[1;33m"
+FG_MAGENTA = "\001\033[1;35m"
+CLOSE = "\001\033[0m\002"

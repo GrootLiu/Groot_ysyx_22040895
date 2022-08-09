@@ -1,12 +1,13 @@
-/*** 
+/***
  * @Author: Groot
  * @Date: 2022-08-08 12:05:19
- * @LastEditTime: 2022-08-08 15:28:39
+ * @LastEditTime: 2022-08-09 10:50:33
  * @LastEditors: Groot
- * @Description: 
- * @FilePath: /ysyx-workbench/npc/main/cpu-excu.cpp
+ * @Description:
+ * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
+// #include "../include/global.h"
 int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 {
 	uint32_t pc;
@@ -45,13 +46,29 @@ int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 	return exit;
 }
 
-void excute(VerilatedContext *contextp, VerilatedVcdC *tfp, int n)
+int excute(VerilatedContext *contextp, VerilatedVcdC *tfp, int n)
 {
 	int exit = 0;
 	int times = 0;
-	while (!contextp->gotFinish() && times <= n)
+	if (n == -1)
 	{
-		exit = excu_once(contextp, tfp, exit);
-		times++;
+		while (!contextp->gotFinish())
+		{
+			exit = excu_once(contextp, tfp, exit);
+			times++;
+		}
 	}
+	else
+	{
+		while (!contextp->gotFinish() && times <= n)
+		{
+			exit = excu_once(contextp, tfp, exit);
+			times++;
+		}
+	}
+	if (exit == 1)
+	{
+		return -1;
+	}
+	return 0;
 }
