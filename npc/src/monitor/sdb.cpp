@@ -1,13 +1,13 @@
-/***
+/*** 
  * @Author: Groot
  * @Date: 2022-08-08 15:05:17
- * @LastEditTime: 2022-08-08 15:05:18
+ * @LastEditTime: 2022-08-08 22:55:15
  * @LastEditors: Groot
- * @Description:
- * @FilePath: /ysyx-workbench/npc/main/sdb.cpp
+ * @Description: 
+ * @FilePath: /ysyx-workbench/npc/src/monitor/sdb.cpp
  * @版权声明
  */
-#include "cpu-excu.cpp"
+#include "../cpu/cpu-excu.cpp"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -45,4 +45,3 @@ void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 		// excute(contextp, tfp, n);
 	}
 }
-
