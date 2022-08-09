@@ -5,6 +5,8 @@
 #include "Vysyx_22040895_top___024root.cpp"
 #include "Vysyx_22040895_top___024unit.cpp"
 #include "Vysyx_22040895_top__Dpi.cpp"
+#include "Vysyx_22040895_top__Trace.cpp"
 #include "Vysyx_22040895_top___024root__Slow.cpp"
 #include "Vysyx_22040895_top___024unit__Slow.cpp"
 #include "Vysyx_22040895_top__Syms.cpp"
+#include "Vysyx_22040895_top__Trace__Slow.cpp"

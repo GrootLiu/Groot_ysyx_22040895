@@ -1,15 +1,15 @@
-/***
+/*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:34:47
- * @LastEditTime: 2022-08-08 11:51:57
+ * @LastEditTime: 2022-08-08 22:51:45
  * @LastEditors: Groot
- * @Description:
- * @FilePath: /ysyx-workbench/npc/main/sim_main.cpp
+ * @Description: 
+ * @FilePath: /ysyx-workbench/npc/src/sim_main.cpp
  * @版权声明
  */
-#include "global.h"
+#include "./include/global.h"
 
-#include "sdb.cpp"
+#include "./monitor/sdb.cpp"
 
 void wave_gen();
 

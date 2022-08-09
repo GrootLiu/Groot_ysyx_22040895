@@ -1,10 +1,10 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:26:30
- * @LastEditTime: 2022-08-08 14:42:19
+ * @LastEditTime: 2022-08-08 22:37:37
  * @LastEditors: Groot
  * @Description: 
- * @FilePath: /ysyx-workbench/npc/main/monitor.cpp
+ * @FilePath: /ysyx-workbench/npc/src/monitor/monitor.cpp
  * @版权声明
  */
 #include "../memory/paddr.c"
@@ -30,7 +30,6 @@ static void load_img(char *img_file)
 
 	fclose(fp);
 }
-
 void init_monitor(int argc, char *argv[])
 {
 	load_img(argv[1]);

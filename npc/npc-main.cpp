@@ -1,14 +1,14 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:22:52
- * @LastEditTime: 2022-08-08 11:15:35
+ * @LastEditTime: 2022-08-08 22:36:11
  * @LastEditors: Groot
  * @Description: 
- * @FilePath: /ysyx-workbench/npc/main/npc-main.cpp
+ * @FilePath: /ysyx-workbench/npc/npc-main.cpp
  * @版权声明
  */
-#include "monitor.cpp"
-#include "engine.cpp"
+#include "./src/monitor/monitor.cpp"
+#include "./src/engine/engine.cpp"
 
 int main(int argc, char** argv)
 {

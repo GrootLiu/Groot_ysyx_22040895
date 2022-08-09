@@ -10,6 +10,8 @@
 //==========
 
 class Vysyx_22040895_top__Syms;
+class Vysyx_22040895_top_VerilatedVcd;
+
 
 //----------
 
