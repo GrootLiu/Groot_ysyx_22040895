@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 12:08:25
- * @LastEditTime: 2022-08-08 22:54:38
+ * @LastEditTime: 2022-08-09 15:06:57
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/include/global.h
@@ -17,14 +17,15 @@
 #include "verilated_dpi.h"
 #include "Vysyx_22040895_top__Dpi.h"
 
+#define ITRACE 1
+#define EBREAK 0x00100073
+
+#define ysyx_22040895_RstEnable 1
+#define ysyx_22040895_RstDisable 0
 
 VerilatedContext *contextp = NULL;
 Vysyx_22040895_top *top = NULL;
 VerilatedVcdC *tfp = NULL;
 
-#define ysyx_22040895_RstEnable 1
-#define ysyx_22040895_RstDisable 0
-
-#define EBREAK 0x00100073
 
 uint64_t *cpu_gpr = NULL;
