@@ -24,7 +24,7 @@ VERILATOR_FLAGS += --Wno-fatal
 ## make waveforms
 VERILATOR_FLAGS += --trace
 ## make dir
-VERILATOR_FLAGS += --Mdir  sim_dir
+VERILATOR_FLAGS += --Mdir  sim
 
 # Input_file for Verilator
 VERILATOR_INPUT = ./vsrc/ysyx_22040895_top.v ./npc-main.cpp -y ../vsrc
@@ -45,12 +45,12 @@ run:
 	@echo
 	@echo $(FG_YELLOW) "-- BUILDING ----------------" $(CLOSE)
 	@echo
-	$(MAKE)  -j -C sim_dir -f ../Makefile_obj
+	$(MAKE)  -j -C sim -f ../Makefile_obj
 
 	@echo
 	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
 	@echo
-	sim_dir/Vysyx_22040895_top $(BIN)
+	sim/Vysyx_22040895_top $(BIN)
 
 	@echo
 	@echo $(FG_YELLOW) "-- DONE --------------------" $(CLOSE)

@@ -7,12 +7,11 @@
  * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
-// #include "../include/global.h"
 int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 {
 	uint32_t pc;
 	contextp->timeInc(1);
-	if (contextp->time() > 10)
+	if (contextp->time() > 5)
 	{
 		top->rst = ysyx_22040895_RstDisable;
 	}
@@ -25,6 +24,20 @@ int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 		top->clk = 1;
 	}
 	top->eval();
+
+#ifdef ITRACE
+	// 上升沿
+	if (top->clk == 1)
+	{
+		int inst;
+		svSetScope(svGetScopeFromName("TOP.ysyx_22040895_top.my_ifu"));
+		get_inst(&inst);
+		char p[128];
+		disassemble(p, 128, pc, (uint8_t *)&inst, 4);
+		printf("%016x: inst %s\n", inst, p);
+	}
+#endif
+
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
 		pc = top->instaddr_o;
