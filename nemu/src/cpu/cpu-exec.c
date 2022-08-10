@@ -86,6 +86,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 		sprintf(c, "call function: [%s@0x%8lx]\n", func_name, dnpc);
 		printf("%s", func_buff);
 		func_depth++;
+		log_write("%s\n", func_buff);
 	}
 	else if (_this->logbuf[32] == 'r')
 	{
@@ -95,6 +96,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 		c += func_depth;
 		sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, _this->pc);
 		printf("%s", func_buff);
+		log_write("%s\n", func_buff);
 	}
 #endif
 }
