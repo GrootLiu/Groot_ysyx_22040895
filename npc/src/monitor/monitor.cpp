@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:26:30
- * @LastEditTime: 2022-08-09 14:57:17
+ * @LastEditTime: 2022-08-09 16:45:30
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/monitor/monitor.cpp
@@ -10,6 +10,7 @@
 #include "../memory/paddr.c"
 #include "../include/utils.h"
 #include "../include/disasm.cc"
+#include "../include/log.c"
 #include <stdio.h>
 static char* img_file = NULL;
 static void welcome()
@@ -34,6 +35,7 @@ static void load_img(char *img_file)
 void init_monitor(int argc, char *argv[])
 {
 	load_img(argv[1]);
+	init_log("./log/log");
 	init_disasm("riscv64");
 	welcome();
 }

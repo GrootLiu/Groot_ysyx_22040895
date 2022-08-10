@@ -1,9 +1,9 @@
-/***
+/*** 
  * @Author: Groot
  * @Date: 2022-08-08 12:05:19
- * @LastEditTime: 2022-08-09 10:50:33
+ * @LastEditTime: 2022-08-09 17:51:56
  * @LastEditors: Groot
- * @Description:
+ * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
@@ -34,7 +34,9 @@ int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 		get_inst(&inst);
 		char p[128];
 		disassemble(p, 128, pc, (uint8_t *)&inst, 4);
-		printf("%016x: inst %s\n", inst, p);
+		char buf[256];
+		sprintf(buf, "%016x: inst %s\n", inst, p);
+		my_log(buf, sizeof(char)*strlen(buf));
 	}
 #endif
 
