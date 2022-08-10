@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 12:08:25
- * @LastEditTime: 2022-08-10 09:51:17
+ * @LastEditTime: 2022-08-10 16:53:09
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/include/global.h
@@ -18,7 +18,7 @@
 #include "Vysyx_22040895_top__Dpi.h"
 
 #define ITRACE 1
-#define FTRACE 1
+#define FTRACE 0
 #define EBREAK 0x00100073
 
 #define ysyx_22040895_RstEnable 1

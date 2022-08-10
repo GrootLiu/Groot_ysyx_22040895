@@ -63,7 +63,7 @@ int excu_once(int exit)
 
 	if (top->clk == 1)
 	{
-#ifdef CONFIG_FTRACE
+#ifdef FTRACE
 		char func_name[128];
 		char func_buff[1024];
 		if (inst_asm[0] == 'j')
