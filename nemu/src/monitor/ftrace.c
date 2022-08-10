@@ -1,19 +1,10 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-30 10:42:13
- * @LastEditTime: 2022-08-03 15:43:36
+ * @LastEditTime: 2022-08-10 17:22:24
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/nemu/src/monitor/ftrace.c
- * 版权声明
- */
-/*
- * @Author: Groot
- * @Date: 2022-07-07 22:24:03
- * @LastEditTime: 2022-07-29 22:43:44
- * @LastEditors: Groot
- * @Description:
- * @FilePath: /ysyx-workbench/test.c
  * 版权声明
  */
 #include <stdio.h>
