@@ -1,9 +1,9 @@
-/*** 
+/***
  * @Author: Groot
  * @Date: 2022-08-08 10:26:30
- * @LastEditTime: 2022-08-09 16:45:30
+ * @LastEditTime: 2022-08-10 10:11:23
  * @LastEditors: Groot
- * @Description: 
+ * @Description:
  * @FilePath: /ysyx-workbench/npc/src/monitor/monitor.cpp
  * @版权声明
  */
@@ -11,11 +11,13 @@
 #include "../include/utils.h"
 #include "../include/disasm.cc"
 #include "../include/log.c"
+#include "../ftrace.cpp"
 #include <stdio.h>
-static char* img_file = NULL;
+
+static char *img_file = NULL;
 static void welcome()
 {
-  printf("Welcome to %s\n", ASNI_FMT("riscv64-NPC!", ASNI_FG_YELLOW ASNI_BG_RED));
+	printf("Welcome to %s\n", ASNI_FMT("riscv64-NPC!", ASNI_FG_YELLOW ASNI_BG_RED));
 }
 static void load_img(char *img_file)
 {
@@ -37,5 +39,6 @@ void init_monitor(int argc, char *argv[])
 	load_img(argv[1]);
 	init_log("./log/log");
 	init_disasm("riscv64");
+	init_elf(argv[2]);
 	welcome();
 }

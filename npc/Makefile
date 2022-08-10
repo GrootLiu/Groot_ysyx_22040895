@@ -50,10 +50,11 @@ run:
 	@echo
 	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
 	@echo
-	sim/Vysyx_22040895_top $(BIN)
+	sim/Vysyx_22040895_top $(BIN) ~/ysyx-workbench/parse.elf
 
 	@echo
 	@echo $(FG_YELLOW) "-- DONE --------------------" $(CLOSE)
+	@echo
 	@echo $(FG_MAGENTA) "To see waveforms, please "make wave"" $(CLOSE)
 	@echo
 wave: run

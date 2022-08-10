@@ -14,7 +14,8 @@
 #include <readline/history.h>
 
 #define CLOSE "\001\033[0m\002"
-#define BEGIN "\001\033[1;36m" "\001\033[1;46m\002"
+#define BEGIN "\001\033[1;36m" \
+			  "\001\033[1;46m\002"
 static char *rl_gets()
 {
 	static char *line_read = NULL;
@@ -108,14 +109,14 @@ static int cmd_si(char *args)
 		char *arg = strtok(NULL, " ");
 		N = atoi(arg);
 	}
-	int ret = excute(contextp, tfp, N);
+	int ret = excute( N);
 	regs_display();
 	return ret;
 }
 
 static int cmd_c(char *args)
 {
-	excute(contextp, tfp, -1);
+	excute(-1);
 	regs_display();
 	return -1;
 }
@@ -130,8 +131,9 @@ void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 	int n;
 	for (char *str; (str = rl_gets()) != NULL;)
 	{
-		char *cmd = strtok(str, " ");
 		char *str_end = str + strlen(str);
+
+		char *cmd = strtok(str, " ");
 		if (cmd == NULL)
 		{
 			continue;

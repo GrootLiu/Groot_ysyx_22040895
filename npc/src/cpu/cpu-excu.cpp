@@ -1,44 +1,49 @@
-/*** 
+/***
  * @Author: Groot
  * @Date: 2022-08-08 12:05:19
- * @LastEditTime: 2022-08-09 17:51:56
+ * @LastEditTime: 2022-08-10 10:19:40
  * @LastEditors: Groot
- * @Description: 
+ * @Description:
  * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
-int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
+#ifdef ITRACE
+char inst_asm[128];
+#endif
+#ifdef FTRACE
+int func_depth = 0;
+#endif
+
+int excu_once(int exit)
 {
-	uint32_t pc;
 	contextp->timeInc(1);
-	if (contextp->time() > 5)
+	if (contextp->time() > 4)
 	{
 		top->rst = ysyx_22040895_RstDisable;
 	}
-	if ((contextp->time() % 2) == 0)
-	{
-		top->clk = 0;
-	}
-	else if ((contextp->time() % 2) == 1)
+	if ((contextp->time() % 2) == 1)
 	{
 		top->clk = 1;
 	}
+	else if ((contextp->time() % 2) == 0)
+	{
+		top->clk = 0;
+	}
 	top->eval();
-
-#ifdef ITRACE
-	// 上升沿
+	uint64_t pc;
 	if (top->clk == 1)
 	{
+#ifdef ITRACE
 		int inst;
 		svSetScope(svGetScopeFromName("TOP.ysyx_22040895_top.my_ifu"));
 		get_inst(&inst);
-		char p[128];
-		disassemble(p, 128, pc, (uint8_t *)&inst, 4);
-		char buf[256];
-		sprintf(buf, "%016x: inst %s\n", inst, p);
-		my_log(buf, sizeof(char)*strlen(buf));
-	}
+		disassemble(inst_asm, 128, pc, (uint8_t *)&inst, 4);
+		char log_buf[256];
+		sprintf(log_buf, "%016x: inst %s\n", inst, inst_asm);
+		my_log(log_buf, sizeof(char) * strlen(log_buf));
 #endif
+	}
+
 
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
@@ -54,6 +59,38 @@ int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 	}
 	top->eval();
 	tfp->dump(contextp->time());
+
+
+	if (top->clk == 1)
+	{
+#ifdef CONFIG_FTRACE
+		char func_name[128];
+		char func_buff[1024];
+		if (inst_asm[0] == 'j')
+		{
+			printf("j\n");
+			char *c = func_buff;
+			find_func(func_name, pc);
+			memset(c, ' ', func_depth);
+			c += func_depth;
+			sprintf(c, "call function: [%s@0x%8lx]\n", func_name, pc);
+			printf("%s", func_buff);
+			my_log(func_buff, sizeof(char) * strlen(func_buff));
+			func_depth++;
+		}
+		else if (inst_asm[0] == 'r')
+		{
+			printf("r\n");
+			char *c = func_buff;
+			func_depth--;
+			memset(c, ' ', func_depth);
+			c += func_depth;
+			sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, pc);
+			printf("%s", func_buff);
+			my_log(func_buff, sizeof(char) * strlen(func_buff));
+		}
+#endif
+	}
 	if (exit == 1)
 	{
 		contextp->gotFinish(true);
@@ -61,7 +98,18 @@ int excu_once(VerilatedContext *contextp, VerilatedVcdC *tfp, int exit)
 	return exit;
 }
 
-int excute(VerilatedContext *contextp, VerilatedVcdC *tfp, int n)
+int trig_once(int exit)
+{
+	exit = excu_once(exit);
+	if (exit == 1)
+	{
+		return exit;
+	}
+	exit = excu_once(exit);
+	return exit;
+}
+
+int excute(int n)
 {
 	int exit = 0;
 	int times = 0;
@@ -69,15 +117,16 @@ int excute(VerilatedContext *contextp, VerilatedVcdC *tfp, int n)
 	{
 		while (!contextp->gotFinish())
 		{
-			exit = excu_once(contextp, tfp, exit);
+			exit = trig_once(exit);
 			times++;
 		}
 	}
 	else
 	{
-		while (!contextp->gotFinish() && times <= n)
+		printf("111\n");
+		while (!contextp->gotFinish() && times < n)
 		{
-			exit = excu_once(contextp, tfp, exit);
+			exit = trig_once(exit);
 			times++;
 		}
 	}
