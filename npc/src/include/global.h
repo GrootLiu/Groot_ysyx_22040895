@@ -18,7 +18,7 @@
 #include "Vysyx_22040895_top__Dpi.h"
 
 #define ITRACE 1
-#define FTRACE 0
+// #define FTRACE 1
 #define EBREAK 0x00100073
 
 #define ysyx_22040895_RstEnable 1

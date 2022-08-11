@@ -11,20 +11,22 @@
 #include "../include/utils.h"
 #include "../include/disasm.cc"
 #include "../include/log.c"
+#include "../include/logo.c"
 #include "../ftrace.cpp"
 #include <stdio.h>
 
 static char *img_file = NULL;
 static void welcome()
 {
-	printf("Welcome to %s\n", ASNI_FMT("riscv64-NPC!", ASNI_FG_YELLOW ASNI_BG_RED));
+	printf(ASNI_FMT("%s", ASNI_FG_BLUE), npc_logo);
+	printf("%s\n", ASNI_FMT("Welcome to riscv64-NPC!", ASNI_FG_BLUE ASNI_BG_WHITE));
 }
 static void load_img(char *img_file)
 {
 	// 初始化内存
 	init_mem();
 	FILE *fp = fopen(img_file, "rb");
-	printf("img: %s\n", img_file);
+	// printf("img: %s\n", img_file);
 
 	fseek(fp, 0, SEEK_END);
 	long size = ftell(fp);
@@ -39,6 +41,8 @@ void init_monitor(int argc, char *argv[])
 	load_img(argv[1]);
 	init_log("./log/log");
 	init_disasm("riscv64");
+#ifdef FTRACE
 	init_elf(argv[2]);
+#endif
 	welcome();
 }

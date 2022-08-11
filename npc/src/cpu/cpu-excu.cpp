@@ -123,7 +123,6 @@ int excute(int n)
 	}
 	else
 	{
-		printf("111\n");
 		while (!contextp->gotFinish() && times < n)
 		{
 			exit = trig_once(exit);
