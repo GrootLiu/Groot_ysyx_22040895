@@ -126,6 +126,5 @@ char *find_func(char *func_name, long int pc)
 int init_elf(char *filename)
 {
 	parse_elf(filename, &symtab_info);
-	printf("ftrace_inited...\n");
 	return 0;
 }

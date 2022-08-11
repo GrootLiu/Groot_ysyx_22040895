@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:34:47
- * @LastEditTime: 2022-08-09 15:35:15
+ * @LastEditTime: 2022-08-10 20:20:43
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/sim-main.cpp
@@ -14,8 +14,6 @@ void wave_gen();
 
 void sim_main(int argc, char **argv)
 {
-	printf("Hello, ysyx!\n");
-
 	contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
 	top = new Vysyx_22040895_top{contextp};
