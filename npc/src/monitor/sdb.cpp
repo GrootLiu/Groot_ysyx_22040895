@@ -136,8 +136,9 @@ void sdb_set_batch_mode()
 
 void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 {
+	
 	if (is_batch_mode)
-	{
+	{		
 		cmd_c(NULL);
 		return;
 	}

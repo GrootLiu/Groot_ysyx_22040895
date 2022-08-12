@@ -1,14 +1,12 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 12:08:25
- * @LastEditTime: 2022-08-12 11:29:42
+ * @LastEditTime: 2022-08-12 17:01:39
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/include/global.h
  * @版权声明
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vysyx_22040895_top.h"
@@ -17,9 +15,7 @@
 #include "verilated_dpi.h"
 #include "Vysyx_22040895_top__Dpi.h"
 
-#define ITRACE 1
-// #define FTRACE 1
-// #define DIFFTEST 1
+
 #define EBREAK 0x00100073
 
 #define ysyx_22040895_RstEnable 1

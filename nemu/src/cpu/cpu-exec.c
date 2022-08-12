@@ -75,10 +75,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 	}
 	IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_FTRACE
-	char func_name[128];
-	char func_buff[1024];
+
 	if (_this->logbuf[32] == 'j')
 	{
+		char func_name[128];
+		char func_buff[1024];
 		char *c = func_buff;
 		find_func(func_name, dnpc);
 		memset(c, ' ', func_depth);
@@ -90,6 +91,8 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc)
 	}
 	else if (_this->logbuf[32] == 'r')
 	{
+		char func_name[128];
+		char func_buff[1024];
 		char *c = func_buff;
 		func_depth--;
 		memset(c, ' ', func_depth);
@@ -204,8 +207,8 @@ void cpu_exec(uint64_t n)
 	case NEMU_ABORT:
 		Log("nemu: %s at pc = " FMT_WORD,
 			(nemu_state.state == NEMU_ABORT ? ASNI_FMT("ABORT", ASNI_FG_RED)
-			 : (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN)
-			 : ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
+											: (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN)
+																		: ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
 			nemu_state.halt_pc);
 		// fall through
 	case NEMU_QUIT:
@@ -214,7 +217,7 @@ void cpu_exec(uint64_t n)
 
 #ifdef CONFIG_ITRACE_COND
 	// 客户程序出错的时候输出最近执行的若干条指令
-	
+
 	if (nemu_state.state == NEMU_ABORT || nemu_state.halt_ret != 0)
 	{
 		for (int i = 0; i < 10; i++)

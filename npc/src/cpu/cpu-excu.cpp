@@ -7,7 +7,7 @@
  * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
-// #include "dut.cpp"
+#include "dut.cpp"
 
 #ifdef ITRACE
 char inst_asm[128];
@@ -18,6 +18,7 @@ int func_depth = 0;
 
 int excu_once(int exit)
 {
+	
 	contextp->timeInc(1);
 	if (contextp->time() > 4)
 	{
