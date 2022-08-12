@@ -16,6 +16,9 @@
 #define CLOSE "\001\033[0m\002"
 #define BEGIN "\001\033[1;36m" \
 			  "\001\033[1;46m\002"
+
+static int is_batch_mode = false;
+
 static char *rl_gets()
 {
 	static char *line_read = NULL;
@@ -109,7 +112,7 @@ static int cmd_si(char *args)
 		char *arg = strtok(NULL, " ");
 		N = atoi(arg);
 	}
-	int ret = excute( N);
+	int ret = excute(N);
 	regs_display();
 	return ret;
 }
@@ -126,8 +129,19 @@ static int cmd_q(char *args)
 	return -1;
 }
 
+void sdb_set_batch_mode()
+{
+	is_batch_mode = true;
+}
+
 void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 {
+	if (is_batch_mode)
+	{
+		cmd_c(NULL);
+		return;
+	}
+	
 	int n;
 	for (char *str; (str = rl_gets()) != NULL;)
 	{

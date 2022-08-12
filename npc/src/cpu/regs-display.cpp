@@ -1,10 +1,10 @@
-/***
+/*** 
  * @Author: Groot
  * @Date: 2022-08-09 10:07:45
- * @LastEditTime: 2022-08-09 10:14:27
+ * @LastEditTime: 2022-08-11 22:46:19
  * @LastEditors: Groot
- * @Description:
- * @FilePath: /ysyx-workbench/npc/src/cpu/regs-dispaly.cpp
+ * @Description: 
+ * @FilePath: /ysyx-workbench/npc/src/cpu/regs-display.cpp
  * @版权声明
  */
 const char *regs[] = {
@@ -22,7 +22,7 @@ void regs_display()
 		{
 			printf("|");
 		}
-		printf("%-3s :%-16.8lx\t", regs[i - 1], cpu_gpr[i - 1]);
+		printf("%-3s :%-16.8lx\t", regs[i - 1], cpu.cpu_gpr[i - 1]);
 		if (i % 4 == 0)
 		{
 			printf("|");

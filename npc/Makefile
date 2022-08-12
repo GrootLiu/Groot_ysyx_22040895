@@ -1,11 +1,15 @@
-# CXXFLAGS += -lreadline
-
+FG_YELLOW = "\001\033[1;33m"
+FG_MAGENTA = "\001\033[1;35m"
+CLOSE = "\001\033[0m\002"
 # verilator: ./npc-main.cpp ../vsrc/ysyx_22040895_top.v
 # 	@echo "- compile the main.cpp..."
 # 	export CXXFLAGS
 # 	verilator --Mdir  sim -y ./vsrc  --Wno-fatal --trace --cc --exe --build ./npc-main.cpp ../vsrc/ysyx_22040895_top.v
 # set up variables
 ## find verilator
+
+override ARGS += -l $(shell pwd)/log/npc-log
+
 ifeq ($(VERILATOR_ROOT),)
 VERILATOR = verilator
 VERILATOR_COVERAGE = verilator_coverage
@@ -50,7 +54,7 @@ run:
 	@echo
 	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
 	@echo
-	sim/Vysyx_22040895_top $(BIN) ~/ysyx-workbench/parse.elf
+	sim/Vysyx_22040895_top $(ARGS) $(IMG)
 
 	@echo
 	@echo $(FG_YELLOW) "-- DONE --------------------" $(CLOSE)
@@ -60,7 +64,3 @@ run:
 wave: run
 	gtkwave ./wave/wave.vcd
 
-
-FG_YELLOW = "\001\033[1;33m"
-FG_MAGENTA = "\001\033[1;35m"
-CLOSE = "\001\033[0m\002"
