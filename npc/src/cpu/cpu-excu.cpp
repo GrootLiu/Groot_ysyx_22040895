@@ -7,6 +7,8 @@
  * @FilePath: /ysyx-workbench/npc/src/cpu/cpu-excu.cpp
  * @版权声明
  */
+// #include "dut.cpp"
+
 #ifdef ITRACE
 char inst_asm[128];
 #endif
@@ -30,25 +32,23 @@ int excu_once(int exit)
 		top->clk = 0;
 	}
 	top->eval();
-	uint64_t pc;
 	if (top->clk == 1)
 	{
 #ifdef ITRACE
 		int inst;
 		svSetScope(svGetScopeFromName("TOP.ysyx_22040895_top.my_ifu"));
 		get_inst(&inst);
-		disassemble(inst_asm, 128, pc, (uint8_t *)&inst, 4);
+		disassemble(inst_asm, 128, cpu.pc, (uint8_t *)&inst, 4);
 		char log_buf[256];
 		sprintf(log_buf, "%016x: inst %s\n", inst, inst_asm);
-		my_log(log_buf, sizeof(char) * strlen(log_buf));
+		my_log(log_buf);
 #endif
 	}
 
-
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
-		pc = top->instaddr_o;
-		top->inst_i = paddr_read(pc);
+		cpu.pc = top->instaddr_o;
+		top->inst_i = paddr_read(cpu.pc);
 		if (top->inst_i == EBREAK)
 		{
 			exit = 1;
@@ -60,7 +60,6 @@ int excu_once(int exit)
 	top->eval();
 	tfp->dump(contextp->time());
 
-
 	if (top->clk == 1)
 	{
 #ifdef FTRACE
@@ -70,12 +69,12 @@ int excu_once(int exit)
 		{
 			printf("j\n");
 			char *c = func_buff;
-			find_func(func_name, pc);
+			find_func(func_name, cpu.pc);
 			memset(c, ' ', func_depth);
 			c += func_depth;
-			sprintf(c, "call function: [%s@0x%8lx]\n", func_name, pc);
+			sprintf(c, "call function: [%s@0x%8lx]\n", func_name, cpu.pc);
 			printf("%s", func_buff);
-			my_log(func_buff, sizeof(char) * strlen(func_buff));
+			my_log(func_buff);
 			func_depth++;
 		}
 		else if (inst_asm[0] == 'r')
@@ -85,10 +84,14 @@ int excu_once(int exit)
 			func_depth--;
 			memset(c, ' ', func_depth);
 			c += func_depth;
-			sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, pc);
+			sprintf(c, "ret function: [%s@0x%8lx]\n", func_name, cpu.pc);
 			printf("%s", func_buff);
-			my_log(func_buff, sizeof(char) * strlen(func_buff));
+			my_log(func_buff);
 		}
+#endif
+
+#ifdef DIFFTEST
+		difftest_step(cpu.pc);
 #endif
 	}
 	if (exit == 1)

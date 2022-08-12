@@ -7,11 +7,12 @@
  * @FilePath: /ysyx-workbench/npc/src/ftrace.cpp
  * @版权声明
  */
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _ASSERT_H
+#include <assert.h>
+#endif
 #include <elf.h>
 #include <string.h>
-#include <assert.h>
+
 typedef struct Symtab_info
 {
 	Elf64_Addr strtab_offset;
