@@ -115,6 +115,7 @@ static void exec_once(Decode *s, vaddr_t pc)
 {
 	s->pc = pc;
 	s->snpc = pc;
+	printf("so_pc: %0lx\n", pc);
 	isa_exec_once(s);
 	cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE

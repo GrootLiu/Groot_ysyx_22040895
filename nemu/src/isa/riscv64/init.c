@@ -1,3 +1,12 @@
+/*
+ * @Author: Groot
+ * @Date: 2022-04-06 19:26:19
+ * @LastEditTime: 2022-08-13 11:01:57
+ * @LastEditors: Groot
+ * @Description: 
+ * @FilePath: /ysyx-workbench/nemu/src/isa/riscv64/init.c
+ * 版权声明
+ */
 #include <isa.h>
 #include <memory/paddr.h>
 
@@ -22,6 +31,7 @@ static void restart() {
 void init_isa() {
   /* Load built-in image. */
   memcpy(guest_to_host(RESET_VECTOR), img, sizeof(img));
+  printf("ref pc: %0lx\n", cpu.pc);
 
   /* Initialize this virtual computer system. */
   restart();
