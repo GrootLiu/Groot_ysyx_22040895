@@ -14,6 +14,8 @@
 #include "../include/logo.c"
 #include "../ftrace.cpp"
 #include "../conf.h"
+#include "../include/global.h"
+#include "sdb.cpp"
 
 #include <getopt.h>
 
@@ -22,7 +24,9 @@ static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
-extern void init_difftest(char *ref_so_file, long img_size, char* img_file, int port);
+static int img_size = 0;
+
+extern void init_difftest(char *ref_so_file, long img_size, int port);
 void sdb_set_batch_mode();
 static void welcome()
 {
@@ -98,18 +102,50 @@ void init_monitor(int argc, char *argv[])
 {
 	parse_args(argc, argv);
 
-	int img_size = load_img(img_file);
+	img_size = load_img(img_file);
 	// printf("%s\n", img_file);
 	init_log(log_file);
 	init_disasm("riscv64");
 
-	#ifdef DIFFTEST
-		init_difftest(diff_so_file, img_size, img_file, difftest_port);
-	#endif
-
 	#ifdef FTRACE
-	printf("2\n");
 		init_elf(elf_file);
 	#endif
 	welcome();
+}
+
+void wave_gen()
+{
+	contextp->traceEverOn(true);
+	tfp = new VerilatedVcdC;
+	top->trace(tfp, 99);
+	// VCD文件保存位置
+	tfp->open("./wave/wave.vcd");
+}
+
+void set_gpr_ptr(const svOpenArrayHandle r)
+{
+	cpu.cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
+}
+
+void sim_main(int argc, char **argv)
+{
+	contextp = new VerilatedContext;
+	contextp->commandArgs(argc, argv);
+	top = new Vysyx_22040895_top{contextp};
+	wave_gen();
+	top->rst = ysyx_22040895_RstEnable;
+
+	top->eval();
+
+#ifdef DIFFTEST
+	init_difftest(diff_so_file, img_size, difftest_port);
+#endif
+
+	main_loop(contextp, tfp);
+
+	top->final();
+	tfp->close();
+	delete top;
+	delete contextp;
+	return;
 }
