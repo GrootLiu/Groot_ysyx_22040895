@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 10:34:47
- * @LastEditTime: 2022-08-12 16:56:55
+ * @LastEditTime: 2022-08-13 11:16:53
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/sim-main.cpp
@@ -41,5 +41,9 @@ void wave_gen()
 
 void set_gpr_ptr(const svOpenArrayHandle r)
 {
-	cpu.cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
+	uint64_t* gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
+	for (int i = 0; i < 32; i++)
+	{
+		cpu.cpu_gpr[i] = gpr[i];
+	}
 }

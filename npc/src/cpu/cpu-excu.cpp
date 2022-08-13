@@ -18,7 +18,7 @@ int func_depth = 0;
 
 int excu_once(int exit)
 {
-	
+
 	contextp->timeInc(1);
 	if (contextp->time() > 4)
 	{
@@ -45,10 +45,11 @@ int excu_once(int exit)
 		my_log(log_buf);
 #endif
 	}
-
+	printf("pc: %08lx\n", cpu.pc);
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
 		cpu.pc = top->instaddr_o;
+
 		top->inst_i = paddr_read(cpu.pc);
 		if (top->inst_i == EBREAK)
 		{

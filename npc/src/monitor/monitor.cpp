@@ -22,7 +22,7 @@ static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
-extern void init_difftest(char *ref_so_file, long img_size, int port);
+extern void init_difftest(char *ref_so_file, long img_size, char* img_file, int port);
 void sdb_set_batch_mode();
 static void welcome()
 {
@@ -99,11 +99,12 @@ void init_monitor(int argc, char *argv[])
 	parse_args(argc, argv);
 
 	int img_size = load_img(img_file);
+	// printf("%s\n", img_file);
 	init_log(log_file);
 	init_disasm("riscv64");
 
 	#ifdef DIFFTEST
-		init_difftest(diff_so_file, img_size, difftest_port);
+		init_difftest(diff_so_file, img_size, img_file, difftest_port);
 	#endif
 
 	#ifdef FTRACE

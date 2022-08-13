@@ -1,7 +1,7 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-08-08 12:08:25
- * @LastEditTime: 2022-08-12 17:01:39
+ * @LastEditTime: 2022-08-13 11:13:51
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/npc/src/include/global.h
@@ -31,7 +31,7 @@ VerilatedVcdC *tfp = NULL;
 
 typedef struct CPU_state
 {
-	uint64_t* cpu_gpr;
+	uint64_t cpu_gpr[32];
 	uint64_t pc;
 }CPU_state;
 

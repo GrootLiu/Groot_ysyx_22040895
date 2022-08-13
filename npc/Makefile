@@ -2,7 +2,7 @@ FG_YELLOW = "\001\033[1;33m"
 FG_MAGENTA = "\001\033[1;35m"
 CLOSE = "\001\033[0m\002"
 
-override ARGS += -l $(shell pwd)/log/npc-log # -ldl
+override ARGS += -l $(shell pwd)/log/npc-log.txt # -ldl
 
 ifeq ($(VERILATOR_ROOT),)
 VERILATOR = verilator
@@ -44,6 +44,10 @@ run:
 	@echo $(FG_YELLOW) "-- BUILDING ----------------" $(CLOSE)
 	@echo
 	$(MAKE)  -j -C sim -f ../Makefile_obj
+
+	@echo
+	@echo $(FG_YELLOW) "-- GENERATE SO ----------------" $(CLOSE)
+	$(MAKE) -j -C $(NEMU_HOME)
 
 	@echo
 	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
