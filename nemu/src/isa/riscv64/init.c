@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-08-13 11:01:57
+ * @LastEditTime: 2022-08-13 12:02:37
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/nemu/src/isa/riscv64/init.c
@@ -23,6 +23,7 @@ static const uint32_t img [] = {
 static void restart() {
   /* Set the initial program counter. */
   cpu.pc = RESET_VECTOR;
+  printf("RESET_VECTOR: %x\n", RESET_VECTOR);
 
   /* The zero register is always 0. */
   cpu.gpr[0] = 0;
@@ -31,8 +32,6 @@ static void restart() {
 void init_isa() {
   /* Load built-in image. */
   memcpy(guest_to_host(RESET_VECTOR), img, sizeof(img));
-  printf("ref pc: %0lx\n", cpu.pc);
-
   /* Initialize this virtual computer system. */
   restart();
 }

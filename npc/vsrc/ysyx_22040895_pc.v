@@ -7,14 +7,14 @@ module ysyx_22040895_pc (input wire clk,
            output reg[`ysyx_22040895_InstAddrBus] pc_o_pc,
            output reg ce_o_pc);
 
-    // initial begin
-    //     pc_o_pc = 32'h80000000;
-    // end
+    initial begin
+        pc_o_pc = 64'h000000007ffffffc;
+    end
     reg pcsel;
     always @(posedge clk) begin
         if (rst == `ysyx_22040895_RstEnable) begin
             ce_o_pc <= `ysyx_22040895_ChipDisable;
-            pc_o_pc <= 64'h000000007ffffffc;
+            // pc_o_pc <= 64'h000000007ffffffc;
             // pc_o_pc <= 64'h0;
         end
         else begin

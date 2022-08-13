@@ -45,7 +45,6 @@ void Vysyx_22040895_top___024root___settle__TOP__2(Vysyx_22040895_top___024root*
         vlSelf->ysyx_22040895_top__DOT__func3_id_cu = 0U;
         vlSelf->ysyx_22040895_top__DOT__rdaddr_id_reg = 0U;
         vlSelf->ysyx_22040895_top__DOT__opcode_id_cu = 0U;
-        vlSelf->ysyx_22040895_top__DOT__pc_id_exu = 0ULL;
     } else {
         vlSelf->ysyx_22040895_top__DOT__rs1addr_id_reg 
             = (0x1fU & (vlSelf->inst_i >> 0xfU));
@@ -59,7 +58,6 @@ void Vysyx_22040895_top___024root___settle__TOP__2(Vysyx_22040895_top___024root*
             = (0x1fU & (vlSelf->inst_i >> 7U));
         vlSelf->ysyx_22040895_top__DOT__opcode_id_cu 
             = (0x7fU & vlSelf->inst_i);
-        vlSelf->ysyx_22040895_top__DOT__pc_id_exu = vlSelf->instaddr_o;
     }
     vlSelf->ysyx_22040895_top__DOT__my_cu__DOT__add_op 
         = (((0x33U == (IData)(vlSelf->ysyx_22040895_top__DOT__opcode_id_cu)) 
@@ -384,7 +382,18 @@ void Vysyx_22040895_top___024root___initial__TOP__4(Vysyx_22040895_top___024root
     Vysyx_22040895_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_22040895_top___024root___initial__TOP__4\n"); );
     // Body
+    vlSelf->instaddr_o = 0x7ffffffcULL;
     Vysyx_22040895_top___024unit____Vdpiimwrap_set_gpr_ptr__Vdpioc2_TOP____024unit(vlSelf->ysyx_22040895_top__DOT__my_regfile__DOT__regs);
+}
+
+void Vysyx_22040895_top___024root___settle__TOP__6(Vysyx_22040895_top___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vysyx_22040895_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_22040895_top___024root___settle__TOP__6\n"); );
+    // Body
+    vlSelf->ysyx_22040895_top__DOT__pc_id_exu = ((IData)(vlSelf->rst)
+                                                  ? 0ULL
+                                                  : vlSelf->instaddr_o);
 }
 
 void Vysyx_22040895_top___024root___eval_initial(Vysyx_22040895_top___024root* vlSelf) {
@@ -405,6 +414,7 @@ void Vysyx_22040895_top___024root___eval_settle(Vysyx_22040895_top___024root* vl
     vlSelf->__Vm_traceActivity[2U] = 1U;
     vlSelf->__Vm_traceActivity[1U] = 1U;
     vlSelf->__Vm_traceActivity[0U] = 1U;
+    Vysyx_22040895_top___024root___settle__TOP__6(vlSelf);
 }
 
 void Vysyx_22040895_top___024root___final(Vysyx_22040895_top___024root* vlSelf) {

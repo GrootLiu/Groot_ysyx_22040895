@@ -8,7 +8,6 @@
  * @版权声明
  */
 #include "./src/monitor/monitor.cpp"
-#include "./src/sim-main.cpp"
 
 int main(int argc, char** argv)
 {

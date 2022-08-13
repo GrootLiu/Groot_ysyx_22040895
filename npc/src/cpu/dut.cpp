@@ -9,7 +9,24 @@
  */
 #include <dlfcn.h>
 
-void (*ref_difftest_init)(char* img_file) = NULL;
+typedef struct REF_CPU_state
+{
+	uint64_t cpu_gpr[32];
+	uint64_t pc;
+} REF_CPU_state;
+
+REF_CPU_state ref_cpu;
+
+void reg_tans(REF_CPU_state ref_cpu, CPU_state dut_cpu_state)
+{
+	for (int i = 0; i < 32; i++)
+	{
+		ref_cpu.cpu_gpr[i] = dut_cpu_state.cpu_gpr[i];
+	}
+	ref_cpu.pc = cpu.pc;
+}
+
+void (*ref_difftest_init)(int port) = NULL;
 // void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
@@ -17,17 +34,15 @@ void (*ref_difftest_exec)(uint64_t n) = NULL;
 
 #ifdef DIFFTEST
 
-void init_difftest(char *ref_so_file, long img_size, char *img_file, int port)
+void init_difftest(char *ref_so_file, long img_size, int port)
 {
-	printf("difftest init\n");
 	assert(ref_so_file != NULL);
 
 	void *handle;
 	handle = dlopen(ref_so_file, RTLD_LAZY);
 	assert(handle);
-	ref_difftest_init = (void (*)(char *))dlsym(handle, "my_difftest_init");
-	printf("img_file: %s\n", img_file);
-	ref_difftest_init(img_file);
+	ref_difftest_init = (void (*)(int))dlsym(handle, "my_difftest_init");
+	ref_difftest_init(port);
 
 	assert(ref_difftest_init);
 	// ref_difftest_memcpy = dlsym(handle, "difftest_memcpy");
@@ -48,11 +63,12 @@ void init_difftest(char *ref_so_file, long img_size, char *img_file, int port)
 	my_log(log_info_2);
 
 	// ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
-	printf("dut pc: %lx\n", cpu.pc);
-	ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
+	reg_tans(ref_cpu, cpu);
+	ref_cpu.pc = 0x80000000;
+	ref_difftest_regcpy(&ref_cpu, DIFFTEST_TO_REF);
 }
 
-static void checkregs(CPU_state *ref, uint64_t pc)
+static void checkregs(REF_CPU_state *ref, uint64_t pc)
 {
 	int abort = 0;
 	for (int i = 0; i < 32; i++)
@@ -72,9 +88,10 @@ static void checkregs(CPU_state *ref, uint64_t pc)
 
 void difftest_step(uint64_t pc)
 {
+	reg_tans(ref_cpu, cpu);
 
-	CPU_state ref_temp;
-	printf("difftest step\n");
+	REF_CPU_state ref_temp;
+
 	ref_difftest_exec(1);
 
 	ref_difftest_regcpy(&ref_temp, DIFFTEST_TO_DUT);

@@ -18,9 +18,8 @@ int func_depth = 0;
 
 int excu_once(int exit)
 {
-
 	contextp->timeInc(1);
-	if (contextp->time() > 4)
+	if (contextp->time() >= 0)
 	{
 		top->rst = ysyx_22040895_RstDisable;
 	}
@@ -45,7 +44,6 @@ int excu_once(int exit)
 		my_log(log_buf);
 #endif
 	}
-	printf("pc: %08lx\n", cpu.pc);
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
 		cpu.pc = top->instaddr_o;
@@ -91,11 +89,8 @@ int excu_once(int exit)
 			my_log(func_buff);
 		}
 #endif
-
-#ifdef DIFFTEST
-		difftest_step(cpu.pc);
-#endif
 	}
+
 	if (exit == 1)
 	{
 		contextp->gotFinish(true);
@@ -105,12 +100,17 @@ int excu_once(int exit)
 
 int trig_once(int exit)
 {
+
 	exit = excu_once(exit);
 	if (exit == 1)
 	{
 		return exit;
 	}
 	exit = excu_once(exit);
+	printf("exit: %d\n", exit);
+#ifdef DIFFTEST
+	difftest_step(cpu.pc);
+#endif
 	return exit;
 }
 
@@ -124,6 +124,7 @@ int excute(int n)
 		{
 			exit = trig_once(exit);
 			times++;
+			printf("11111111111111\n");
 		}
 	}
 	else
