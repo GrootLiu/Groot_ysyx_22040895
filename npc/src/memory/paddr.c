@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-08-13 12:02:57
+ * @LastEditTime: 2022-08-14 11:52:21
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/src/memory/paddr.c
@@ -17,11 +17,13 @@
 #include <stdlib.h>
 #endif
 
-// #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-// 字节对齐？
 #define PG_ALIGN __attribute((aligned(4096)))
 #define RESET_VECTOR (CONFIG_MBASE + CONFIG_PC_RESET_OFFSET)
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
+
+
+uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
+paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 int outOfBound(uint64_t addr)
 {
@@ -46,8 +48,6 @@ uint32_t paddr_read(uint64_t addr)
 		return *(uint32_t *)paddr;
 	}
 }
-
-uint8_t *guest_to_host(uint32_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 
 void init_mem()
 {

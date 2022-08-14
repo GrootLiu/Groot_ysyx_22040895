@@ -382,7 +382,7 @@ void Vysyx_22040895_top___024root___initial__TOP__4(Vysyx_22040895_top___024root
     Vysyx_22040895_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_22040895_top___024root___initial__TOP__4\n"); );
     // Body
-    vlSelf->instaddr_o = 0x7ffffffcULL;
+    vlSelf->instaddr_o = 0x80000000ULL;
     Vysyx_22040895_top___024unit____Vdpiimwrap_set_gpr_ptr__Vdpioc2_TOP____024unit(vlSelf->ysyx_22040895_top__DOT__my_regfile__DOT__regs);
 }
 

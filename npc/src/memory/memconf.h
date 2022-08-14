@@ -1,10 +1,10 @@
 /*** 
  * @Author: Groot
  * @Date: 2022-07-22 21:31:37
- * @LastEditTime: 2022-07-29 10:09:08
+ * @LastEditTime: 2022-08-14 11:50:55
  * @LastEditors: Groot
  * @Description: 
- * @FilePath: /ysyx-workbench/npc/memory/memconf.h
+ * @FilePath: /ysyx-workbench/npc/src/memory/memconf.h
  * @版权声明
  */
 #define CONFIG_ISA_riscv64 1
@@ -35,3 +35,5 @@
 
 #define CONFIG_MTRACE 0
 #define CONFIG_FTRACE 1
+
+#define paddr_t uint32_t

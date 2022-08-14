@@ -27,7 +27,7 @@ void reg_tans(REF_CPU_state ref_cpu, CPU_state dut_cpu_state)
 }
 
 void (*ref_difftest_init)(int port) = NULL;
-// void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
+void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
 // void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
@@ -43,10 +43,10 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	assert(handle);
 	ref_difftest_init = (void (*)(int))dlsym(handle, "my_difftest_init");
 	ref_difftest_init(port);
-
 	assert(ref_difftest_init);
-	// ref_difftest_memcpy = dlsym(handle, "difftest_memcpy");
-	// assert(ref_difftest_memcpy);
+
+	ref_difftest_memcpy = (void (*)(uint32_t, void*, size_t, bool))dlsym(handle, "my_difftest_memcpy");
+	assert(ref_difftest_memcpy);
 
 	ref_difftest_regcpy = (void (*)(void *, bool))dlsym(handle, "my_difftest_regcpy");
 	assert(ref_difftest_regcpy);
@@ -62,20 +62,23 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	char log_info_2[256] = "The result of every instruction will be compared with ref_so_file. \nThis will help you a lot for debugging, but also significantly reduce the performance.\n";
 	my_log(log_info_2);
 
-	// ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
 	reg_tans(ref_cpu, cpu);
-	ref_cpu.pc = 0x80000000;
+	ref_cpu.pc = RESET_VECTOR;
+	ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
 	ref_difftest_regcpy(&ref_cpu, DIFFTEST_TO_REF);
 }
 
-static void checkregs(REF_CPU_state *ref, uint64_t pc)
+static void checkregs(REF_CPU_state ref, uint64_t pc)
 {
 	int abort = 0;
+	printf("dut cpu_gpr[2]: %lx\n", cpu.cpu_gpr[2]);
+	printf("ref cpu_gpr[2]: %lx\n", ref.cpu_gpr[2]);
 	for (int i = 0; i < 32; i++)
 	{
-		if (cpu.cpu_gpr[i] != ref->cpu_gpr[i])
+		if (cpu.cpu_gpr[i] != ref.cpu_gpr[i])
 		{
 			abort = 1;
+			printf("i: %d\n", i);
 		}
 	}
 	if (abort == 1)
@@ -83,6 +86,7 @@ static void checkregs(REF_CPU_state *ref, uint64_t pc)
 		contextp->gotFinish(true);
 		char log_info[64] = ASNI_FMT("Differential testing Failed, Please Check Your NPC", ASNI_FG_RED);
 		my_log(log_info);
+		printf("checkregs fault: %s\n", log_info);
 	}
 }
 
@@ -96,7 +100,7 @@ void difftest_step(uint64_t pc)
 
 	ref_difftest_regcpy(&ref_temp, DIFFTEST_TO_DUT);
 
-	checkregs(&ref_temp, pc);
+	checkregs(ref_temp, pc);
 }
 
 #endif
