@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-07-29 11:39:37
+ * @LastEditTime: 2022-08-14 11:48:01
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/nemu/src/memory/paddr.c
@@ -27,7 +27,6 @@ void mtrace(char* r_or_w, paddr_t addr)
   char *p = mtrace_buf[mtrace_num];
   p += snprintf(p, 10, "%s" " : ", r_or_w);
   p += snprintf(p, sizeof(mtrace_buf), "%x", addr);  
-  // printf("mtrace_buf[%d]: %s\n", mtrace_num, mtrace_buf[mtrace_num]);
   mtrace_num++;
 }
 #endif

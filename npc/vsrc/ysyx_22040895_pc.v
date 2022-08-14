@@ -8,7 +8,7 @@ module ysyx_22040895_pc (input wire clk,
            output reg ce_o_pc);
 
     initial begin
-        pc_o_pc = 64'h000000007ffffffc;
+        pc_o_pc = 64'h0000000080000000;
     end
     reg pcsel;
     always @(posedge clk) begin

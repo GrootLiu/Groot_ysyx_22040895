@@ -16,10 +16,12 @@ char inst_asm[128];
 int func_depth = 0;
 #endif
 
+#define RstTime 4
+
 int excu_once(int exit)
 {
 	contextp->timeInc(1);
-	if (contextp->time() >= 0)
+	if (contextp->time() > RstTime)
 	{
 		top->rst = ysyx_22040895_RstDisable;
 	}
@@ -46,9 +48,10 @@ int excu_once(int exit)
 	}
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
+		printf("111\n");
 		cpu.pc = top->instaddr_o;
-
 		top->inst_i = paddr_read(cpu.pc);
+		printf("instruction: %0x\n", top->inst_i);
 		if (top->inst_i == EBREAK)
 		{
 			exit = 1;
@@ -90,7 +93,6 @@ int excu_once(int exit)
 		}
 #endif
 	}
-
 	if (exit == 1)
 	{
 		contextp->gotFinish(true);
@@ -100,7 +102,6 @@ int excu_once(int exit)
 
 int trig_once(int exit)
 {
-
 	exit = excu_once(exit);
 	if (exit == 1)
 	{
@@ -108,9 +109,12 @@ int trig_once(int exit)
 	}
 	exit = excu_once(exit);
 	printf("exit: %d\n", exit);
+	if (contextp->time() > RstTime)
+	{
 #ifdef DIFFTEST
-	difftest_step(cpu.pc);
+		difftest_step(cpu.pc);
 #endif
+	}
 	return exit;
 }
 
@@ -124,7 +128,6 @@ int excute(int n)
 		{
 			exit = trig_once(exit);
 			times++;
-			printf("11111111111111\n");
 		}
 	}
 	else
