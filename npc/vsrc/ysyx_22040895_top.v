@@ -6,6 +6,7 @@
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_opnumsel.v"
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_cu.v"
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_mmu.v"
 
 module top(input wire clk,
            input wire rst,
@@ -49,13 +50,13 @@ module top(input wire clk,
     
     // 用于连接cu模块和opnumsel模块得线
     wire opsrc_cu_opnumsel;
-
-
+    
+    
     // 用于连接cu模块和exu模块的线
     wire[`ysyx_22040895_aluopLength] aluop_cu_exu;
     wire[`ysyx_22040895_bcuopLength] bcuop_cu_exu;
     wire jump_branch_exu_cu;
-
+    
     // 用于连接ex模块和ifu模块的线
     wire[`ysyx_22040895_InstAddrBus] dnpc_exu_ifu;
     
@@ -63,15 +64,24 @@ module top(input wire clk,
     wire[`ysyx_22040895_RegBus] rdata1_reg_mux;
     wire[`ysyx_22040895_RegBus] rdata2_reg_mux;
     
-    // 用于连接ex模块和regfile模块的线
-    wire[`ysyx_22040895_RegBus] wdata_ex_reg;
-
+    // 用于连接mmu模块和regfile模块的线
+    wire[`ysyx_22040895_RegBus] wdata_mmu_reg;
+    
     // 用于连接id模块和ex模块的线
     wire[`ysyx_22040895_InstAddrBus] pc_id_exu;
     
     // 用于连接opnumsel模块和ex模块的线
     wire[`ysyx_22040895_RegBus] opnum1_opnumsel_ex;
     wire[`ysyx_22040895_RegBus] opnum2_opnumsel_ex;
+    
+    // 用于连接cu和mmu的线
+    wire sl_cu_mmu_exu;
+    wire mew_cu_mmu;
+    wire[1:0] munit_cu_mmu;
+    
+    // 用于连接exu和mmu的线
+    wire[`ysyx_22040895_RegBus] result_exu_mmu;
+    wire[`ysyx_22040895_RegBus] wmdata_exu_mmu;
     
     ysyx_22040895_ifu my_ifu(
     .clk                (clk),
@@ -119,7 +129,7 @@ module top(input wire clk,
     .waddr_i_reg  		(rdaddr_id_reg),
     .rdata1_o_reg 		(rdata1_reg_mux),
     .rdata2_o_reg 		(rdata2_reg_mux),
-    .wdata_i_reg  		(wdata_ex_reg)
+    .wdata_i_reg  		(wdata_mmu_reg)
     );
     
     ysyx_22040895_opnumsel my_opnumsel(
@@ -144,7 +154,10 @@ module top(input wire clk,
     .re1_o_cu    		(re1_cu_reg),
     .re2_o_cu    		(re2_cu_reg),
     .we_o_cu     		(we_cu_reg),
-    .jump_branch_o_cu  	(jump_branch_cu_ifu)
+    .jump_branch_o_cu  	(jump_branch_cu_ifu),
+    .sl_o_cu			(sl_cu_mmu_exu),
+    .mwe_o_cu			(mew_cu_mmu),
+    .munit_o_cu			(munit_cu_mmu)
     );
     
     ysyx_22040895_exu my_exu(
@@ -155,9 +168,30 @@ module top(input wire clk,
     .dnpc_o_exu   		(dnpc_exu_ifu),
     .op1_i_exu    		(opnum1_opnumsel_ex),
     .op2_i_exu    		(opnum2_opnumsel_ex),
-    .result_o_exu 		(wdata_ex_reg),
+    .result_o_exu 		(result_exu_mmu),
     .pc_i_exu     		(pc_id_exu),
-    .offset_i_exu       (simm_sext_opnummux_exu)
+    .offset_i_exu       (simm_sext_opnummux_exu),
+    .sl_i_exu			(sl_cu_mmu_exu),
+    .mdata_o_exu		(wmdata_exu_mmu)
     );
+    
+    
+    ysyx_22040895_mmu my_mmu(
+    //ports
+    .rst          		(rst          		),
+    .sl_i_mmu     		(sl_cu_mmu_exu		),
+    .mwe_i_mmu    		(mew_cu_mmu    		),
+    .munit_i_mmu  		(munit_cu_mmu  		),
+    .result_i_mmu 		(result_exu_mmu		),
+    .wmdata_i_mmu 		(wmdata_exu_mmu		),
+    .wdata_o_mmu  		(wdata_mmu_reg 		)
+    // .rmdata_i_mmu 		(rmdata_i_mmu 		),
+    // .maddr_o_mmu  		(maddr_o_mmu  		),
+    // .mce_o_mmu    		(mce_o_mmu    		),
+    // .munit_o_mmu   		(msel_o_mmu   		),
+    // .wmdata_o_mmu 		(wmdata_o_mmu 		),
+    // .mwe_o_mmu    		(mwe_o_mmu    		)
+    );
+    
     
 endmodule

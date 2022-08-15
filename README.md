@@ -6,4 +6,6 @@ bash init.sh subproject-name
 ```
 进行初始化, 具体请参考[实验讲义][lecture note].
 
+目前进行到B线，即分支需要调整到PA2
+
 [lecture note]: https://docs.ysyx.org/schedule.html

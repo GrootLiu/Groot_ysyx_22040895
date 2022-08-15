@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-08-15 17:49:45
+ * @LastEditTime: 2022-08-15 22:26:40
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/src/memory/paddr.c
@@ -24,7 +24,7 @@ static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 uint8_t *guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
-static inline uint64_t host_read(void *addr, int len)
+static uint64_t host_read(void *addr, int len)
 {
 	switch (len)
 	{
@@ -39,7 +39,7 @@ static inline uint64_t host_read(void *addr, int len)
 	}
 }
 
-static inline void host_write(void *addr, int len, uint64_t data)
+static void host_write(void *addr, int len, uint64_t data)
 {
 	switch (len)
 	{
