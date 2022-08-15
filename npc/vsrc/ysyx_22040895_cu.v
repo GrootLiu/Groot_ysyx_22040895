@@ -1,18 +1,21 @@
 `include "/home/groot/ysyx-workbench/npc/include/define.v"
 
 module ysyx_22040895_cu (input wire rst,
-           input wire[`ysyx_22040895_OpCodeLength] opcode_i_cu,
-           input wire[`ysyx_22040895_func3Length] func3_i_cu,
-           input wire[`ysyx_22040895_func7Length] func7_i_cu,
-           input wire jump_branch_i_cu,
-           output wire[`ysyx_22040895_aluopLength] aluop_o_cu,
-           output wire[`ysyx_22040895_bcuopLength] bcuop_o_cu,
-           output wire opsel_o_cu,
-           output wire immsel_o_cu,
-           output wire re1_o_cu,
-           output wire re2_o_cu,
-           output wire we_o_cu,
-           output wire jump_branch_o_cu);
+                         input wire[`ysyx_22040895_OpCodeLength] opcode_i_cu,
+                         input wire[`ysyx_22040895_func3Length] func3_i_cu,
+                         input wire[`ysyx_22040895_func7Length] func7_i_cu,
+                         input wire jump_branch_i_cu,
+                         output wire[`ysyx_22040895_aluopLength] aluop_o_cu,
+                         output wire[`ysyx_22040895_bcuopLength] bcuop_o_cu,
+                         output wire opsel_o_cu,
+                         output wire immsel_o_cu,
+                         output wire re1_o_cu,
+                         output wire re2_o_cu,
+                         output wire we_o_cu,
+                         output wire jump_branch_o_cu,
+                         output wire sl_o_cu,
+                         output wire mwe_o_cu,
+                         output wire[1:0] munit_o_cu);
     
     wire[`ysyx_22040895_OpCodeLength] op   = opcode_i_cu;
     wire[`ysyx_22040895_func3Length] func3 = func3_i_cu;
@@ -27,14 +30,15 @@ module ysyx_22040895_cu (input wire rst,
     wire slti_op;           wire slt_op;
     wire sltiu_op;          wire sltu_op;
     
-    // B type               // U type
-    wire beq_op;            wire auipc_op;
-    wire bge_op;			wire lui_op;
-    wire bgeu_op;           
+    // B type               // U type				// s type
+    wire beq_op;            wire auipc_op;			wire sb_op;
+    wire bge_op;			wire lui_op;			wire sh_op;
+    wire bgeu_op;           						wire sw_op;
     wire blt_op;            // J type
     wire bltu_op;           wire jal_op;
     wire bne_op;			wire jalr_op;
     
+    wire store_op;
     
     // 解析输入生成指令
     assign addi_op  = (op == 7'b0010011) & (func3 == 3'b000);
@@ -56,7 +60,7 @@ module ysyx_22040895_cu (input wire rst,
     assign sra_op  = (op == 7'b0110011) & (func3 == 3'b101) & (func7 == 7'b0100000);
     
     assign auipc_op = (op == 7'b0010111);
-	assign lui_op   = (op == 7'b0110111);
+    assign lui_op   = (op == 7'b0110111);
     
     assign beq_op  = (op == 7'b1100011 & func3 == 3'b000);
     assign bge_op  = (op == 7'b1100011 & func3 == 3'b101);
@@ -68,8 +72,14 @@ module ysyx_22040895_cu (input wire rst,
     assign jal_op  = (op == 7'b1101111);
     assign jalr_op = (op == 7'b1100111) & (func3 == 3'b000);
     
+    assign sb_op = (op == 7'b0100011) & (func3 == 3'b000);
+    assign sh_op = (op == 7'b0100011) & (func3 == 3'b001);
+    assign sw_op = (op == 7'b0100011) & (func3 == 3'b010);
+    
+    assign store_op = sb_op | sh_op | sw_op;
+    
     // 解析指令生成控制信号
-    assign aluop_o_cu = ({4{addi_op   | add_op}}  & 4'b0000)
+    assign aluop_o_cu = ({4{addi_op   | add_op | store_op}}  & 4'b0000)
     | ({4{sub_op}}  & 4'b0001)
     | ({4{andi_op   | and_op}}  & 4'b0110)
     | ({4{ori_op    | or_op}}   & 4'b0111)
@@ -80,8 +90,8 @@ module ysyx_22040895_cu (input wire rst,
     | ({4{srl_op}}  & 4'b0100)
     | ({4{sra_op}}  & 4'b0101)
     | ({4{auipc_op}}& 4'b1010)
-	| ({4{lui_op}}  & 4'b1011)
-	| ({4{jalr_op}} & 4'b1100);
+    | ({4{lui_op}}  & 4'b1011)
+    | ({4{jalr_op}} & 4'b1100);
     
     assign bcuop_o_cu = ({3{beq_op}} & 3'b001)
     |({3{bge_op}} & 3'b010)
@@ -92,11 +102,11 @@ module ysyx_22040895_cu (input wire rst,
     |({3{jal_op}} & 3'b111);
     
     wire op_rs1_imm = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | auipc_op | jalr_op | lui_op);
-    wire op_rs1_rs2 = (add_op   | sub_op  | and_op | or_op   | xor_op  | slt_op   | sltu_op  | sll_op | srl_op | sra_op | beq_op | bge_op  | bgeu_op | blt_op | bltu_op | bne_op);
-    wire imm1       = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | beq_op   | bge_op | bge_op | bgeu_op| blt_op | bltu_op | bne_op  | jalr_op) ;
+    wire op_rs1_rs2 = (add_op   | sub_op  | and_op | or_op   | xor_op  | slt_op   | sltu_op  | sll_op | srl_op | sra_op | beq_op | bge_op  | bgeu_op | blt_op  | bltu_op | bne_op | store_op);
+    wire imm1       = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | beq_op   | bge_op | bge_op | bgeu_op| blt_op | bltu_op | bne_op  | jalr_op | store_op) ;
     wire imm2       = (auipc_op | jal_op  | lui_op);
-    wire reg_r1     = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op | bne_op | jalr_op);
-    wire reg_r2     = (add_op  | sub_op  | and_op |  or_op  | xor_op  | slt_op   | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op| bne_op);
+    wire reg_r1     = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op | bne_op | jalr_op | store_op);
+    wire reg_r2     = (add_op  | sub_op  | and_op |  or_op  | xor_op  | slt_op   | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op| bne_op | store_op);
     wire reg_w      = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | auipc_op | jal_op | jalr_op | lui_op);
     
     assign opsel_o_cu       = ~op_rs1_imm | op_rs1_rs2;
@@ -105,5 +115,9 @@ module ysyx_22040895_cu (input wire rst,
     assign re2_o_cu         = reg_r2;
     assign we_o_cu          = reg_w;
     assign jump_branch_o_cu = jump_branch_i_cu | jal_op | jalr_op;
-    
+    assign sl_o_cu          = store_op;
+    assign mwe_o_cu         = store_op;
+    assign munit_o_cu = ({2{sb_op}} & 2'b00)
+    |({2{sh_op}} & 2'b01)
+    |({2{sw_op}} & 2'b10);
 endmodule //cu
