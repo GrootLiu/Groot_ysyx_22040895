@@ -48,10 +48,8 @@ int excu_once(int exit)
 	}
 	if (top->instaddr_o >= 0x80000000 && top->rst == ysyx_22040895_RstDisable)
 	{
-		printf("111\n");
 		cpu.pc = top->instaddr_o;
 		top->inst_i = paddr_read(cpu.pc);
-		printf("instruction: %0x\n", top->inst_i);
 		if (top->inst_i == EBREAK)
 		{
 			exit = 1;
@@ -108,11 +106,10 @@ int trig_once(int exit)
 		return exit;
 	}
 	exit = excu_once(exit);
-	printf("exit: %d\n", exit);
 	if (contextp->time() > RstTime)
 	{
 #ifdef DIFFTEST
-		difftest_step(cpu.pc);
+		exit = difftest_step(cpu.pc);
 #endif
 	}
 	return exit;
@@ -141,6 +138,11 @@ int excute(int n)
 	if (exit == 1)
 	{
 		return -1;
+	}
+	if (exit == 2)
+	{
+		return -2;
+		printf("2222\n");
 	}
 	return 0;
 }

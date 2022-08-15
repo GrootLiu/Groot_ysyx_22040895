@@ -119,9 +119,9 @@ static int cmd_si(char *args)
 
 static int cmd_c(char *args)
 {
-	excute(-1);
+	int ret = excute(-1);
 	regs_display();
-	return -1;
+	return ret;
 }
 
 static int cmd_q(char *args)
@@ -134,12 +134,13 @@ void sdb_set_batch_mode()
 	is_batch_mode = true;
 }
 
-void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
+int main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 {
 	if (is_batch_mode)
-	{		
-		cmd_c(NULL);
-		return;
+	{	
+		int ret = cmd_c(NULL);
+		
+		return ret;
 	}
 	
 	int n;
@@ -165,7 +166,7 @@ void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 			{
 				if (cmd_table[i].handler(args) < 0)
 				{
-					return;
+					return -1;
 				}
 				break;
 			}
@@ -175,4 +176,5 @@ void main_loop(VerilatedContext *contextp, VerilatedVcdC *tfp)
 			printf("Unknown command '%s'\n", cmd);
 		}
 	}
+	return 0;
 }
