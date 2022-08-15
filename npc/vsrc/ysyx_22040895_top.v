@@ -7,7 +7,7 @@
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_cu.v"
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
 
-module ysyx_22040895_top(input wire clk,
+module top(input wire clk,
            input wire rst,
            input wire[`ysyx_22040895_InstBus] inst_i,
            output wire[`ysyx_22040895_InstAddrBus] instaddr_o);

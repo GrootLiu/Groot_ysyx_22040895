@@ -34,7 +34,7 @@ class Vysyx_22040895_top__Syms final : public VerilatedSyms {
     Vysyx_22040895_top___024unit   TOP____024unit;
 
     // SCOPE NAMES
-    VerilatedScope __Vscope_ysyx_22040895_top__my_ifu;
+    VerilatedScope __Vscope_top__my_ifu;
 
     // CONSTRUCTORS
     Vysyx_22040895_top__Syms(VerilatedContext* contextp, const char* namep, Vysyx_22040895_top* modelp);

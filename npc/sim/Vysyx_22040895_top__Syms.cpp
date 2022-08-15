@@ -6,7 +6,7 @@
 #include "Vysyx_22040895_top___024root.h"
 #include "Vysyx_22040895_top___024unit.h"
 
-void Vysyx_22040895_top___024root____Vdpiexp_ysyx_22040895_top__DOT__my_ifu__DOT__get_inst_TOP(Vysyx_22040895_top__Syms* __restrict vlSymsp, IData/*31:0*/ &inst);
+void Vysyx_22040895_top___024root____Vdpiexp_top__DOT__my_ifu__DOT__get_inst_TOP(Vysyx_22040895_top__Syms* __restrict vlSymsp, IData/*31:0*/ &inst);
 
 // FUNCTIONS
 Vysyx_22040895_top__Syms::~Vysyx_22040895_top__Syms()
@@ -30,9 +30,9 @@ Vysyx_22040895_top__Syms::Vysyx_22040895_top__Syms(VerilatedContext* contextp, c
     TOP.__Vconfigure(this, true);
     TOP____024unit.__Vconfigure(this, true);
     // Setup scopes
-    __Vscope_ysyx_22040895_top__my_ifu.configure(this, name(), "ysyx_22040895_top.my_ifu", "my_ifu", -12, VerilatedScope::SCOPE_OTHER);
+    __Vscope_top__my_ifu.configure(this, name(), "top.my_ifu", "my_ifu", -12, VerilatedScope::SCOPE_OTHER);
     // Setup export functions
     for (int __Vfinal=0; __Vfinal<2; __Vfinal++) {
-        __Vscope_ysyx_22040895_top__my_ifu.exportInsert(__Vfinal, "get_inst", (void*)(&Vysyx_22040895_top___024root____Vdpiexp_ysyx_22040895_top__DOT__my_ifu__DOT__get_inst_TOP));
+        __Vscope_top__my_ifu.exportInsert(__Vfinal, "get_inst", (void*)(&Vysyx_22040895_top___024root____Vdpiexp_top__DOT__my_ifu__DOT__get_inst_TOP));
     }
 }

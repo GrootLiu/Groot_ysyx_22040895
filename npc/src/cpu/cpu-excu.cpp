@@ -38,7 +38,7 @@ int excu_once(int exit)
 	{
 #ifdef ITRACE
 		int inst;
-		svSetScope(svGetScopeFromName("TOP.ysyx_22040895_top.my_ifu"));
+		svSetScope(svGetScopeFromName("TOP.top.my_ifu"));
 		get_inst(&inst);
 		disassemble(inst_asm, 128, cpu.pc, (uint8_t *)&inst, 4);
 		char log_buf[256];
