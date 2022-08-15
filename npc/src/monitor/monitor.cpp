@@ -127,7 +127,7 @@ void set_gpr_ptr(const svOpenArrayHandle r)
 	cpu.cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar *)r)->datap());
 }
 
-void sim_main(int argc, char **argv)
+int sim_main(int argc, char **argv)
 {
 	contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
@@ -141,11 +141,11 @@ void sim_main(int argc, char **argv)
 	init_difftest(diff_so_file, img_size, difftest_port);
 #endif
 
-	main_loop(contextp, tfp);
-
+	int state = main_loop(contextp, tfp);
+	
 	top->final();
 	tfp->close();
 	delete top;
 	delete contextp;
-	return;
+	return state;
 }

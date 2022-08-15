@@ -45,7 +45,7 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	ref_difftest_init(port);
 	assert(ref_difftest_init);
 
-	ref_difftest_memcpy = (void (*)(uint32_t, void*, size_t, bool))dlsym(handle, "my_difftest_memcpy");
+	ref_difftest_memcpy = (void (*)(uint32_t, void *, size_t, bool))dlsym(handle, "my_difftest_memcpy");
 	assert(ref_difftest_memcpy);
 
 	ref_difftest_regcpy = (void (*)(void *, bool))dlsym(handle, "my_difftest_regcpy");
@@ -68,30 +68,32 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	ref_difftest_regcpy(&ref_cpu, DIFFTEST_TO_REF);
 }
 
-static void checkregs(REF_CPU_state ref, uint64_t pc)
+static int checkregs(REF_CPU_state ref, uint64_t pc)
 {
 	int abort = 0;
-	printf("dut cpu_gpr[2]: %lx\n", cpu.cpu_gpr[2]);
-	printf("ref cpu_gpr[2]: %lx\n", ref.cpu_gpr[2]);
 	for (int i = 0; i < 32; i++)
 	{
 		if (cpu.cpu_gpr[i] != ref.cpu_gpr[i])
 		{
 			abort = 1;
-			printf("i: %d\n", i);
 		}
 	}
 	if (abort == 1)
 	{
 		contextp->gotFinish(true);
-		char log_info[64] = ASNI_FMT("Differential testing Failed, Please Check Your NPC", ASNI_FG_RED);
+
+		char log_info[96] = ASNI_FMT("Differential testing Failed, Please Check Your NPC", ASNI_FG_RED);
 		my_log(log_info);
-		printf("checkregs fault: %s\n", log_info);
+		printf(ASNI_FMT("Differential testing Failed, Please Check Your NPC at %08lx\n", ASNI_FG_RED), cpu.pc);
+		return abort + 1;
 	}
+	return abort;
 }
 
-void difftest_step(uint64_t pc)
+int difftest_step(uint64_t pc)
 {
+	int exit = 0;
+
 	reg_tans(ref_cpu, cpu);
 
 	REF_CPU_state ref_temp;
@@ -100,7 +102,9 @@ void difftest_step(uint64_t pc)
 
 	ref_difftest_regcpy(&ref_temp, DIFFTEST_TO_DUT);
 
-	checkregs(ref_temp, pc);
+	exit = checkregs(ref_temp, pc);
+
+	return exit;
 }
 
 #endif
