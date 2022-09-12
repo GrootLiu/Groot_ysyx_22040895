@@ -10,3 +10,4 @@
 !.gitignore
 !Makefile_obj
 !README.md
+!log/*
