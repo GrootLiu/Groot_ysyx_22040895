@@ -1,4 +1,4 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "../include/define.v"
 
 module ysyx_22040895_pc (input wire clk, 
            input wire rst,

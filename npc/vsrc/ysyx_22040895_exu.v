@@ -1,6 +1,6 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_alu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_bcu.v"
+`include "../include/define.v"
+`include "../vsrc/ysyx_22040895_alu.v"
+`include "../vsrc/ysyx_22040895_bcu.v"
 
 module ysyx_22040895_exu (input wire rst,
                           input wire[`ysyx_22040895_aluopLength] aluop_i_exu,

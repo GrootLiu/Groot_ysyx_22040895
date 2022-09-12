@@ -17,7 +17,7 @@
 #ifndef VL_DPIDECL_get_inst_
 #define VL_DPIDECL_get_inst_
 void get_inst(int* inst) {
-    // DPI export at /home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_ifu.v:29:19
+    // DPI export at sim/../vsrc/ysyx_22040895_ifu.v:30:19
     return Vysyx_22040895_top::get_inst(inst);
 }
 #endif

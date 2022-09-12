@@ -61,6 +61,7 @@ VL_MODULE(Vysyx_22040895_top___024root) {
     CData/*0:0*/ top__DOT__my_cu__DOT__bltu_op;
     CData/*0:0*/ top__DOT__my_cu__DOT__bne_op;
     CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
+    CData/*0:0*/ top__DOT__my_cu__DOT__store_op;
     CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_cout;
     SData/*11:0*/ top__DOT__imm1_id_sext;
     IData/*19:0*/ top__DOT__imm2_id_sext;
@@ -68,12 +69,14 @@ VL_MODULE(Vysyx_22040895_top___024root) {
     QData/*63:0*/ top__DOT__rdata1_reg_mux;
     QData/*63:0*/ top__DOT__pc_id_exu;
     QData/*63:0*/ top__DOT__opnum2_opnumsel_ex;
+    QData/*63:0*/ top__DOT__my_exu__DOT__op2_i_alu;
     QData/*63:0*/ top__DOT__my_exu__DOT__alu_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__sub_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__slt_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_result;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__op2;
     QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__cin;
+    QData/*63:0*/ top__DOT__my_mmu__DOT__rmdata_i_mmu;
     VlUnpacked<QData/*63:0*/, 32> top__DOT__my_regfile__DOT__regs;
 
     // LOCAL VARIABLES
