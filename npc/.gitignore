@@ -8,4 +8,5 @@
 !*.cc
 !*.cpp
 !.gitignore
+!Makefile_obj
 !README.md
