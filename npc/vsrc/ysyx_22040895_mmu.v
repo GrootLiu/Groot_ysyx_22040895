@@ -1,4 +1,4 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "../include/define.v"
 module ysyx_22040895_mmu (input wire rst,
                           input wire sl_i_mmu,
                           input wire mwe_i_mmu,
