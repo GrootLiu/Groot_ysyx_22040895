@@ -1,0 +1,17 @@
+[1;32mDifferential testing: ON[0mThe result of every instruction will be compared with ref_so_file. 
+This will help you a lot for debugging, but also significantly reduce the performance.
+0000000000000000: inst unimp	
+0000000000000000: inst unimp	
+0000000000000000: inst unimp	
+0000000000009117: inst auipc	sp, 9
+00000000ffc10113: inst addi	sp, sp, -4
+0000000000c000ef: inst jal	0x80000018
+00000000ff010113: inst addi	sp, sp, -16
+0000000000000517: inst auipc	a0, 0
+0000000001c50513: inst addi	a0, a0, 28
+0000000000113423: inst sd	ra, 8(sp)
+00000000fe9ff0ef: inst jal	0x80000010
+0000000000000513: inst mv	a0, zero
+0000000000008067: inst ret
+0000000000050513: inst mv	a0, a0
+0000000000100073: inst ebreak	
