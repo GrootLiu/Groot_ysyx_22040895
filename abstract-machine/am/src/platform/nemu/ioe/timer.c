@@ -11,18 +11,18 @@
 #include <nemu.h>
 
 static uint32_t boot_sec;
-// static uint32_t boot_usec;
+static uint32_t boot_usec;
 
 void __am_timer_init()
 {
-//	 boot_usec = inl(RTC_ADDR);
-	 boot_sec  = inl(RTC_ADDR + 0x4);
+	boot_sec  = inl(RTC_ADDR + 4);
+	boot_usec = inl(RTC_ADDR);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime)
 {
+	uint32_t now_sec  = inl(RTC_ADDR + 4);
 	uint32_t now_usec = inl(RTC_ADDR);
-	uint32_t now_sec  = inl(RTC_ADDR + 0x4);
 	uptime->us = (now_sec - boot_sec) * 1000000 + now_usec;
 }
 
