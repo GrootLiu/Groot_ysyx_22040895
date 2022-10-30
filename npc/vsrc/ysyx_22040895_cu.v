@@ -1,4 +1,5 @@
-`include "../include/define.v"
+`include "define.v"
+
 
 module ysyx_22040895_cu (input wire rst,
                          input wire[`ysyx_22040895_OpCodeLength] opcode_i_cu,

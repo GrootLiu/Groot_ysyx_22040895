@@ -1,4 +1,4 @@
-`include "../include/define.v"
+`include "define.v"
 
 module ysyx_22040895_sext (input wire rst,
              input wire immsel_i_sext,

@@ -1,12 +1,12 @@
-`include "../include/define.v"
-`include "../vsrc/ysyx_22040895_idu.v"
-`include "../vsrc/ysyx_22040895_ifu.v"
-`include "../vsrc/ysyx_22040895_sext.v"
-`include "../vsrc/ysyx_22040895_regfile.v"
-`include "../vsrc/ysyx_22040895_opnumsel.v"
-`include "../vsrc/ysyx_22040895_cu.v"
-`include "../vsrc/ysyx_22040895_exu.v"
-`include "../vsrc/ysyx_22040895_mmu.v"
+`include "define.v"
+`include "ysyx_22040895_idu.v"
+`include "ysyx_22040895_ifu.v"
+`include "ysyx_22040895_sext.v"
+`include "ysyx_22040895_regfile.v"
+`include "ysyx_22040895_opnumsel.v"
+`include "ysyx_22040895_cu.v"
+`include "ysyx_22040895_exu.v"
+`include "ysyx_22040895_mmu.v"
 
 module top(input wire clk,
            input wire rst,

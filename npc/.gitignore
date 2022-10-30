@@ -1,14 +1,11 @@
-*.*
-*
-sim//
+sim/*
 !*/
 !Makefile
 !*.mk
 !*.[cSh]
-!*.v
-!*.cc
-!*.cpp
 !.gitignore
 !Makefile_obj
 !README.md
 !log/*
+!include/*
+!src/*

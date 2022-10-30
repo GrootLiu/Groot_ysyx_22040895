@@ -1,5 +1,5 @@
-`include "../include/define.v"
-`include "../vsrc/ysyx_22040895_pc.v"
+`include "define.v"
+`include "ysyx_22040895_pc.v"
 
 
 
