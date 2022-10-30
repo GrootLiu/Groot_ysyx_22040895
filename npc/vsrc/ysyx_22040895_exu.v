@@ -1,6 +1,7 @@
-`include "../include/define.v"
-`include "../vsrc/ysyx_22040895_alu.v"
-`include "../vsrc/ysyx_22040895_bcu.v"
+`include "define.v"
+
+`include "ysyx_22040895_alu.v"
+`include "ysyx_22040895_bcu.v"
 
 module ysyx_22040895_exu (input wire rst,
                           input wire[`ysyx_22040895_aluopLength] aluop_i_exu,

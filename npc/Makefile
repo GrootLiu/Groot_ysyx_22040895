@@ -16,23 +16,26 @@ endif
 ## Generate C++ in executable form
 VERILATOR_FLAGS += -cc --exe
 ## Optimiza
-VERILATOR_FLAGS += -Os -x-assign 0
+VERILATOR_FLAGS += -O3 -x-assign 0
 ## Don't warn the no-fatal warning
 VERILATOR_FLAGS += --Wno-fatal
 ## make waveforms
 VERILATOR_FLAGS += --trace
 ## make dir
 VERILATOR_FLAGS += --Mdir  sim
+##include
+VERILATOR_FLAGS += -y $(NPC_HOME)/include/
+VERILATOR_FLAGS += -y $(NPC_HOME)/vsrc/
 
 # Input_file for Verilator
-VERILATOR_INPUT = ./vsrc/ysyx_22040895_top.v ./npc-main.cpp -y ../vsrc
+VERILATOR_INPUT = ./vsrc/ysyx_22040895_top.v ./npc-main.cpp -y .
 
 default: run
 
 ## Make
 run: 
 	@echo
-	@echo $(FG_YELLOW) "-- VERILATE ----------------" $(CLOSE)
+	@echo $(FG_YELLOW) "-------------------------------- VERILATE --------------------------------" $(CLOSE)
 	@echo
 	$(VERILATOR) $(VERILATOR_FLAGS) $(VERILATOR_INPUT)
 ### To compile, we can either
@@ -41,21 +44,21 @@ run:
 #		$(MAKE) -j -C obj_dir -f Vysyx_22040895_top.mk
 # 3. Or, call a submakefile where we can override the rules ourselves:
 	@echo
-	@echo $(FG_YELLOW) "-- BUILDING ----------------" $(CLOSE)
+	@echo $(FG_YELLOW) "-------------------------------- BUILDING --------------------------------" $(CLOSE)
 	@echo
 	$(MAKE)  -j -C sim -f ../Makefile_obj
 
 	@echo
-	@echo $(FG_YELLOW) "-- GENERATE SO ----------------" $(CLOSE)
+	@echo $(FG_YELLOW) "-------------------------------- GENERATE SO --------------------------------" $(CLOSE)
 	$(MAKE) -j -C $(NEMU_HOME)
 
 	@echo
-	@echo $(FG_YELLOW) "-- RUN ---------------------" $(CLOSE)
+	@echo $(FG_YELLOW) "-------------------------------- RUN -------------------------------------" $(CLOSE)
 	@echo
 	sim/Vysyx_22040895_top $(ARGS) $(IMG) 
 
 	@echo
-	@echo $(FG_YELLOW) "-- DONE --------------------" $(CLOSE)
+	@echo $(FG_YELLOW) "-------------------------------- DONE ------------------------------------" $(CLOSE)
 	@echo
 	@echo $(FG_MAGENTA) "To see waveforms, please "make wave"" $(CLOSE)
 	@echo

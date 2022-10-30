@@ -1,4 +1,5 @@
-`include "../include/define.v"
+`include "define.v"
+
 import "DPI-C" function void set_gpr_ptr(input logic [63:0] a []);
 
 module ysyx_22040895_regfile (input wire clk,
