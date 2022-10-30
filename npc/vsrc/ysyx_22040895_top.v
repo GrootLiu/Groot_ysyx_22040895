@@ -1,12 +1,12 @@
-`include "define.v"
-`include "ysyx_22040895_idu.v"
-`include "ysyx_22040895_ifu.v"
-`include "ysyx_22040895_sext.v"
-`include "ysyx_22040895_regfile.v"
-`include "ysyx_22040895_opnumsel.v"
-`include "ysyx_22040895_cu.v"
-`include "ysyx_22040895_exu.v"
-`include "ysyx_22040895_mmu.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_idu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_ifu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_sext.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_regfile.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_opnumsel.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_cu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_mmu.v"
 
 module top(input wire clk,
            input wire rst,

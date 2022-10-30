@@ -1,5 +1,5 @@
-`include "define.v"
-`include "ysyx_22040895_pc.v"
+`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_pc.v"
 
 
 

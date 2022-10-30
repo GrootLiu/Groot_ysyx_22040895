@@ -1,5 +1,4 @@
-`include "define.v"
-
+`include "../include/define.v"
 
 module ysyx_22040895_bcu (input wire lt_i_bcu,
             input wire ltu_i_bcu,
