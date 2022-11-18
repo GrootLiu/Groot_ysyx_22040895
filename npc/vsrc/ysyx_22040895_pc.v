@@ -15,8 +15,6 @@ module ysyx_22040895_pc (input wire clk,
     always @(posedge clk) begin
         if (rst == `ysyx_22040895_RstEnable) begin
             ce_o_pc <= `ysyx_22040895_ChipDisable;
-            // pc_o_pc <= 64'h000000007ffffffc;
-            // pc_o_pc <= 64'h0;
         end
         else begin
             ce_o_pc <= `ysyx_22040895_ChipEnable;

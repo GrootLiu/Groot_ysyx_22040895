@@ -62,6 +62,6 @@ run:
 	@echo
 	@echo $(FG_MAGENTA) "To see waveforms, please "make wave"" $(CLOSE)
 	@echo
-wave: run
+wave: 
 	gtkwave ./wave/wave.vcd
 

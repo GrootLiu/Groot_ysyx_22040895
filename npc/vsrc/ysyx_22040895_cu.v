@@ -14,9 +14,10 @@ module ysyx_22040895_cu (input wire rst,
                          output wire re2_o_cu,
                          output wire we_o_cu,
                          output wire jump_branch_o_cu,
-                         output wire sl_o_cu,
+                         output wire[1:0] sl_o_cu,
                          output wire mwe_o_cu,
-                         output wire[1:0] munit_o_cu);
+                         output wire[1:0] munit_o_cu,
+						 output wire wordop_o_cu);
     
     wire[`ysyx_22040895_OpCodeLength] op   = opcode_i_cu;
     wire[`ysyx_22040895_func3Length] func3 = func3_i_cu;
@@ -30,16 +31,22 @@ module ysyx_22040895_cu (input wire rst,
     wire xori_op;           wire xor_op;            wire sra_op;
     wire slti_op;           wire slt_op;
     wire sltiu_op;          wire sltu_op;
-    
+    wire lb_op;				wire addw_op;
+	wire lh_op;
+	wire lw_op;
+	wire ld_op;
+	wire addiw_op;
+
     // B type               // U type				// s type
     wire beq_op;            wire auipc_op;			wire sb_op;
     wire bge_op;			wire lui_op;			wire sh_op;
     wire bgeu_op;           						wire sw_op;
-    wire blt_op;            // J type
+    wire blt_op;            /* J type */			wire sd_op;
     wire bltu_op;           wire jal_op;
-    wire bne_op;			wire jalr_op;
+    wire bne_op;			wire jalr_op;			
     
     wire store_op;
+	wire load_op;
     
     // 解析输入生成指令
     assign addi_op  = (op == 7'b0010011) & (func3 == 3'b000);
@@ -48,6 +55,7 @@ module ysyx_22040895_cu (input wire rst,
     assign xori_op  = (op == 7'b0010011) & (func3 == 3'b100);
     assign slti_op  = (op == 7'b0010011) & (func3 == 3'b010);
     assign sltiu_op = (op == 7'b0010011) & (func3 == 3'b011);
+	assign addiw_op = (op == 7'b0011011) & (func3 == 3'b000);
     
     assign add_op  = (op == 7'b0110011) & (func3 == 3'b000) & (func7 == 7'b0000000);
     assign sub_op  = (op == 7'b0110011) & (func3 == 3'b000) & (func7 == 7'b0100000);
@@ -59,6 +67,7 @@ module ysyx_22040895_cu (input wire rst,
     assign sll_op  = (op == 7'b0110011) & (func3 == 3'b001) & (func7 == 7'b0000000);
     assign srl_op  = (op == 7'b0110011) & (func3 == 3'b101) & (func7 == 7'b0000000);
     assign sra_op  = (op == 7'b0110011) & (func3 == 3'b101) & (func7 == 7'b0100000);
+	assign addw_op = (op == 7'b0111011) & (func3 == 3'b000) & (func7 == 7'b0000000);
     
     assign auipc_op = (op == 7'b0010111);
     assign lui_op   = (op == 7'b0110111);
@@ -76,16 +85,24 @@ module ysyx_22040895_cu (input wire rst,
     assign sb_op = (op == 7'b0100011) & (func3 == 3'b000);
     assign sh_op = (op == 7'b0100011) & (func3 == 3'b001);
     assign sw_op = (op == 7'b0100011) & (func3 == 3'b010);
-    
-    assign store_op = sb_op | sh_op | sw_op;
-    
+    assign sd_op = (op == 7'b0100011) & (func3 == 3'b011);
+
+	assign lb_op = (op == 7'b0000011) & (func3 == 3'b000);
+	assign lh_op = (op == 7'b0000011) & (func3 == 3'b001);
+	assign lw_op = (op == 7'b0000011) & (func3 == 3'b010);
+    assign ld_op = (op == 7'b0000011) & (func3 == 3'b011);
+
+	assign wordop_o_cu = (addiw_op | addw_op) & 1'b1;
+
+    assign store_op = sb_op | sh_op | sw_op | sd_op;
+	assign load_op  = lb_op | lh_op | lw_op | ld_op;
     // 解析指令生成控制信号
-    assign aluop_o_cu = ({4{addi_op   | add_op | store_op}}  & 4'b0000)
-    | ({4{sub_op}}  & 4'b0001)
+    assign aluop_o_cu = ({4{addi_op   | add_op | store_op | load_op | addiw_op | addw_op}}  & 4'b0000)
+    | ({4{sub_op 	| beq_op | bne_op}}  & 4'b0001)
     | ({4{andi_op   | and_op}}  & 4'b0110)
     | ({4{ori_op    | or_op}}   & 4'b0111)
     | ({4{xori_op   | xor_op}}  & 4'b1000)
-    | ({4{slti_op   | slt_op | beq_op | bge_op | blt_op | bne_op}}  & 4'b0010)
+    | ({4{slti_op   | slt_op | bge_op | blt_op}}  & 4'b0010)
     | ({4{sltiu_op  | sltu_op| bgeu_op| bltu_op}} & 4'b1001)
     | ({4{sll_op}}  & 4'b0011)
     | ({4{srl_op}}  & 4'b0100)
@@ -102,13 +119,13 @@ module ysyx_22040895_cu (input wire rst,
     |({3{bne_op}} & 3'b110)
     |({3{jal_op}} & 3'b111);
     
-    wire op_rs1_imm = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | auipc_op | jalr_op | lui_op);
-    wire op_rs1_rs2 = (add_op   | sub_op  | and_op | or_op   | xor_op  | slt_op   | sltu_op  | sll_op | srl_op | sra_op | beq_op | bge_op  | bgeu_op | blt_op  | bltu_op | bne_op | store_op);
-    wire imm1       = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | beq_op   | bge_op | bge_op | bgeu_op| blt_op | bltu_op | bne_op  | jalr_op | store_op) ;
+    wire op_rs1_imm = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | auipc_op | jalr_op | lui_op | load_op | addiw_op);
+    wire op_rs1_rs2 = (add_op   | sub_op  | and_op | or_op   | xor_op  | slt_op   | sltu_op  | sll_op | srl_op | sra_op | beq_op | bge_op  | bgeu_op | blt_op  | bltu_op  | bne_op | store_op | addw_op);
+    wire imm1       = (addi_op  | andi_op | ori_op | xori_op | slti_op | sltiu_op | beq_op   | bge_op | bge_op | bgeu_op| blt_op | bltu_op | bne_op  | jalr_op | store_op | load_op | addiw_op) ;
     wire imm2       = (auipc_op | jal_op  | lui_op);
-    wire reg_r1     = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op | bne_op | jalr_op | store_op);
-    wire reg_r2     = (add_op  | sub_op  | and_op |  or_op  | xor_op  | slt_op   | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op| bne_op | store_op);
-    wire reg_w      = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | auipc_op | jal_op | jalr_op | lui_op);
+    wire reg_r1     = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | beq_op   | bge_op | bgeu_op | blt_op | bltu_op | bne_op | jalr_op | store_op | load_op | addiw_op | addw_op);
+    wire reg_r2     = (add_op  | sub_op  | and_op |  or_op  | xor_op  | slt_op   | sltu_op | sll_op | srl_op | sra_op | beq_op | bge_op | bgeu_op | blt_op | bltu_op| bne_op | store_op | addw_op);
+    wire reg_w      = (addi_op | andi_op | ori_op | xori_op | slti_op | sltiu_op | add_op  | sub_op | and_op | or_op  | xor_op | slt_op | sltu_op | sll_op | srl_op | sra_op | auipc_op | jal_op | jalr_op | lui_op | load_op | addiw_op | addw_op);
     
     assign opsel_o_cu       = ~op_rs1_imm | op_rs1_rs2;
     assign immsel_o_cu      = imm1 | ~imm2;
@@ -116,9 +133,12 @@ module ysyx_22040895_cu (input wire rst,
     assign re2_o_cu         = reg_r2;
     assign we_o_cu          = reg_w;
     assign jump_branch_o_cu = jump_branch_i_cu | jal_op | jalr_op;
-    assign sl_o_cu          = store_op;
+	// sl = store/load
+    assign sl_o_cu          = (store_op == 1) ? 2'b01 : (load_op == 1) ? 2'b10 : 2'b00;
     assign mwe_o_cu         = store_op;
-    assign munit_o_cu = ({2{sb_op}} & 2'b00)
-    |({2{sh_op}} & 2'b01)
-    |({2{sw_op}} & 2'b10);
+	// to select which memory unit will be written
+    assign munit_o_cu = ({2{sb_op | lb_op}} & 2'b00)
+    |({2{sh_op | lh_op}} & 2'b01)
+    |({2{sw_op | lw_op}} & 2'b10)
+	|({2{sd_op | ld_op}} & 2'b11);
 endmodule //cu

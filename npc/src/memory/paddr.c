@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-08-15 22:26:40
+ * @LastEditTime: 2022-11-18 20:43:50
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/src/memory/paddr.c
@@ -21,7 +21,7 @@
 #define RESET_VECTOR (CONFIG_MBASE + CONFIG_PC_RESET_OFFSET)
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 
-uint8_t *guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
+uint8_t *guest_to_host(paddr_t paddr) { /*printf("g2h: %08x\n", *(pmem + paddr - CONFIG_MBASE)); */ return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static uint64_t host_read(void *addr, int len)
@@ -29,31 +29,34 @@ static uint64_t host_read(void *addr, int len)
 	switch (len)
 	{
 	case 1:
-		return *(uint8_t *)addr;
+		return *(int8_t *)addr;
 	case 2:
-		return *(uint16_t *)addr;
+		return *(int16_t *)addr;
 	case 4:
-		return *(uint32_t *)addr;
+		return *(int32_t *)addr;
 	case 8:
-		return *(uint64_t *)addr;
+		return *(int64_t *)addr;
 	}
+	// printf("read addr: %08llx\n", *(long long unsigned int*)addr);
+	return 0;
 }
 
-static void host_write(void *addr, int len, uint64_t data)
+static void host_write(void *addr, int len, int64_t data)
 {
 	switch (len)
 	{
 	case 1:
-		*(uint8_t *)addr = data;
+		*(int8_t *)addr = data;
 		return;
 	case 2:
-		*(uint16_t *)addr = data;
+		*(int16_t *)addr = data;
 		return;
 	case 4:
-		*(uint32_t *)addr = data;
+		*(int32_t *)addr = data;
 		return;
 	case 8:
-		*(uint64_t *)addr = data;
+		*(int64_t *)addr = data;
+		// printf("write addr: %08llx\n", *(long long unsigned int*)addr);
 		return;
 	}
 }
@@ -66,16 +69,59 @@ int outOfBound(uint64_t addr)
 	}
 	return 1;
 }
-static uint64_t pmem_read(paddr_t addr, int len)
+extern "C" void pmem_read(long long raddr, long long *rdata, char wmask)
 {
-	uint64_t ret = host_read(guest_to_host(addr), len);
-	return ret;
+	paddr_t addr = raddr;
+	int len = 0;
+	switch ((int)wmask)
+	{
+	case 1:
+		len = 1;
+		break;
+	case 3:
+		len = 2;
+		break;
+	case 15:
+		len = 4;
+		break;
+	case -1:
+		len = 8;
+		break;
+	default:
+		break;
+	}
+	long long ret = host_read(guest_to_host(addr), len);
+	// printf("read data: %016llx\n", ret);
+	*rdata = ret;
 }
 
-static void pmem_write(paddr_t addr, int len, uint64_t data)
+extern "C" void pmem_write(long long waddr, long long wdata, char wmask)
 {
-	host_write(guest_to_host(addr), len, data);
+	paddr_t addr = waddr;
+	// `wmask`中每比特表示`wdata`中1个字节的掩码,
+	// 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
+	int len = 0;
+	switch ((int)wmask)
+	{
+	case 1:
+		len = 1;
+		break;
+	case 3:
+		len = 2;
+		break;
+	case 15:
+		len = 4;
+		break;
+	case -1:
+		len = 8;
+		break;
+	default:
+		break;
+	}
+	host_write(guest_to_host(addr), len, wdata);
+	return;
 }
+
 uint32_t paddr_read(uint64_t addr)
 {
 	// printf("pc: %lx\n", addr);
