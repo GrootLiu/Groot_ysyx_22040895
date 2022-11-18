@@ -2,7 +2,6 @@
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_pc.v"
 
 
-
 module ysyx_22040895_ifu (input wire clk,
                           input wire rst,
                           input wire[`ysyx_22040895_InstBus] inst_i_ifu,
@@ -12,7 +11,6 @@ module ysyx_22040895_ifu (input wire clk,
                           output wire[`ysyx_22040895_InstAddrBus] instaddr_o_ifu,
                           output wire[`ysyx_22040895_InstAddrBus] pc_o_ifu,
                           output wire ce_o_ifu);
-    export "DPI-C" function get_inst;
     
     ysyx_22040895_pc my_pc(
     .clk(clk),
@@ -25,11 +23,5 @@ module ysyx_22040895_ifu (input wire clk,
     
     assign inst_o_ifu = inst_i_ifu;
     assign pc_o_ifu   = instaddr_o_ifu;
-    
-    
-    function void get_inst();
-        output int inst;
-        inst = inst_i_ifu;
-    endfunction
     
 endmodule //ifu

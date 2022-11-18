@@ -6,21 +6,22 @@
 module ysyx_22040895_exu (input wire rst,
                           input wire[`ysyx_22040895_aluopLength] aluop_i_exu,
                           input wire[`ysyx_22040895_bcuopLength] bcuop_i_exu,
-                          output wire jump_branch_o_exu,
-                          output wire[`ysyx_22040895_InstAddrBus] dnpc_o_exu,
                           input wire[`ysyx_22040895_RegBus] op1_i_exu,
                           input wire[`ysyx_22040895_RegBus] op2_i_exu,
-                          output wire[`ysyx_22040895_RegBus] result_o_exu,
                           input wire[`ysyx_22040895_InstAddrBus] pc_i_exu,
                           input wire[`ysyx_22040895_RegBus] offset_i_exu,
-                          input wire sl_i_exu,
+                          input wire[1:0] sl_i_exu,
+						  input wire  wordop_i_exu,
+						  output wire jump_branch_o_exu,
+						  output wire[`ysyx_22040895_RegBus] result_o_exu,
+                          output wire[`ysyx_22040895_InstAddrBus] dnpc_o_exu,
 						  output wire[`ysyx_22040895_RegBus] mdata_o_exu);
     
     wire lt_alu_bcu;
     wire ltu_alu_bcu;
     wire zero_alu_bcu;
     
-    wire[`ysyx_22040895_RegBus] op2_i_alu = (sl_i_exu == 1) ? (offset_i_exu) : (op2_i_exu);
+    wire[`ysyx_22040895_RegBus] op2_i_alu = (sl_i_exu == 2'b01) ? (offset_i_exu) : (op2_i_exu);
     wire[`ysyx_22040895_RegBus] op1_i_alu = op1_i_exu;
     wire[`ysyx_22040895_RegBus] alu_result;
 
@@ -55,9 +56,11 @@ module ysyx_22040895_exu (input wire rst,
     wire jalr_op                          = (aluop_i_exu == 4'b1100);
     wire[`ysyx_22040895_RegBus] adder_op1 = (lui_op == 1'b1) ? (64'b0) : pc_i_exu;
     wire[`ysyx_22040895_RegBus] adder_op2 = (auipc_op == 1'b1) ? (op2_i_exu<<12) :
-    (jal_op == 1'b1 | jalr_op == 1'b1) ? (64'h4) : 64'h0;
+    										(jal_op == 1'b1 | jalr_op == 1'b1) ? (64'h4) : 64'h0;
     wire[`ysyx_22040895_RegBus] adder_result = adder_op1 + adder_op2;
-    assign result_o_exu                      = (auipc_op | jal_op | jalr_op) ? adder_result : alu_result;
+    assign result_o_exu                      = (auipc_op | jal_op | jalr_op) ? adder_result : 
+											   (wordop_i_exu == 1) ? ({{32{alu_result[31]}}, alu_result[31:0]}) : alu_result;
+
     
 	assign mdata_o_exu = op2_i_exu;
 

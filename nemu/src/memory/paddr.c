@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:26:19
- * @LastEditTime: 2022-08-14 11:48:01
+ * @LastEditTime: 2022-11-16 23:48:08
  * @LastEditors: Groot
  * @Description: 
  * @FilePath: /ysyx-workbench/nemu/src/memory/paddr.c
@@ -27,16 +27,18 @@ void mtrace(char* r_or_w, paddr_t addr)
   char *p = mtrace_buf[mtrace_num];
   p += snprintf(p, 10, "%s" " : ", r_or_w);
   p += snprintf(p, sizeof(mtrace_buf), "%x", addr);  
+   printf("mtrace_buf[%d]: %s\n", mtrace_num, mtrace_buf[mtrace_num]);
   mtrace_num++;
 }
 #endif
 
 
-uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
-paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
+uint8_t* guest_to_host(paddr_t paddr) { /* printf("g2h: %08x\n", *(pmem + paddr - CONFIG_MBASE)); */ return pmem + paddr - CONFIG_MBASE; }
+paddr_t host_to_guest(uint8_t *haddr) { /* printf("h2g: %08lx\n", haddr - pmem + CONFIG_MBASE); */ return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
+//   printf("ret: %08lx\n", ret);
   return ret;
 }
 

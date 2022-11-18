@@ -38,7 +38,8 @@ int excu_once(int exit)
 	{
 #ifdef ITRACE
 		int inst;
-		svSetScope(svGetScopeFromName("TOP.top.my_ifu"));
+		svSetScope(svGetScopeFromName("TOP.top"));
+		// get_inst = read_memory
 		get_inst(&inst);
 		disassemble(inst_asm, 128, cpu.pc, (uint8_t *)&inst, 4);
 		char log_buf[256];
@@ -142,7 +143,6 @@ int excute(int n)
 	if (exit == 2)
 	{
 		return -2;
-		printf("2222\n");
 	}
 	return 0;
 }

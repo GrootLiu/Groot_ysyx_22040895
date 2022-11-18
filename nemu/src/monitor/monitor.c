@@ -74,7 +74,6 @@ static int parse_args(int argc, char *argv[])
 		{"batch", no_argument, NULL, 'b'},
 		{"log", required_argument, NULL, 'l'},
 		{"diff", required_argument, NULL, 'd'},
-		{"mtrace", required_argument, NULL, 'm'},
 		{"port", required_argument, NULL, 'p'},
 		{"help", no_argument, NULL, 'h'},
 		{0, 0, NULL, 0},

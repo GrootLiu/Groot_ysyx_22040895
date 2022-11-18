@@ -8,7 +8,11 @@
  * @版权声明
  */
 #include <dlfcn.h>
-
+const char *regss[] = {
+	"$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+	"s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
+	"a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
+	"s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"};
 typedef struct REF_CPU_state
 {
 	uint64_t cpu_gpr[32];
@@ -76,6 +80,13 @@ static int checkregs(REF_CPU_state ref, uint64_t pc)
 		if (cpu.cpu_gpr[i] != ref.cpu_gpr[i])
 		{
 			abort = 1;
+			printf(ASNI_FMT("***************************************************************************************************\n",  ASNI_FG_CYAN));
+			printf(ASNI_FMT("The wrong reg is: %s\n", ), regss[i]);
+			printf("nemu's ");
+			printf(ASNI_FMT("%s ", ASNI_FG_RED), regss[i]);
+			printf("is %08lx; npc's ", ref.cpu_gpr[i]);
+			printf(ASNI_FMT("%s ", ASNI_FG_RED), regss[i]);
+			printf("is %08lx\n", cpu.cpu_gpr[i]);
 		}
 	}
 	if (abort == 1)
@@ -84,7 +95,9 @@ static int checkregs(REF_CPU_state ref, uint64_t pc)
 
 		char log_info[96] = ASNI_FMT("Differential testing Failed, Please Check Your NPC", ASNI_FG_RED);
 		my_log(log_info);
-		printf(ASNI_FMT("Differential testing Failed, Please Check Your NPC at %08lx\n", ASNI_FG_RED), cpu.pc);
+		printf("Differential testing Failed, Please Check Your NPC at the previous directive of the instruction: ");
+		printf(ASNI_FMT("\n%08lx\n", ASNI_FG_RED), cpu.pc);
+		printf(ASNI_FMT("***************************************************************************************************\n",  ASNI_FG_CYAN));
 		return abort + 1;
 	}
 	return abort;

@@ -8,12 +8,13 @@
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
 `include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_mmu.v"
 
+
+
 module top(input wire clk,
            input wire rst,
            input wire[`ysyx_22040895_InstBus] inst_i,
            output wire[`ysyx_22040895_InstAddrBus] instaddr_o);
-    
-    
+    export "DPI-C" function get_inst;
     // 用于连接if模块和inst_rom的线
     wire ce_ifu_instrom;
     // 用于连接cu和if中pc的线
@@ -56,6 +57,7 @@ module top(input wire clk,
     wire[`ysyx_22040895_aluopLength] aluop_cu_exu;
     wire[`ysyx_22040895_bcuopLength] bcuop_cu_exu;
     wire jump_branch_exu_cu;
+	wire wordop_cu_exu;
     
     // 用于连接ex模块和ifu模块的线
     wire[`ysyx_22040895_InstAddrBus] dnpc_exu_ifu;
@@ -75,7 +77,7 @@ module top(input wire clk,
     wire[`ysyx_22040895_RegBus] opnum2_opnumsel_ex;
     
     // 用于连接cu和mmu的线
-    wire sl_cu_mmu_exu;
+    wire[1:0] sl_cu_mmu_exu;
     wire mew_cu_mmu;
     wire[1:0] munit_cu_mmu;
     
@@ -94,6 +96,11 @@ module top(input wire clk,
     .pc_o_ifu           (pc_ifu_idu),
     .ce_o_ifu           (ce_ifu_instrom)
     );
+    
+    function void get_inst();
+        output int inst;
+        inst = inst_i;
+    endfunction
     
     ysyx_22040895_sext my_sext(
     .rst           		(rst),
@@ -157,7 +164,8 @@ module top(input wire clk,
     .jump_branch_o_cu  	(jump_branch_cu_ifu),
     .sl_o_cu			(sl_cu_mmu_exu),
     .mwe_o_cu			(mew_cu_mmu),
-    .munit_o_cu			(munit_cu_mmu)
+    .munit_o_cu			(munit_cu_mmu),
+	.wordop_o_cu		(wordop_cu_exu)
     );
     
     ysyx_22040895_exu my_exu(
@@ -172,12 +180,14 @@ module top(input wire clk,
     .pc_i_exu     		(pc_id_exu),
     .offset_i_exu       (simm_sext_opnummux_exu),
     .sl_i_exu			(sl_cu_mmu_exu),
-    .mdata_o_exu		(wmdata_exu_mmu)
+    .mdata_o_exu		(wmdata_exu_mmu),
+	.wordop_i_exu		(wordop_cu_exu)
     );
     
     
     ysyx_22040895_mmu my_mmu(
     //ports
+	.clk				(clk				),
     .rst          		(rst          		),
     .sl_i_mmu     		(sl_cu_mmu_exu		),
     .mwe_i_mmu    		(mew_cu_mmu    		),
@@ -185,12 +195,6 @@ module top(input wire clk,
     .result_i_mmu 		(result_exu_mmu		),
     .wmdata_i_mmu 		(wmdata_exu_mmu		),
     .wdata_o_mmu  		(wdata_mmu_reg 		)
-    // .rmdata_i_mmu 		(rmdata_i_mmu 		),
-    // .maddr_o_mmu  		(maddr_o_mmu  		),
-    // .mce_o_mmu    		(mce_o_mmu    		),
-    // .munit_o_mmu   		(msel_o_mmu   		),
-    // .wmdata_o_mmu 		(wmdata_o_mmu 		),
-    // .mwe_o_mmu    		(mwe_o_mmu    		)
     );
     
     
