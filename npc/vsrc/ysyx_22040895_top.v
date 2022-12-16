@@ -58,6 +58,7 @@ module top(input wire clk,
     wire[`ysyx_22040895_bcuopLength] bcuop_cu_exu;
     wire jump_branch_exu_cu;
 	wire wordop_cu_exu;
+	wire shift_cu_exu;
     
     // 用于连接ex模块和ifu模块的线
     wire[`ysyx_22040895_InstAddrBus] dnpc_exu_ifu;
@@ -165,7 +166,8 @@ module top(input wire clk,
     .sl_o_cu			(sl_cu_mmu_exu),
     .mwe_o_cu			(mew_cu_mmu),
     .munit_o_cu			(munit_cu_mmu),
-	.wordop_o_cu		(wordop_cu_exu)
+	.wordop_o_cu		(wordop_cu_exu),
+	.shift_o_cu			(shift_cu_exu)
     );
     
     ysyx_22040895_exu my_exu(
@@ -181,7 +183,8 @@ module top(input wire clk,
     .offset_i_exu       (simm_sext_opnummux_exu),
     .sl_i_exu			(sl_cu_mmu_exu),
     .mdata_o_exu		(wmdata_exu_mmu),
-	.wordop_i_exu		(wordop_cu_exu)
+	.wordop_i_exu		(wordop_cu_exu),
+	.shift_i_exu		(shift_cu_exu)
     );
     
     
