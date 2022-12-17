@@ -13,7 +13,7 @@ extern "C" {
 
 
     // DPI EXPORTS
-    // DPI export at vsrc/ysyx_22040895_top.v:101:19
+    // DPI export at vsrc/ysyx_22040895_top.v:102:19
     extern void get_inst(int* inst);
 
     // DPI IMPORTS

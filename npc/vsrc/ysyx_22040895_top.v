@@ -56,6 +56,7 @@ module top(input wire clk,
     // 用于连接cu模块和exu模块的线
     wire[`ysyx_22040895_aluopLength] aluop_cu_exu;
     wire[`ysyx_22040895_bcuopLength] bcuop_cu_exu;
+	wire[`ysyx_22040895_mduopLength] mduop_cu_exu; 
     wire jump_branch_exu_cu;
 	wire wordop_cu_exu;
 	wire shift_cu_exu;
@@ -163,6 +164,7 @@ module top(input wire clk,
     .re2_o_cu    		(re2_cu_reg),
     .we_o_cu     		(we_cu_reg),
     .jump_branch_o_cu  	(jump_branch_cu_ifu),
+	.mduop_o_cu			(mduop_cu_exu),
     .sl_o_cu			(sl_cu_mmu_exu),
     .mwe_o_cu			(mew_cu_mmu),
     .munit_o_cu			(munit_cu_mmu),
@@ -181,6 +183,7 @@ module top(input wire clk,
     .result_o_exu 		(result_exu_mmu),
     .pc_i_exu     		(pc_id_exu),
     .offset_i_exu       (simm_sext_opnummux_exu),
+	.mduop_i_exu		(mduop_cu_exu),
     .sl_i_exu			(sl_cu_mmu_exu),
     .mdata_o_exu		(wmdata_exu_mmu),
 	.wordop_i_exu		(wordop_cu_exu),

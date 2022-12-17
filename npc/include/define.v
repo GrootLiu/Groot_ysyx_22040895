@@ -28,6 +28,7 @@
 `define ysyx_22040895_func7Length      6:0             // fun7长度 = 7
 `define ysyx_22040895_aluopLength           3:0
 `define ysyx_22040895_bcuopLength           2:0
+`define ysyx_22040895_mduopLength			3:0
 `define ysyx_22040895_imm1Length            11:0
 `define ysyx_22040895_imm2Length            19:0
 
