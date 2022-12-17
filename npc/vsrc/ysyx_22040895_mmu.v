@@ -20,7 +20,9 @@ module ysyx_22040895_mmu (input wire clk,
     
     wire[`ysyx_22040895_RegBus] rmdata_i_mmu;
     
-    assign wdata_o_mmu  = (sl_i_mmu == 2'b10) ? (rmdata_i_mmu) : (sl_i_mmu == 2'b11) ? ({{56{1'b0}}, rmdata_i_mmu[7:0]}) : result_i_mmu;
+    assign wdata_o_mmu  = (sl_i_mmu == 2'b10) ? (rmdata_i_mmu) : 
+	(sl_i_mmu == 2'b11 && munit_i_mmu == 2'b00) ? ({{56{1'b0}}, rmdata_i_mmu[7:0]})  : 
+	(sl_i_mmu == 2'b11 && munit_i_mmu == 2'b01) ? ({{48{1'b0}}, rmdata_i_mmu[15:0]}) : result_i_mmu;
     assign mce_o_mmu    = | sl_i_mmu;
     assign mwe_o_mmu    = mwe_i_mmu;
     assign maddr_o_mmu  = result_i_mmu;

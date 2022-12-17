@@ -4,6 +4,7 @@
 module ysyx_22040895_alu (input wire[`ysyx_22040895_aluopLength] aluop_i_alu,
             input wire[`ysyx_22040895_RegBus] op1_i_alu,
             input wire[`ysyx_22040895_RegBus] op2_i_alu,
+			input wire wordop_i_alu,
 			input wire shift_i_alu,
             output wire[`ysyx_22040895_RegBus] result_o_alu,
             output wire lt_o_alu,
@@ -36,11 +37,8 @@ module ysyx_22040895_alu (input wire[`ysyx_22040895_aluopLength] aluop_i_alu,
     assign or_result  = op1_i_alu | op2_i_alu;
     assign xor_result = op1_i_alu ^ op2_i_alu;
 
-
     wire[`ysyx_22040895_RegBus] adder_result;
     wire adder_cout;
-//     wire carryout;
-//     wire overflow;
 
     wire[`ysyx_22040895_RegBus] op1 = op1_i_alu;
     wire[`ysyx_22040895_RegBus] op2 = (op_sub | op_slt | op_sltu) ? ~op2_i_alu : op2_i_alu;
@@ -51,9 +49,9 @@ module ysyx_22040895_alu (input wire[`ysyx_22040895_aluopLength] aluop_i_alu,
     assign slt_result[0] = (op1_i_alu[63] & ~op2_i_alu[63]) | (~(op1_i_alu[63]^op2_i_alu[63])&adder_result[63]);
     assign sltu_result[63:1] = {63{1'b0}};
     assign sltu_result[0] = ~adder_cout;
-    assign sll_result = (shift_i_alu == 1) ? (op1_i_alu << op2_i_alu) : (op1_i_alu << op2_i_alu[5:0]);
-    assign srl_result = (shift_i_alu == 1) ? (op1_i_alu << op2_i_alu) : (op1_i_alu >> op2_i_alu[5:0]);
-    assign sra_result = (shift_i_alu == 1) ? (($signed(op1_i_alu)) >>> op2_i_alu) : (($signed(op1_i_alu)) >>> op2_i_alu[5:0]);
+    assign sll_result = (shift_i_alu == 1'b0) ? (op1_i_alu << op2_i_alu) : (shift_i_alu & wordop_i_alu == 1'b1) ? ({32'b0, op1_i_alu[31:0]} << op2_i_alu[5:0]) : (wordop_i_alu == 1'b1) ? ({32'b0, op1_i_alu[31:0]} << op2_i_alu[4:0]) : (op1_i_alu << op2_i_alu[5:0]);
+    assign srl_result = (shift_i_alu == 1'b0) ? (op1_i_alu >> op2_i_alu) : (shift_i_alu & wordop_i_alu == 1'b1) ? ({32'b0, op1_i_alu[31:0]} >> op2_i_alu[5:0]) : (wordop_i_alu == 1'b1) ? ({32'b0, op1_i_alu[31:0]} >> op2_i_alu[4:0]) : (op1_i_alu >> op2_i_alu[5:0]);
+    assign sra_result = (shift_i_alu == 1'b0) ? (($signed(op1_i_alu)) >>> op2_i_alu[4:0]) : (($signed(op1_i_alu)) >>> op2_i_alu[5:0]);
     assign result_o_alu = (op_add | op_sub) ? add_sub_result : 
                           (op_and)          ? and_result     :
                           (op_or)           ? or_result      :
