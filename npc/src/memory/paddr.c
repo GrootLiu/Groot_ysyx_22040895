@@ -1,7 +1,7 @@
 /*
  * @Author: Groot
  * @Date: 2022-07-14 22:36:28
- * @LastEditTime: 2022-11-18 20:43:50
+ * @LastEditTime: 2022-12-18 15:19:47
  * @LastEditors: Groot
  * @Description:
  * @FilePath: /ysyx-workbench/npc/src/memory/paddr.c
@@ -72,6 +72,11 @@ int outOfBound(uint64_t addr)
 extern "C" void pmem_read(long long raddr, long long *rdata, char wmask)
 {
 	paddr_t addr = raddr;
+	if (addr == 0xa00003f8)
+	{
+		return 
+	}
+	
 	int len = 0;
 	switch ((int)wmask)
 	{
