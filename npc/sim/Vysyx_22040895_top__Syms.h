@@ -7,7 +7,7 @@
 #ifndef VERILATED_VYSYX_22040895_TOP__SYMS_H_
 #define VERILATED_VYSYX_22040895_TOP__SYMS_H_  // guard
 
-#include "verilated_heavy.h"
+#include "verilated.h"
 
 // INCLUDE MODEL CLASS
 

@@ -5,31 +5,22 @@
 #ifndef VERILATED_VYSYX_22040895_TOP___024ROOT_H_
 #define VERILATED_VYSYX_22040895_TOP___024ROOT_H_  // guard
 
-#include "verilated_heavy.h"
-
-//==========
+#include "verilated.h"
 
 class Vysyx_22040895_top__Syms;
-class Vysyx_22040895_top_VerilatedVcd;
 class Vysyx_22040895_top___024unit;
 
 
-//----------
-
-VL_MODULE(Vysyx_22040895_top___024root) {
+class Vysyx_22040895_top___024root final : public VerilatedModule {
   public:
     // CELLS
     Vysyx_22040895_top___024unit* __PVT____024unit;
 
-    // PORTS
-    VL_IN8(clk,0,0);
-    VL_IN8(rst,0,0);
-    VL_IN(inst_i,31,0);
-    VL_OUT64(instaddr_o,63,0);
-
-    // LOCAL SIGNALS
+    // DESIGN SPECIFIC STATE
     // Anonymous structures to workaround compiler member-count bugs
     struct {
+        VL_IN8(clk,0,0);
+        VL_IN8(rst,0,0);
         CData/*0:0*/ top__DOT__ce_ifu_instrom;
         CData/*6:0*/ top__DOT__opcode_id_cu;
         CData/*2:0*/ top__DOT__func3_id_cu;
@@ -41,11 +32,16 @@ VL_MODULE(Vysyx_22040895_top___024root) {
         CData/*2:0*/ top__DOT__bcuop_cu_exu;
         CData/*3:0*/ top__DOT__mduop_cu_exu;
         CData/*0:0*/ top__DOT__wordop_cu_exu;
-        CData/*0:0*/ top__DOT__shift_cu_exu;
         CData/*1:0*/ top__DOT__sl_cu_mmu_exu;
+        CData/*0:0*/ top__DOT__mew_cu_mmu;
         CData/*1:0*/ top__DOT__munit_cu_mmu;
         CData/*0:0*/ top__DOT__my_ifu__DOT__my_pc__DOT__pcsel;
-        CData/*0:0*/ top__DOT__my_cu__DOT__addi_op;
+        CData/*0:0*/ top__DOT__my_idu__DOT__beq;
+        CData/*0:0*/ top__DOT__my_idu__DOT__bge;
+        CData/*0:0*/ top__DOT__my_idu__DOT__bgeu;
+        CData/*0:0*/ top__DOT__my_idu__DOT__blt;
+        CData/*0:0*/ top__DOT__my_idu__DOT__bltu;
+        CData/*0:0*/ top__DOT__my_idu__DOT__bne;
         CData/*0:0*/ top__DOT__my_cu__DOT__add_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sub_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__andi_op;
@@ -78,24 +74,40 @@ VL_MODULE(Vysyx_22040895_top___024root) {
         CData/*0:0*/ top__DOT__my_cu__DOT__srliw_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__slli_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__slliw_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__beq_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__bge_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sh_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__bgeu_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sw_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__blt_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sd_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__bltu_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__bne_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__store_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__load_op;
-        CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_cout;
-        CData/*7:0*/ top__DOT__my_mmu__DOT__munit_o_mmu;
-        SData/*11:0*/ top__DOT__imm1_id_sext;
-        IData/*19:0*/ top__DOT__imm2_id_sext;
+        CData/*0:0*/ top__DOT__my_cu__DOT__load_unsigned_op;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_hbd144a85__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h85762de3__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h88ef4d41__0;
     };
     struct {
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h993c3d0f__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h9a1a96aa__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h91a0a311__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_ha453e32a__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h4550e04c__0;
+        CData/*0:0*/ top__DOT__my_exu__DOT__lt_alu_bcu;
+        CData/*0:0*/ top__DOT__my_exu__DOT____VdfgTmp_h6e87c126__0;
+        CData/*0:0*/ top__DOT__my_exu__DOT____VdfgTmp_hecbdebcd__0;
+        CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_cout;
+        CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT____VdfgTmp_h2cc5735b__0;
+        CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT____VdfgTmp_hee26600d__0;
+        CData/*7:0*/ top__DOT__my_mmu__DOT__munit_o_mmu;
+        CData/*0:0*/ __VdfgTmp_h25267370__0;
+        CData/*0:0*/ __VdfgTmp_hc8b1ccb7__0;
+        CData/*0:0*/ __Vtrigrprev__TOP__clk;
+        CData/*0:0*/ __VactContinue;
+        SData/*11:0*/ __VdfgTmp_h436c2b34__0;
+        VL_IN(inst_i,31,0);
+        IData/*19:0*/ __VdfgTmp_hcb193c22__0;
+        IData/*31:0*/ __VstlIterCount;
+        IData/*31:0*/ __VicoIterCount;
+        IData/*31:0*/ __VactIterCount;
+        VL_OUT64(instaddr_o,63,0);
         QData/*63:0*/ top__DOT__simm_sext_opnummux_exu;
         QData/*63:0*/ top__DOT__rdata1_reg_mux;
         QData/*63:0*/ top__DOT__pc_id_exu;
@@ -104,37 +116,33 @@ VL_MODULE(Vysyx_22040895_top___024root) {
         QData/*63:0*/ top__DOT__my_exu__DOT__op2_i_alu;
         QData/*63:0*/ top__DOT__my_exu__DOT__alu_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__math_result;
+        QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__add_sub_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__sub_result;
-        QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__slt_result;
-        QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__adder_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__op2;
-        QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__cin;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT__multiplication;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT__division;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT__reminder;
+        QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT____VdfgTmp_h3ffa10bd__0;
         QData/*63:0*/ top__DOT__my_mmu__DOT__rmdata_i_mmu;
         VlUnpacked<QData/*63:0*/, 32> top__DOT__my_regfile__DOT__regs;
+        VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
     };
-
-    // LOCAL VARIABLES
-    CData/*0:0*/ __Vclklast__TOP__clk;
-    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
+    VlTriggerVec<1> __VstlTriggered;
+    VlTriggerVec<1> __VicoTriggered;
+    VlTriggerVec<1> __VactTriggered;
+    VlTriggerVec<1> __VnbaTriggered;
 
     // INTERNAL VARIABLES
-    Vysyx_22040895_top__Syms* vlSymsp;  // Symbol table
+    Vysyx_22040895_top__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-  private:
-    VL_UNCOPYABLE(Vysyx_22040895_top___024root);  ///< Copying not allowed
-  public:
-    Vysyx_22040895_top___024root(const char* name);
+    Vysyx_22040895_top___024root(Vysyx_22040895_top__Syms* symsp, const char* name);
     ~Vysyx_22040895_top___024root();
+    VL_UNCOPYABLE(Vysyx_22040895_top___024root);
 
     // INTERNAL METHODS
-    void __Vconfigure(Vysyx_22040895_top__Syms* symsp, bool first);
+    void __Vconfigure(bool first);
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
-
-//----------
 
 
 #endif  // guard
