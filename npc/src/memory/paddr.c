@@ -151,16 +151,16 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask)
 
 uint32_t paddr_read(uint64_t addr)
 {
-	if (outOfBound(addr) == 1)
-	{
-		printf("!!!---memory access out of boundry---!!!\n");
-		exit(0);
-	}
-	else
-	{
-		uint8_t *paddr = pmem + addr - CONFIG_MBASE;
-		return *(uint32_t *)paddr;
-	}
+	// if (outOfBound(addr) == 1)
+	// {
+	// 	printf("!!!---memory access out of boundry---!!!\n");
+	// 	exit(0);
+	// }
+	// else
+	// {
+	// 	uint8_t *paddr = pmem + addr - CONFIG_MBASE;
+	// 	return *(uint32_t *)paddr;
+	// }
 }
 
 void init_mem()
