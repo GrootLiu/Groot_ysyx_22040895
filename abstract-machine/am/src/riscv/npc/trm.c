@@ -1,15 +1,16 @@
 /*
  * @Author: Groot
  * @Date: 2022-04-06 19:54:14
- * @LastEditTime: 2022-08-05 15:31:01
+ * @LastEditTime: 2022-12-23 15:46:12
  * @LastEditors: Groot
  * @Description:
- * @FilePath: /ysyx-workbench/abstract-machine/am/src/riscv/npc/trm.c
+ * @FilePath: \npc\trm.c
  * 版权声明
  */
 #include <am.h>
 #include <klib-macros.h>
-
+#include <stdio.h>
+#define SERIAL_PORT 0xa00003f8
 extern char _heap_start;
 int main(const char *args);
 
@@ -23,8 +24,14 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 #endif
 static const char mainargs[] = MAINARGS;
 
+static inline void outb(long long addr, uint8_t data) 
+{ 
+	*(volatile uint8_t  *)addr = data; 
+}
+
 void putch(char ch)
 {
+	outb(SERIAL_PORT, ch);
 }
 
 void halt(int code)

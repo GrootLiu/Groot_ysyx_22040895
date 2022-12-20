@@ -151,7 +151,6 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask)
 
 uint32_t paddr_read(uint64_t addr)
 {
-	// printf("pc: %lx\n", addr);
 	if (outOfBound(addr) == 1)
 	{
 		printf("!!!---memory access out of boundry---!!!\n");
