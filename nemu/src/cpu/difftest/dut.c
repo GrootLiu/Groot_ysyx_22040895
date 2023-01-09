@@ -81,39 +81,43 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
 
-// void ref_reg_display(CPU_state *ref)
-// {
-// 	printf("++++++++++++++++++++++++++++++++++++++++++reg info:++++++++++++++++++++++++++++++++++++++++++++++\n");
-// 	for (int i = 1; i <= 32; i++)
-// 	{
-// 		if (i % 1 == 0)
-// 		{
-// 			printf("|");
-// 		}
-// 		printf("%-3s :%-16.8lx\t", "xx", ref->gpr[i - 1]);
-// 		if (i % 4 == 0)
-// 		{
-// 			printf("|");
-// 			printf("\n");
-// 		}
-// 	}
-// 	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "pc", ref->pc);
-// 	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mtevc", ref->csr[0]);
-// 	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mepc", ref->csr[1]);
-// 	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mstatus", ref->csr[2]);
-// 	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mcause", ref->csr[3]);
-// 	printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-// }
+void ref_reg_display(CPU_state *ref)
+{
+	printf("++++++++++++++++++++++++++++++++++++++++++reg info:++++++++++++++++++++++++++++++++++++++++++++++\n");
+	for (int i = 1; i <= 32; i++)
+	{
+		if (i % 1 == 0)
+		{
+			printf("|");
+		}
+		printf("%-3s :%-16.8lx\t", "xx", ref->gpr[i - 1]);
+		if (i % 4 == 0)
+		{
+			printf("|");
+			printf("\n");
+		}
+	}
+	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "pc", ref->pc);
+	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mtvec", ref->csr[0]);
+	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mepc", ref->csr[1]);
+	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mstatus", ref->csr[2]);
+	printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mcause", ref->csr[3]);
+	printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+}
 
 static void checkregs(CPU_state *ref, vaddr_t pc)
 {
-	// if (pc >= 0x800005c4)
-	// 	ref_reg_display(ref);
+	if (pc == 0x80000774 || pc == 0x80000770)
+	{
+		ref_reg_display(ref);
+	}
+		
 	if (!isa_difftest_checkregs(ref, pc))
 	{
 		nemu_state.state = NEMU_ABORT;
 		nemu_state.halt_pc = pc;
 		isa_reg_display();
+		ref_reg_display(ref);
 	}
 }
 
@@ -146,8 +150,6 @@ void difftest_step(vaddr_t pc, vaddr_t npc)
 
 	ref_difftest_exec(1);
 	ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
-
-
 
 	checkregs(&ref_r, pc);
 }
