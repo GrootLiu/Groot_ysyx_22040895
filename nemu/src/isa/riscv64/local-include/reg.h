@@ -32,6 +32,7 @@ static inline int idx2csr(int idx) {
 
 // 读CSR寄存器
 #define csr(idx) (cpu.csr[idx2csr(idx)])
+#define csrval(idx) (cpu.csr[idx])
 
 static inline const char* reg_name(int idx, int width) {
   extern const char* regs[];
