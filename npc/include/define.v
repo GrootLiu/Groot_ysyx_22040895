@@ -46,3 +46,6 @@
 `define Doubleysyx_22040895_RegBus    127:0           //两倍的通用寄存器的数据线宽度
 `define ysyx_22040895_RegNum          32              //通用寄存器的数量
 `define ysyx_22040895_RegNumLog2      5               //寻址通用寄存器使用的地址位数
+
+//*************************     与特权指令寄存器Reg file有关的宏定义     **************************
+`define ysyx_22040895_CSRRegAddrBus 2:0
