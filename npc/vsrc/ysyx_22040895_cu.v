@@ -209,9 +209,10 @@ module ysyx_22040895_cu (input wire rst,
     
     // 判断是否是特权指令
     // 并且给具体的特权指令设置特权操作op
-    // ecall: 0001
+    // ecall: 001
     // mret : 010
-    assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : 3'b000;
+	// csrrs: 011
+    assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : (csrrs_op == 1'b1) ? 3'b011 : 3'b000;
     
     // 下面对csr寄存器进行操作
     // 分别为读信号和写信号，读写数据的操作在exu里面
