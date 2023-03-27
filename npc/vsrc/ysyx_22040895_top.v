@@ -18,7 +18,7 @@ module top(input wire clk,
     // 用于连接if模块和inst_rom的线
     wire ce_ifu_instrom;
     // 用于连接cu和if中pc的线
-    wire jump_branch_cu_ifu;
+    wire pcsel_cu_ifu;
     
     // 用于连接if模块与id模块的线
     wire[`ysyx_22040895_InstBus] inst_ifu_idu;
@@ -60,6 +60,7 @@ module top(input wire clk,
     wire jump_branch_exu_cu;
 	wire wordop_cu_exu;
 	wire shift_cu_exu;
+	wire[2:0] privileged_op_cu_exu;
     
     // 用于连接ex模块和ifu模块的线
     wire[`ysyx_22040895_InstAddrBus] dnpc_exu_ifu;
@@ -86,12 +87,37 @@ module top(input wire clk,
     // 用于连接exu和mmu的线
     wire[`ysyx_22040895_RegBus] result_exu_mmu;
     wire[`ysyx_22040895_RegBus] wmdata_exu_mmu;
-    
+
+	// 用于连接idu和csr的线
+	wire[1:0] csrraddr_idu_csr;
+	wire[1:0] csrwaddr_idu_csr;
+
+	// 用于连接cu和csr的线
+	wire re_cu_csr;
+	wire we_cu_csr;
+	wire set_mepc_cu_csr;
+	wire get_mepc_cu_csr;
+	wire set_mcause_cu_csr;
+	wire get_mcause_cu_csr;
+    wire set_mtvec_cu_csr;
+    wire get_mtvec_cu_csr;
+
+	// 用于连接csr和exu的线
+	wire[`ysyx_22040895_RegBus] csrrdata_csr_exu;
+	wire[`ysyx_22040895_RegBus] csrwdata_exu_csr;
+	wire[`ysyx_22040895_RegBus] csrrdata_mepc_csr_exu;
+	wire[`ysyx_22040895_RegBus] csrwdata_mepc_exu_csr;
+	wire[`ysyx_22040895_RegBus] csrrdata_mcause_csr_exu;
+	wire[`ysyx_22040895_RegBus] csrwdata_mcause_exu_csr;
+	wire[`ysyx_22040895_RegBus] csrrdata_mtvec_csr_exu;
+	wire[`ysyx_22040895_RegBus] csrwdata_mtvec_exu_csr;
+
+
     ysyx_22040895_ifu my_ifu(
     .clk                (clk),
     .rst                (rst),
     .inst_i_ifu         (inst_i),
-    .pcsel_i_ifu        (jump_branch_cu_ifu),
+    .pcsel_i_ifu        (pcsel_cu_ifu),
     .dnpc_i_ifu         (dnpc_exu_ifu),
     .inst_o_ifu         (inst_ifu_idu),
     .instaddr_o_ifu     (instaddr_o),
@@ -124,7 +150,9 @@ module top(input wire clk,
     .rs1addr_o_idu 		(rs1addr_id_reg),
     .rs2addr_o_idu 		(rs2addr_id_reg),
     .rdaddr_o_idu  		(rdaddr_id_reg),
-    .pc_o_idu      		(pc_id_exu)
+    .pc_o_idu      		(pc_id_exu),
+	.csrraddr_o_idu		(csrraddr_idu_csr),
+	.csrwaddr_o_idu		(csrwaddr_idu_csr)
     );
     
     ysyx_22040895_regfile my_regfile(
@@ -163,13 +191,22 @@ module top(input wire clk,
     .re1_o_cu    		(re1_cu_reg),
     .re2_o_cu    		(re2_cu_reg),
     .we_o_cu     		(we_cu_reg),
-    .jump_branch_o_cu  	(jump_branch_cu_ifu),
+    .pcsel_o_cu  		(pcsel_cu_ifu),
 	.mduop_o_cu			(mduop_cu_exu),
     .sl_o_cu			(sl_cu_mmu_exu),
     .mwe_o_cu			(mew_cu_mmu),
     .munit_o_cu			(munit_cu_mmu),
 	.wordop_o_cu		(wordop_cu_exu),
-	.shift_o_cu			(shift_cu_exu)
+	.shift_o_cu			(shift_cu_exu),
+	.csrre_o_cu			(re_cu_csr),
+	.csrwe_o_cu			(we_cu_csr),
+	.set_mepc_o_cu		(set_mepc_cu_csr),
+	.get_mepc_o_cu		(get_mepc_cu_csr),
+	.set_mcause_o_cu	(set_mcause_cu_csr),
+	.get_mcause_o_cu	(get_mcause_cu_csr),
+	.set_mtvec_o_cu		(set_mtvec_cu_csr),
+	.get_mtvec_o_cu		(get_mtvec_cu_csr),
+	.privileged_op_o_cu	(privileged_op_cu_exu)
     );
     
     ysyx_22040895_exu my_exu(
@@ -187,7 +224,16 @@ module top(input wire clk,
     .sl_i_exu			(sl_cu_mmu_exu),
     .mdata_o_exu		(wmdata_exu_mmu),
 	.wordop_i_exu		(wordop_cu_exu),
-	.shift_i_exu		(shift_cu_exu)
+	.shift_i_exu		(shift_cu_exu),
+	.privileged_op_i_exu(privileged_op_cu_exu),
+	.csrrdata_i_exu		(csrrdata_csr_exu),
+	.csrwdata_o_exu		(csrwdata_exu_csr),
+	.rdata_mepc_i_exu	(csrrdata_mepc_csr_exu),
+	.wdata_mepc_o_exu	(csrwdata_mepc_exu_csr),
+	.rdata_mcause_i_exu	(csrrdata_mcause_csr_exu),
+	.wdata_mcause_o_exu	(csrwdata_mcause_exu_csr),
+	.rdata_mtvec_i_exu	(csrrdata_mtvec_csr_exu),
+	.wdata_mtvec_o_exu	(csrwdata_mtvec_exu_csr)
     );
     
     
@@ -202,6 +248,32 @@ module top(input wire clk,
     .wmdata_i_mmu 		(wmdata_exu_mmu		),
     .wdata_o_mmu  		(wdata_mmu_reg 		)
     );
-    
+
+
+	ysyx_22040895_csr my_csr(
+	//ports
+	.clk                		( clk                		),
+	.rst                		( rst                		),
+	.re_i_csr           		(re_cu_csr  	 			),
+	.we_i_csr           		(we_cu_csr	   				),
+	.raddr_i_csr        		(csrraddr_idu_csr   		),
+	.waddr_i_csr        		(csrwaddr_idu_csr   		),
+	.rdata_o_csr        		(csrrdata_csr_exu   		),
+	.wdata_i_csr        		(csrwdata_exu_csr   		),
+	.set_mepc_i_csr     		(set_mepc_cu_csr	   		),
+	.get_mepc_i_csr     		(get_mepc_cu_csr	   		),
+	.wdata_mepc_i_csr   		(csrwdata_mepc_exu_csr 		),
+	.rdata_mepc_o_csr   		(csrrdata_mepc_csr_exu 		),
+	.set_mcause_i_csr   		(set_mcause_cu_csr   		),
+	.get_mcause_i_csr   		(get_mcause_cu_csr   		),
+	.wdata_mcause_i_csr 		(csrwdata_mcause_exu_csr	),
+	.rdata_mcause_o_csr 		(csrrdata_mcause_csr_exu	),
+	.set_mtvec_i_csr    		(set_mtvec_cu_csr   		),
+	.get_mtvec_i_csr    		(get_mtvec_cu_csr   		),
+	.wdata_mtvec_i_csr  		(csrwdata_mtvec_exu_csr		),
+	.rdata_mtvec_o_csr  		(csrrdata_mtvec_csr_exu		)
+);
+
+
     
 endmodule

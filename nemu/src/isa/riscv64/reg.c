@@ -38,7 +38,7 @@ void isa_reg_display() {
     }
   }
   printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "pc", cpu.pc);
-  printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mtevc", cpu.csr[0]);
+  printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mtvec", cpu.csr[0]);
   printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mepc", cpu.csr[1]);
   printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mstatus", cpu.csr[2]);
   printf("|%-12s :%#-35.16lx\t\t\t\t\t\t|\n", "csr.mcause", cpu.csr[3]);

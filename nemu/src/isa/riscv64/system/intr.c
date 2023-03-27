@@ -7,7 +7,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc)
 	 */
 	cpu.csr[mepc] = epc;
 	cpu.csr[mcause] = NO;
-	printf("mcause: %ld\n", NO);
+	// printf("mcause: %ld\n", NO);
 
 #ifdef CONFIG_ETRACE
 	char exec_name[128];

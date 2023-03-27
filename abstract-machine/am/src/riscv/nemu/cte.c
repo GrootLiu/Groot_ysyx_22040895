@@ -10,7 +10,6 @@ Context *__am_irq_handle(Context *c)
 {
 	if (user_handler)
 	{
-		printf("macuse: %d, mstatus: %d, mepc: %d\n", c->mcause, c->mstatus, c->mepc);
 		Event ev = {0};
 		switch (c->mcause)
 		{
