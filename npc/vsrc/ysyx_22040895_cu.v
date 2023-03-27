@@ -13,19 +13,34 @@ module ysyx_22040895_cu (input wire rst,
                          output wire re1_o_cu,
                          output wire re2_o_cu,
                          output wire we_o_cu,
-                         output wire jump_branch_o_cu,
+                         output wire pcsel_o_cu,
 						 output wire[`ysyx_22040895_mduopLength] mduop_o_cu, 
                          output wire[1:0] sl_o_cu,
                          output wire mwe_o_cu,
                          output wire[1:0] munit_o_cu,
 						 output wire wordop_o_cu,
-						 output wire shift_o_cu);
+						 output wire shift_o_cu,
+						 output wire[2:0] privileged_op_o_cu,
+						//  output wire csrre_o_cu,
+						//  output wire csrwe_o_cu,
+						 output wire set_mepc_o_cu,
+						 output wire get_mepc_o_cu,
+						 output wire set_mcause_o_cu,
+						 output wire get_mcause_o_cu,
+						 output wire set_mtvec_o_cu,
+						 output wire get_mtvec_o_cu,
+						 output wire set_mstatus_o_cu,
+						 output wire get_mstatus_o_cu
+						 );
     
     wire[`ysyx_22040895_OpCodeLength] op   = opcode_i_cu;
     wire[`ysyx_22040895_func3Length] func3 = func3_i_cu;
     wire[`ysyx_22040895_func7Length] func7 = func7_i_cu;
     
     //  指令
+	// privileged 指令
+	wire ecall;
+	wire mret;
     // I type               // R type               // R type
     wire addi_op;           wire add_op;            wire sub_op;
     wire andi_op;           wire and_op;            wire subw_op;
@@ -61,6 +76,9 @@ module ysyx_22040895_cu (input wire rst,
 	wire load_unsigned_op;
     
     // 解析输入生成指令
+	assign ecall   	= (op == 7'b1111111);
+	assign mret		= (op == 7'b1111110);
+
     assign addi_op  = (op == 7'b0010011) & (func3 == 3'b000);
     assign andi_op  = (op == 7'b0010011) & (func3 == 3'b111);
     assign ori_op   = (op == 7'b0010011) & (func3 == 3'b110);
@@ -171,7 +189,9 @@ module ysyx_22040895_cu (input wire rst,
     assign re1_o_cu         = reg_r1;
     assign re2_o_cu         = reg_r2;
     assign we_o_cu          = reg_w;
-    assign jump_branch_o_cu = jump_branch_i_cu | jal_op | jalr_op;
+	// pcsel_o_cu为pc选择信号
+	// 或列表里面的指令都可能会引起pc不按照+4变化，而按照其他规则变化
+    assign pcsel_o_cu = jump_branch_i_cu | jal_op | jalr_op | ecall | mret;
 	// sl = store/load
     assign sl_o_cu          = (store_op == 1'b1) ? 2'b01 : (load_unsigned_op == 1'b1) ? 2'b11 : (load_op == 1'b1) ? 2'b10 : 2'b00;
     assign mwe_o_cu         = store_op;
@@ -181,4 +201,24 @@ module ysyx_22040895_cu (input wire rst,
     |({2{sw_op | lw_op}} & 2'b10)
 	|({2{sd_op | ld_op}} & 2'b11);
 	assign shift_o_cu = ((sra_op | srl_op | sll_op) == 1'b1) ? 1'b0 : 1'b1;
+
+	// 判断是否是特权指令
+	// 并且给具体的特权指令设置特权操作op
+	// ecall: 0001
+	// mret : 010
+	assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : 3'b000;
+
+	// 下面对csr寄存器进行操作
+	// 分别为读信号和写信号，读写数据的操作在exu里面
+	// 信号的定义见csr.v
+	assign set_mepc_o_cu 	= (ecall == 1'b1) ? 1'b1 : 1'b0;
+	assign get_mepc_o_cu 	= (mret	 == 1'b1) ? 1'b1 : 1'b0;
+	assign set_mcause_o_cu	= (ecall == 1'b1 | mret) ? 1'b1 : 1'b0;
+	assign get_mcause_o_cu	= 1'b0;
+	assign set_mtvec_o_cu 	= 1'b0;
+	assign get_mtvec_o_cu 	= (ecall == 1'b1) ? 1'b1 : 1'b0;
+	assign set_mstatus_o_cu = (mret  == 1'b1) ? 1'b1 : 1'b0;
+	assign get_mstatus_o_cu = (mret  == 1'b1) ? 1'b1 : 1'b0;
+
+
 endmodule //cu

@@ -35,6 +35,9 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*1:0*/ top__DOT__sl_cu_mmu_exu;
         CData/*0:0*/ top__DOT__mew_cu_mmu;
         CData/*1:0*/ top__DOT__munit_cu_mmu;
+        CData/*1:0*/ top__DOT__csrraddr_idu_csr;
+        CData/*0:0*/ top__DOT__re_cu_csr;
+        CData/*0:0*/ top__DOT__we_cu_csr;
         CData/*0:0*/ top__DOT__my_ifu__DOT__my_pc__DOT__pcsel;
         CData/*0:0*/ top__DOT__my_idu__DOT__beq;
         CData/*0:0*/ top__DOT__my_idu__DOT__bge;
@@ -42,6 +45,7 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__my_idu__DOT__blt;
         CData/*0:0*/ top__DOT__my_idu__DOT__bltu;
         CData/*0:0*/ top__DOT__my_idu__DOT__bne;
+        CData/*1:0*/ top__DOT__my_idu__DOT__csrraddr;
         CData/*0:0*/ top__DOT__my_cu__DOT__add_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sub_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__andi_op;
@@ -79,12 +83,12 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__my_cu__DOT__sd_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__load_op;
+    };
+    struct {
         CData/*0:0*/ top__DOT__my_cu__DOT__load_unsigned_op;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_hbd144a85__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h85762de3__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h88ef4d41__0;
-    };
-    struct {
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h993c3d0f__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h9a1a96aa__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h91a0a311__0;
@@ -97,13 +101,13 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT____VdfgTmp_h2cc5735b__0;
         CData/*0:0*/ top__DOT__my_exu__DOT__my_alu__DOT____VdfgTmp_hee26600d__0;
         CData/*7:0*/ top__DOT__my_mmu__DOT__munit_o_mmu;
-        CData/*0:0*/ __VdfgTmp_h25267370__0;
-        CData/*0:0*/ __VdfgTmp_hc8b1ccb7__0;
+        CData/*0:0*/ __VdfgTmp_h649fa5fe__0;
+        CData/*0:0*/ __VdfgTmp_h29680a4e__0;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
         CData/*0:0*/ __VactContinue;
-        SData/*11:0*/ __VdfgTmp_h436c2b34__0;
+        SData/*11:0*/ __VdfgTmp_h6a40e698__0;
         VL_IN(inst_i,31,0);
-        IData/*19:0*/ __VdfgTmp_hcb193c22__0;
+        IData/*19:0*/ __VdfgTmp_h44eb2821__0;
         IData/*31:0*/ __VstlIterCount;
         IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
@@ -113,9 +117,14 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         QData/*63:0*/ top__DOT__pc_id_exu;
         QData/*63:0*/ top__DOT__opnum2_opnumsel_ex;
         QData/*63:0*/ top__DOT__result_exu_mmu;
+        QData/*63:0*/ top__DOT__csrwdata_exu_csr;
+        QData/*63:0*/ top__DOT__csrwdata_mepc_exu_csr;
+        QData/*63:0*/ top__DOT__csrwdata_mcause_exu_csr;
+        QData/*63:0*/ top__DOT__csrwdata_mtvec_exu_csr;
         QData/*63:0*/ top__DOT__my_exu__DOT__op2_i_alu;
         QData/*63:0*/ top__DOT__my_exu__DOT__alu_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__math_result;
+        QData/*63:0*/ top__DOT__my_exu__DOT__privileged_pc;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__add_sub_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__sub_result;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_alu__DOT__op2;
@@ -124,7 +133,9 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT__reminder;
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT____VdfgTmp_h3ffa10bd__0;
         QData/*63:0*/ top__DOT__my_mmu__DOT__rmdata_i_mmu;
+        QData/*63:0*/ top__DOT__my_csr__DOT____Vlvbound_h4bfbe3e8__0;
         VlUnpacked<QData/*63:0*/, 32> top__DOT__my_regfile__DOT__regs;
+        VlUnpacked<QData/*63:0*/, 3> top__DOT__my_csr__DOT__csr;
         VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
     };
     VlTriggerVec<1> __VstlTriggered;
