@@ -41,6 +41,7 @@ module ysyx_22040895_cu (input wire rst,
     wire ecall;
     wire mret;
     wire csrrs_op;
+	wire csrrw_op;
     
     // I type               // R type               // R type
     wire addi_op;           wire add_op;            wire sub_op;
@@ -82,6 +83,7 @@ module ysyx_22040895_cu (input wire rst,
     assign ecall   	 = (op == 7'b1111111);
     assign mret      = (op == 7'b1111110);
     assign csrrs_op  = (op == 7'b1110011) & (func3 == 3'b010);
+    assign csrrw_op  = (op == 7'b1110011) & (func3 == 3'b001);
     
     assign addi_op  = (op == 7'b0010011) & (func3 == 3'b000);
     assign andi_op  = (op == 7'b0010011) & (func3 == 3'b111);
@@ -149,7 +151,7 @@ module ysyx_22040895_cu (input wire rst,
     assign store_op         = sb_op | sh_op | sw_op | sd_op;
     assign load_op          = lb_op | lbu_op | lh_op | lhu_op | lw_op | ld_op;
     assign load_unsigned_op = lbu_op | lhu_op;
-    assign csr_op           = csrrs_op;
+    assign csr_op           = csrrs_op | csrrw_op;
     
     // 解析指令生成控制信号
     assign aluop_o_cu = ({4{addi_op   | add_op | store_op | load_op | addiw_op | addw_op}}  & 4'b0000)
@@ -212,7 +214,7 @@ module ysyx_22040895_cu (input wire rst,
     // ecall: 001
     // mret : 010
 	// csrrs: 011
-    assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : (csrrs_op == 1'b1) ? 3'b011 : 3'b000;
+    assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : (csrrs_op == 1'b1) ? 3'b011 : (csrrw_op == 1'b1) ? 3'b100 : 3'b000;
     
     // 下面对csr寄存器进行操作
     // 分别为读信号和写信号，读写数据的操作在exu里面
@@ -226,8 +228,8 @@ module ysyx_22040895_cu (input wire rst,
     assign set_mstatus_o_cu = (mret == 1'b1) ? 1'b1 : 1'b0;
     assign get_mstatus_o_cu = (mret == 1'b1) ? 1'b1 : 1'b0;
     
-    assign csrre_o_cu = csrrs_op;
-    assign csrwe_o_cu = 1'b0;
+    assign csrre_o_cu = csrrs_op | csrrw_op;
+    assign csrwe_o_cu = csrrs_op | csrrw_op;
     
     
 endmodule //cu

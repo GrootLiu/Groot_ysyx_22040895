@@ -46,6 +46,8 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__my_idu__DOT__bltu;
         CData/*0:0*/ top__DOT__my_idu__DOT__bne;
         CData/*2:0*/ top__DOT__my_idu__DOT__csraddr;
+        CData/*0:0*/ top__DOT__my_cu__DOT__csrrs_op;
+        CData/*0:0*/ top__DOT__my_cu__DOT__csrrw_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__addi_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__add_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sub_op;
@@ -81,19 +83,19 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__my_cu__DOT__slliw_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sh_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__sw_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__sd_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
     };
     struct {
+        CData/*0:0*/ top__DOT__my_cu__DOT__sd_op;
+        CData/*0:0*/ top__DOT__my_cu__DOT__jalr_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__load_op;
         CData/*0:0*/ top__DOT__my_cu__DOT__load_unsigned_op;
-        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h86311822__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_hde486365__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h85762de3__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h88ef4d41__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h993c3d0f__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h9a1a96aa__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h91a0a311__0;
-        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_ha112b556__0;
+        CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_hc013935d__0;
         CData/*0:0*/ top__DOT__my_cu__DOT____VdfgTmp_h4550e04c__0;
         CData/*0:0*/ top__DOT__my_exu__DOT__lt_alu_bcu;
         CData/*0:0*/ top__DOT__my_exu__DOT____VdfgTmp_h6e87c126__0;
@@ -104,7 +106,7 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         CData/*7:0*/ top__DOT__my_mmu__DOT__munit_o_mmu;
         CData/*0:0*/ top__DOT__my_csr__DOT__set_mstatus_i_csr;
         CData/*0:0*/ top__DOT__my_csr__DOT__get_mstatus_i_csr;
-        CData/*0:0*/ __VdfgTmp_h032a6229__0;
+        CData/*0:0*/ __VdfgTmp_h06e588e5__0;
         CData/*0:0*/ __VdfgTmp_hf4b63914__0;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
         CData/*0:0*/ __VactContinue;
@@ -120,6 +122,7 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         QData/*63:0*/ top__DOT__pc_id_exu;
         QData/*63:0*/ top__DOT__opnum2_opnumsel_ex;
         QData/*63:0*/ top__DOT__result_exu_mmu;
+        QData/*63:0*/ top__DOT__csrrdata_csr_exu;
         QData/*63:0*/ top__DOT__csrwdata_exu_csr;
         QData/*63:0*/ top__DOT__csrwdata_mepc_exu_csr;
         QData/*63:0*/ top__DOT__csrwdata_mcause_exu_csr;
@@ -142,6 +145,7 @@ class Vysyx_22040895_top___024root final : public VerilatedModule {
         QData/*63:0*/ top__DOT__my_exu__DOT__my_mdu__DOT____VdfgTmp_h3ffa10bd__0;
         QData/*63:0*/ top__DOT__my_mmu__DOT__rmdata_i_mmu;
         QData/*63:0*/ top__DOT__my_csr__DOT__wdata_mstatus_i_csr;
+        QData/*63:0*/ top__DOT__my_csr__DOT____Vlvbound_hbcf75953__0;
         VlUnpacked<QData/*63:0*/, 32> top__DOT__my_regfile__DOT__regs;
         VlUnpacked<QData/*63:0*/, 5> top__DOT__my_csr__DOT__csr;
         VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
