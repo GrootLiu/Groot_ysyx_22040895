@@ -136,6 +136,12 @@ module ysyx_22040895_exu (input wire rst,
                 assign csrwdata_o_exu = t | op1_i_exu;
                 assign csrsetrd       = t;
             end
+			// csrrw指令
+			3'b100 : begin
+				assign t              = csrrdata_i_exu;
+                assign csrwdata_o_exu = op1_i_exu;
+                assign csrsetrd       = t;
+			end
             default : begin
                 
             end
