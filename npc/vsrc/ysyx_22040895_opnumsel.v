@@ -1,4 +1,7 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
 
 module ysyx_22040895_opnumsel (
     input  wire opsrc_i_opnumsel,

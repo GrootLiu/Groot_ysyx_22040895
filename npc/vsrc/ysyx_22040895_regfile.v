@@ -1,4 +1,7 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
 
 import "DPI-C" function void set_gpr_ptr(input logic [63:0] a []);
 

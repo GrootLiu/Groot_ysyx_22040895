@@ -1,13 +1,53 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_idu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_ifu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_sext.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_regfile.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_opnumsel.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_cu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_exu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_mmu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_csr.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
+
+`ifndef _IDU_H
+`define _IDU_H
+`include "ysyx_22040895_idu.v"
+`endif
+
+`ifndef _IFU_H
+`define _IFU_H
+`include "ysyx_22040895_ifu.v"
+`endif
+
+`ifndef _SEXT_V
+`define _SEXT_V
+`include "ysyx_22040895_sext.v"
+`endif
+
+`ifndef _REGFILE_V
+`define _REGFILE_V
+`include "ysyx_22040895_regfile.v"
+`endif
+
+`ifndef _OPNUMSEL_V
+`define _OPNUMSEL_V
+`include "ysyx_22040895_opnumsel.v"
+`endif
+
+`ifndef _CU_V
+`define _CU_V
+`include "ysyx_22040895_cu.v"
+`endif
+
+`ifndef _EXU_V
+`define _EXU_V
+`include "ysyx_22040895_exu.v"
+`endif
+
+`ifndef _MMU_V
+`define _MMU_V
+`include "ysyx_22040895_mmu.v"
+`endif
+
+`ifndef _CSR_V
+`define _CSR_V
+`include "ysyx_22040895_csr.v"
+`endif
+
 
 
 

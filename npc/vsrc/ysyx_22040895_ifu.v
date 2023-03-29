@@ -1,5 +1,13 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_pc.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
+
+`ifndef _PC_V
+`define _PC_V
+`include "ysyx_22040895_pc.v"
+`endif
+
 
 
 module ysyx_22040895_ifu (input wire clk,

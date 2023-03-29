@@ -9,3 +9,4 @@ sim/*
 !log/*
 !include/*
 !src/*
+!vsrc/*

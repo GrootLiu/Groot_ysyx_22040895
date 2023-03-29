@@ -65,3 +65,8 @@ run:
 wave: 
 	gtkwave ./wave/wave.vcd
 
+clean:
+	rm -f $(NPC_HOME)/sim/*
+	rm -f $(NPC_HOME)wave/*
+	rm -f $(NPC_HOME)/log/*
+

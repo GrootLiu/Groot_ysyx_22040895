@@ -1,8 +1,23 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+	`include "../include/define.v"
+`endif
 
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_alu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_bcu.v"
-`include "/home/groot/ysyx-workbench/npc/vsrc/ysyx_22040895_mdu.v"
+`ifndef _ALU_V
+`define _ALU_V
+`include "ysyx_22040895_alu.v"
+`endif
+
+`ifndef _BCU_V
+`define _BCU_V
+`include "ysyx_22040895_bcu.v"
+`endif
+
+`ifndef _MDU_V
+`define _MDU_V
+`include "ysyx_22040895_mdu.v"
+`endif
+
 
 module ysyx_22040895_exu (input wire rst,
                           input wire[`ysyx_22040895_aluopLength] aluop_i_exu,
@@ -109,14 +124,20 @@ module ysyx_22040895_exu (input wire rst,
     reg[`ysyx_22040895_RegBus] csrsetrd;
     // 用来暂存从CSR中取出mstatus的寄存器
     reg[`ysyx_22040895_RegBus] mstatus;
-    always @(*) begin
-        reg[`ysyx_22040895_RegBus] t;
+    // 暂存中间数据
+    reg[`ysyx_22040895_RegBus] temp;
+    always_comb  begin
         case (privileged_op_i_exu)
             // ecall指令
             3'b001 : begin
-                wdata_mepc_o_exu   = pc_i_exu;
-                wdata_mcause_o_exu = 'd1011;
-                privileged_pc      = rdata_mtvec_i_exu;
+                wdata_mepc_o_exu    = pc_i_exu;
+                wdata_mcause_o_exu  = 'd1011;
+                privileged_pc       = rdata_mtvec_i_exu;
+                csrwdata_o_exu      = 'b0;
+                temp                = 'b0;
+                csrsetrd            = 'b0;
+                mstatus             = 'b0;
+                wdata_mstatus_o_exu = 'b0;
             end
             // mret指令
             3'b010 : begin
@@ -129,21 +150,43 @@ module ysyx_22040895_exu (input wire rst,
                     mstatus = {mstatus[63:13], 1'b0, 1'b0, mstatus[10:8], 1'b1, mstatus[6:4], 1'b0, mstatus[2:0]};
                 end
                 wdata_mstatus_o_exu = mstatus;
+                csrwdata_o_exu      = 'b0;
+                temp                = 'b0;
+                csrsetrd            = 'b0;
+                wdata_mepc_o_exu    = 'b0;
+                wdata_mcause_o_exu  = 'b0;
             end
             // csrrs指令
             3'b011 : begin
-                assign t              = csrrdata_i_exu;
-                assign csrwdata_o_exu = t | op1_i_exu;
-                assign csrsetrd       = t;
+                temp                = csrrdata_i_exu;
+                csrwdata_o_exu      = temp | op1_i_exu;
+                csrsetrd            = temp;
+                privileged_pc       = 'b0;
+                mstatus             = 'b0;
+                wdata_mstatus_o_exu = 'b0;
+                wdata_mepc_o_exu    = 'b0;
+                wdata_mcause_o_exu  = 'b0;
             end
-			// csrrw指令
-			3'b100 : begin
-				assign t              = csrrdata_i_exu;
-                assign csrwdata_o_exu = op1_i_exu;
-                assign csrsetrd       = t;
-			end
+            // csrrw指令
+            3'b100 : begin
+                temp                = csrrdata_i_exu;
+                csrwdata_o_exu      = op1_i_exu;
+                csrsetrd            = temp;
+                privileged_pc       = 'b0;
+                mstatus             = 'b0;
+                wdata_mstatus_o_exu = 'b0;
+                wdata_mepc_o_exu    = 'b0;
+                wdata_mcause_o_exu  = 'b0;
+            end
             default : begin
-                
+                temp                = 'b0;
+                csrwdata_o_exu      = 'b0;
+                csrsetrd            = 'b0;
+                privileged_pc       = 'b0;
+                mstatus             = 'b0;
+                wdata_mstatus_o_exu = 'b0;
+                wdata_mepc_o_exu    = 'b0;
+                wdata_mcause_o_exu  = 'b0;
             end
         endcase
     end

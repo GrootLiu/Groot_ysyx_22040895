@@ -1,4 +1,7 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
 
 
 module ysyx_22040895_alu (input wire[`ysyx_22040895_aluopLength] aluop_i_alu,

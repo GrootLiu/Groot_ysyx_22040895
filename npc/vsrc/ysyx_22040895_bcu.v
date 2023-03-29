@@ -1,4 +1,8 @@
+`ifndef _DEFINE_H
+`define _DEFINE_H
 `include "../include/define.v"
+`endif
+
 
 module ysyx_22040895_bcu (input wire lt_i_bcu,
             input wire ltu_i_bcu,

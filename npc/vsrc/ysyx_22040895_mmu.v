@@ -1,4 +1,7 @@
-`include "/home/groot/ysyx-workbench/npc/include/define.v"
+`ifndef _DEFINE_H
+`define _DEFINE_H
+`include "../include/define.v"
+`endif
 
 import "DPI-C" function void pmem_read(input longint raddr, output longint rdata, input byte wmask);
 import "DPI-C" function void pmem_write(input longint waddr, input longint wdata, input byte wmask);
