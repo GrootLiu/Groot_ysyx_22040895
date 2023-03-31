@@ -35,16 +35,9 @@ module ysyx_22040895_exu (input wire rst,
                           output wire[`ysyx_22040895_InstAddrBus] dnpc_o_exu,
                           output wire[`ysyx_22040895_RegBus] mdata_o_exu,
                           input wire[2:0] privileged_op_i_exu,
-                          input wire[`ysyx_22040895_RegBus] csrrdata_i_exu,
-                          output reg[`ysyx_22040895_RegBus] csrwdata_o_exu,
-                          input wire[`ysyx_22040895_RegBus] rdata_mepc_i_exu,
-                          output reg[`ysyx_22040895_RegBus] wdata_mepc_o_exu,
-                          input wire[`ysyx_22040895_RegBus] rdata_mcause_i_exu,
-                          output reg[`ysyx_22040895_RegBus] wdata_mcause_o_exu,
-                          input wire[`ysyx_22040895_RegBus] rdata_mtvec_i_exu,
-                          output wire[`ysyx_22040895_RegBus] wdata_mtvec_o_exu,
-                          input wire[`ysyx_22040895_RegBus] rdata_mstatus_i_exu,
-                          output wire[`ysyx_22040895_RegBus] wdata_mstatus_o_exu);
+						  input wire[`ysyx_22040895_InstAddrBus] csrpc_i_exu,
+						  input wire[`ysyx_22040895_RegBus] csrresult_i_exu
+						);
     
     wire lt_alu_bcu;
     wire ltu_alu_bcu;
@@ -100,7 +93,7 @@ module ysyx_22040895_exu (input wire rst,
     // 2. b类型指令的跳转
     // 3. 特权指令的跳转
     // 选出来后再到取值阶段去与当前pc+4做选择
-    assign dnpc_o_exu = (jalr_op == 1) ? ((op1_i_exu + offset_i_exu) & ~1) : (privileged_op_i_exu == 3'b001) ? privileged_pc : dnpc_o_bcu;
+    assign dnpc_o_exu = (jalr_op == 1) ? ((op1_i_exu + offset_i_exu) & ~1) : (privileged_op_i_exu == 3'b001) ? csrpc_i_exu : dnpc_o_bcu;
     // 0 alu   |   1 adder_op2
     wire auipc_op                         = (aluop_i_exu == 4'b1010);
     wire lui_op                           = (aluop_i_exu == 4'b1011);
@@ -113,84 +106,11 @@ module ysyx_22040895_exu (input wire rst,
     
     wire[`ysyx_22040895_RegBus] adder_result = adder_op1 + adder_op2;
     
-    assign result_o_exu = (|privileged_op_i_exu) ? csrsetrd : (auipc_op | lui_op | jal_op | jalr_op) ? adder_result :
+    assign result_o_exu = (|privileged_op_i_exu) ? csrresult_i_exu : (auipc_op | lui_op | jal_op | jalr_op) ? adder_result :
     (wordop_i_exu == 1'b1) ? ({{32{math_result[31]}}, math_result[31:0]}) : math_result;
     
     
     assign mdata_o_exu = op2_i_exu;
 
-	
-    
-    reg[`ysyx_22040895_InstAddrBus] privileged_pc;
-    // 暂存异常处理要写入通用寄存器的结果
-    reg[`ysyx_22040895_RegBus] csrsetrd;
-    // 用来暂存从CSR中取出mstatus的寄存器
-    reg[`ysyx_22040895_RegBus] mstatus;
-    // 暂存中间数据
-    reg[`ysyx_22040895_RegBus] temp;
-    always_comb  begin
-        case (privileged_op_i_exu)
-            // ecall指令
-            3'b001 : begin
-				wdata_mcause_o_exu  = 'd11;
-                wdata_mepc_o_exu    = pc_i_exu;
-                privileged_pc       = rdata_mtvec_i_exu;
-                csrwdata_o_exu      = 'b0;
-                temp                = 'b0;
-                csrsetrd            = 'b0;
-                mstatus             = 'b0;
-                wdata_mstatus_o_exu = 'b0;
-            end
-            // mret指令
-            3'b010 : begin
-                privileged_pc = rdata_mepc_i_exu;
-                mstatus       = rdata_mstatus_i_exu;
-                if (mstatus[7] == 1'b1) begin
-                    mstatus = {mstatus[63:13], 1'b0, 1'b0, mstatus[10:8], 1'b1, mstatus[6:4], 1'b1, mstatus[2:0]};
-                end
-                else begin
-                    mstatus = {mstatus[63:13], 1'b0, 1'b0, mstatus[10:8], 1'b1, mstatus[6:4], 1'b0, mstatus[2:0]};
-                end
-                wdata_mstatus_o_exu = mstatus;
-                csrwdata_o_exu      = 'b0;
-                temp                = 'b0;
-                csrsetrd            = 'b0;
-                wdata_mepc_o_exu    = 'b0;
-                wdata_mcause_o_exu  = 'b0;
-            end
-            // csrrs指令
-            3'b011 : begin
-                temp                = csrrdata_i_exu;
-                csrwdata_o_exu      = temp | op1_i_exu;
-                csrsetrd            = temp;
-                privileged_pc       = 'b0;
-                mstatus             = 'b0;
-                wdata_mstatus_o_exu = 'b0;
-                wdata_mepc_o_exu    = 'b0;
-                wdata_mcause_o_exu  = 'b0;
-            end
-            // csrrw指令
-            3'b100 : begin
-                temp                = csrrdata_i_exu;
-                csrwdata_o_exu      = op1_i_exu;
-                csrsetrd            = temp;
-                privileged_pc       = 'b0;
-                mstatus             = 'b0;
-                wdata_mstatus_o_exu = 'b0;
-                wdata_mepc_o_exu    = 'b0;
-                wdata_mcause_o_exu  = 'b0;
-            end
-            default : begin
-                temp                = 'b0;
-                csrwdata_o_exu      = 'b0;
-                csrsetrd            = 'b0;
-                privileged_pc       = 'b0;
-                mstatus             = 'b0;
-                wdata_mstatus_o_exu = 'b0;
-                wdata_mepc_o_exu    = 'b0;
-                wdata_mcause_o_exu  = 'b0;
-            end
-        endcase
-    end
-    
+
 endmodule //ex
