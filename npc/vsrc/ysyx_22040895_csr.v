@@ -61,7 +61,7 @@ module ysyx_22040895_csr (input clk,
     assign rdata_mcause_o_csr = (get_mcause_i_csr == `ysyx_22040895_ReadEnable) ? csr[1] : 0;
     // 写mcause寄存器
     always @(posedge clk) begin
-        if (`ysyx_22040895_RstDisable) begin
+        if (rst == `ysyx_22040895_RstDisable) begin
             if (set_mcause_i_csr == `ysyx_22040895_WriteEnable) begin
                 csr[1] <= wdata_mcause_i_csr;
             end

@@ -118,9 +118,11 @@ module ysyx_22040895_exu (input wire rst,
     
     
     assign mdata_o_exu = op2_i_exu;
+
+	
     
     reg[`ysyx_22040895_InstAddrBus] privileged_pc;
-    
+    // 暂存异常处理要写入通用寄存器的结果
     reg[`ysyx_22040895_RegBus] csrsetrd;
     // 用来暂存从CSR中取出mstatus的寄存器
     reg[`ysyx_22040895_RegBus] mstatus;
@@ -130,8 +132,8 @@ module ysyx_22040895_exu (input wire rst,
         case (privileged_op_i_exu)
             // ecall指令
             3'b001 : begin
+				wdata_mcause_o_exu  = 'd11;
                 wdata_mepc_o_exu    = pc_i_exu;
-                wdata_mcause_o_exu  = 'd1011;
                 privileged_pc       = rdata_mtvec_i_exu;
                 csrwdata_o_exu      = 'b0;
                 temp                = 'b0;

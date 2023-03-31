@@ -44,7 +44,7 @@ module ysyx_22040895_cu (input wire rst,
     wire ecall;
     wire mret;
     wire csrrs_op;
-	wire csrrw_op;
+    wire csrrw_op;
     
     // I type               // R type               // R type
     wire addi_op;           wire add_op;            wire sub_op;
@@ -216,20 +216,20 @@ module ysyx_22040895_cu (input wire rst,
     // 并且给具体的特权指令设置特权操作op
     // ecall: 001
     // mret : 010
-	// csrrs: 011
+    // csrrs: 011
     assign privileged_op_o_cu = (ecall == 1'b1) ? 3'b001 : (mret == 1'b1) ? 3'b010 : (csrrs_op == 1'b1) ? 3'b011 : (csrrw_op == 1'b1) ? 3'b100 : 3'b000;
     
     // 下面对csr寄存器进行操作
     // 分别为读信号和写信号，读写数据的操作在exu里面
     // 信号的定义见csr.v
-    assign set_mepc_o_cu    = (ecall == 1'b1) ? 1'b1 : 1'b0;
-    assign get_mepc_o_cu    = (mret	 == 1'b1) ? 1'b1 : 1'b0;
-    assign set_mcause_o_cu	 = (ecall == 1'b1 | mret) ? 1'b1 : 1'b0;
-    assign get_mcause_o_cu	 = 1'b0;
-    assign set_mtvec_o_cu 	 = 1'b0;
-    assign get_mtvec_o_cu 	 = (ecall == 1'b1) ? 1'b1 : 1'b0;
-    assign set_mstatus_o_cu = (mret == 1'b1) ? 1'b1 : 1'b0;
-    assign get_mstatus_o_cu = (mret == 1'b1) ? 1'b1 : 1'b0;
+    assign set_mepc_o_cu    = (ecall) ? 1'b1 : 1'b0;
+    assign get_mepc_o_cu    = (mret) ? 1'b1 : 1'b0;
+    assign set_mcause_o_cu  = (ecall) ? 1'b1 : 1'b0;
+    assign get_mcause_o_cu  = 1'b0;
+    assign set_mtvec_o_cu   = 1'b0;
+    assign get_mtvec_o_cu   = (ecall) ? 1'b1 : 1'b0;
+    assign set_mstatus_o_cu = (mret) ? 1'b1 : 1'b0;
+    assign get_mstatus_o_cu = (mret) ? 1'b1 : 1'b0;
     
     assign csrre_o_cu = csrrs_op | csrrw_op;
     assign csrwe_o_cu = csrrs_op | csrrw_op;
