@@ -19,7 +19,7 @@
 `endif
 
 
-module ysyx_22040895_exu (input wire rst,
+module ysyx_22040895_exu (//input wire rst,
                           input wire[`ysyx_22040895_aluopLength] aluop_i_exu,
                           input wire[`ysyx_22040895_bcuopLength] bcuop_i_exu,
                           input wire[`ysyx_22040895_RegBus] op1_i_exu,
@@ -34,7 +34,7 @@ module ysyx_22040895_exu (input wire rst,
                           output reg[`ysyx_22040895_RegBus] result_o_exu,
                           output wire[`ysyx_22040895_InstAddrBus] dnpc_o_exu,
                           output wire[`ysyx_22040895_RegBus] mdata_o_exu,
-                          input wire[2:0] privileged_op_i_exu,
+                          input wire[`ysyx_22040895_CSRRegAddrBus] privileged_op_i_exu,
 						  input wire[`ysyx_22040895_InstAddrBus] csrpc_i_exu,
 						  input wire[`ysyx_22040895_RegBus] csrresult_i_exu
 						);
