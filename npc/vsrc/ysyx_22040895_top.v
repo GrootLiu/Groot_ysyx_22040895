@@ -285,8 +285,8 @@ module top(input wire clk,
     .wordop_i_exu		(wordop_cu_exu					),
     .shift_i_exu		(shift_cu_exu					),
     .privileged_op_i_exu(privileged_op_privileged_exu	),
-    .csrpc_i_exu		(result_privileged_exu			),
-    .csrresult_i_exu	(privileged_pc_privileged_exu	)
+    .csrpc_i_exu		(privileged_pc_privileged_exu	),
+    .csrresult_i_exu	(result_privileged_exu			)
     );
     
     
