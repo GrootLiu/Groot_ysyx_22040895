@@ -34,7 +34,7 @@ void (*ref_difftest_init)(int port) = NULL;
 void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
-// void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
+void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
 #ifdef DIFFTEST
 
@@ -58,8 +58,8 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	ref_difftest_exec = (void (*)(uint64_t))dlsym(handle, "my_difftest_exec");
 	assert(ref_difftest_exec);
 
-	// ref_difftest_raise_intr = dlsym(handle, "difftest_raise_intr");
-	// assert(ref_difftest_raise_intr);
+	ref_difftest_raise_intr = (void (*)(uint64_t))dlsym(handle, "difftest_raise_intr");
+	assert(ref_difftest_raise_intr);
 
 	char log_info_1[64] = ASNI_FMT("Differential testing: ON", ASNI_FG_GREEN);
 	my_log(log_info_1);
@@ -72,7 +72,7 @@ void init_difftest(char *ref_so_file, long img_size, int port)
 	ref_difftest_regcpy(&ref_cpu, DIFFTEST_TO_REF);
 }
 
-static int checkregs(REF_CPU_state ref, uint64_t pc)
+static int checkgpregs(REF_CPU_state ref, uint64_t pc)
 {
 	int abort = 0;
 	for (int i = 0; i < 32; i++)
@@ -115,7 +115,7 @@ int difftest_step(uint64_t pc)
 
 	ref_difftest_regcpy(&ref_temp, DIFFTEST_TO_DUT);
 
-	exit = checkregs(ref_temp, pc);
+	exit = checkgpregs(ref_temp, pc);
 
 	return exit;
 }

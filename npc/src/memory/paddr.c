@@ -7,7 +7,7 @@
  * @FilePath: /ysyx-workbench/npc/src/memory/paddr.c
  * 版权声明
  */
-#include "memconf.h"
+// #include "memconf.h"
 #include <stdint.h>
 
 #ifndef _STDIO_H
@@ -18,6 +18,7 @@
 #endif
 
 #include <time.h>
+#include "../conf.h"
 
 typedef struct
 {

@@ -14,7 +14,12 @@ CFLAGS    += -fdata-sections -ffunction-sections
 LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
-NPCFLAGS += -d $(NEMU_HOME)/build/riscv64-nemu-interpreter-so # -f $(IMAGE).elf # -b
+# difftest
+NPCFLAGS += -d $(NEMU_HOME)/build/riscv64-nemu-interpreter-so 
+# batch mode
+# NPCFLAGS += -b 
+# difftest
+# NPCFLAGS += -f $(IMAGE).elf 
 
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
 

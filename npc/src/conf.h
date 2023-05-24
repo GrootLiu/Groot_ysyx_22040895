@@ -9,4 +9,11 @@
  */
 #define ITRACE 1
 // #define FTRACE 1
-// #define DIFFTEST 1
+#define DIFFTEST 1
+
+#define CONFIG_PC_RESET_OFFSET 0x0
+#define CONFIG_MSIZE 0x000000008000000
+
+#define CONFIG_MBASE 0x0000000080000000
+
+#define paddr_t uint32_t

@@ -7,7 +7,7 @@
  * @FilePath: /ysyx-workbench/npc/src/include/global.h
  * @版权声明
  */
-#include "verilated.h"
+// #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vysyx_22040895_top.h"
 #include "utils.h"

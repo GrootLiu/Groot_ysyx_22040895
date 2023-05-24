@@ -83,6 +83,7 @@ void my_difftest_exec(uint64_t n)
 // 后面中断的时候实现
 void difftest_raise_intr(word_t NO)
 {
+	
 	assert(0);
 }
 

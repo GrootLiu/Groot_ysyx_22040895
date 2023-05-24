@@ -110,6 +110,7 @@ int trig_once(int exit)
 	if (contextp->time() > RstTime)
 	{
 #ifdef DIFFTEST
+
 		exit = difftest_step(cpu.pc);
 #endif
 	}
