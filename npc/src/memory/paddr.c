@@ -72,13 +72,16 @@ static void host_write(void *addr, int len, int64_t data)
 	}
 }
 
-int outOfBound(uint64_t addr)
+int in_pmem(uint64_t addr)
 {
-	if ((addr >= CONFIG_MBASE) && (addr < (uint64_t)CONFIG_MBASE + CONFIG_MSIZE))
-	{
-		return 0;
-	}
-	return 1;
+	return (addr >= CONFIG_MBASE) && (addr < (uint64_t)CONFIG_MBASE + CONFIG_MSIZE);
+}
+
+void outOfBound()
+{
+	printf("!!!---memory access out of boundry---!!!\n");
+	exit(0);
+	return;
 }
 extern "C" void pmem_read(long long raddr, long long *rdata, char wmask)
 {
@@ -146,16 +149,15 @@ extern "C" void pmem_write(long long waddr, long long wdata, char wmask)
 		}
 		host_write(guest_to_host(addr), len, wdata);
 	}
-
 	return;
 }
 
 uint32_t paddr_read(uint64_t addr)
 {
-	if (outOfBound(addr) == 1)
+	if (!in_pmem(addr))
 	{
-		printf("!!!---memory access out of boundry---!!!\n");
-		exit(0);
+		outOfBound();
+		return 0;
 	}
 	else
 	{

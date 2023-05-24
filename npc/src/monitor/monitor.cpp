@@ -106,7 +106,9 @@ void init_monitor(int argc, char *argv[])
 	// printf("%s\n", img_file);
 	init_log(log_file);
 	init_disasm("riscv64");
-
+#ifdef DIFFTEST
+	init_difftest(diff_so_file, img_size, difftest_port);
+#endif
 	#ifdef FTRACE
 		init_elf(elf_file);
 	#endif
@@ -137,9 +139,7 @@ int sim_main(int argc, char **argv)
 
 	top->eval();
 
-#ifdef DIFFTEST
-	init_difftest(diff_so_file, img_size, difftest_port);
-#endif
+
 
 	int state = main_loop(contextp, tfp);
 	

@@ -19,6 +19,13 @@ typedef struct REF_CPU_state
 	uint64_t pc;
 } REF_CPU_state;
 
+static bool is_skip_ref = false;
+
+void difftest_skip_ref()
+{
+	is_skip_ref = true;
+}
+
 REF_CPU_state ref_cpu;
 
 void reg_tans(REF_CPU_state ref_cpu, CPU_state dut_cpu_state)
@@ -80,7 +87,7 @@ static int checkgpregs(REF_CPU_state ref, uint64_t pc)
 		if (cpu.cpu_gpr[i] != ref.cpu_gpr[i])
 		{
 			abort = 1;
-			printf(ASNI_FMT("***************************************************************************************************\n",  ASNI_FG_CYAN));
+			printf(ASNI_FMT("***************************************************************************************************\n", ASNI_FG_CYAN));
 			printf(ASNI_FMT("The wrong reg is: %s\n", ), regss[i]);
 			printf("nemu's ");
 			printf(ASNI_FMT("%s ", ASNI_FG_RED), regss[i]);
@@ -97,7 +104,7 @@ static int checkgpregs(REF_CPU_state ref, uint64_t pc)
 		my_log(log_info);
 		printf("Differential testing Failed, Please Check Your NPC at the previous directive of the instruction: ");
 		printf(ASNI_FMT("\n%08lx\n", ASNI_FG_RED), cpu.pc);
-		printf(ASNI_FMT("***************************************************************************************************\n",  ASNI_FG_CYAN));
+		printf(ASNI_FMT("***************************************************************************************************\n", ASNI_FG_CYAN));
 		return abort + 1;
 	}
 	return abort;
@@ -110,6 +117,15 @@ int difftest_step(uint64_t pc)
 	reg_tans(ref_cpu, cpu);
 
 	REF_CPU_state ref_temp;
+
+	// 是否跳过difftest比对
+	if (is_skip_ref)
+	{
+		// to skip the checking of an instruction, just copy the reg state to reference design
+		ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
+		is_skip_ref = false;
+		return exit;
+	}
 
 	ref_difftest_exec(1);
 
