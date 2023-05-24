@@ -1,5 +1,5 @@
 sim/*.*
-log/*.*
+log/npc-log.txt
 !*/
 !Makefile
 !*.mk
