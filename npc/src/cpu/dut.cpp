@@ -112,6 +112,7 @@ static int checkgpregs(REF_CPU_state ref, uint64_t pc)
 
 int difftest_step(uint64_t pc)
 {
+	// 0: nornal
 	int exit = 0;
 
 	reg_tans(ref_cpu, cpu);
@@ -119,12 +120,13 @@ int difftest_step(uint64_t pc)
 	REF_CPU_state ref_temp;
 
 	// 是否跳过difftest比对
-	if (is_skip_ref)
+	if (is_skip_ref == true)
 	{
+		printf("111\n");
 		// to skip the checking of an instruction, just copy the reg state to reference design
 		ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 		is_skip_ref = false;
-		return exit;
+		return 1;
 	}
 
 	ref_difftest_exec(1);

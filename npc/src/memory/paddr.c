@@ -77,6 +77,8 @@ int in_pmem(uint64_t addr)
 	return (addr >= CONFIG_MBASE) && (addr < (uint64_t)CONFIG_MBASE + CONFIG_MSIZE);
 }
 
+extern void difftest_skip_ref();
+
 void outOfBound()
 {
 	printf("!!!---memory access out of boundry---!!!\n");
@@ -86,6 +88,12 @@ void outOfBound()
 extern "C" void pmem_read(long long raddr, long long *rdata, char wmask)
 {
 	paddr_t addr = raddr;
+	// if (addr >= 0xa00003f8 && addr <= 0xa0000100)
+	// {
+	// 	difftest_skip_ref();
+		
+	// }
+
 	if (addr == 0xa0000048)
 	{
 		int sec = time((time_t *)NULL);
@@ -120,12 +128,17 @@ extern "C" void pmem_read(long long raddr, long long *rdata, char wmask)
 extern "C" void pmem_write(long long waddr, long long wdata, char wmask)
 {
 	paddr_t addr = waddr;
+	// if (addr >= 0xa00003f8 && addr <= 0xa0000100)
+	// {
+		
+	// }
 	// `wmask`中每比特表示`wdata`中1个字节的掩码,
 	// 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
-	if (addr == 0xa00003f8)
+	if (addr >= 0xa00003f8)
 	{
 		char ch = (uint8_t)wdata;
 		printf("%c", ch);
+		difftest_skip_ref();
 	}
 	else
 	{
